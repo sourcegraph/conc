@@ -10,8 +10,8 @@ type ResultContextPool[T any] struct {
 	collectErrored bool
 }
 
-func (p *ResultContextPool[T]) Do(f func(context.Context) (T, error)) {
-	p.ContextPool.Do(func(ctx context.Context) error {
+func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
+	p.ContextPool.Go(func(ctx context.Context) error {
 		res, err := f(ctx)
 		if err == nil || p.collectErrored {
 			p.agg.add(res)

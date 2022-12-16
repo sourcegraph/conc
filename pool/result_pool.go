@@ -10,7 +10,7 @@ type ResultPool[T any] struct {
 	agg resultAggregator[T]
 }
 
-func (p *ResultPool[T]) Do(f func() T) {
+func (p *ResultPool[T]) Go(f func() T) {
 	p.Pool.Go(func() {
 		p.agg.add(f())
 	})

@@ -34,8 +34,3 @@ func (p *ContextPool) WithCancelOnError() *ContextPool {
 	p.ctx, p.cancel = context.WithCancel(p.ctx)
 	return p
 }
-
-func (p *ContextPool) WithMaxGoroutines(limit int) *ContextPool {
-	p.ErrorPool = *p.ErrorPool.WithMaxGoroutines(limit)
-	return p
-}

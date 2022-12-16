@@ -8,7 +8,7 @@ import (
 )
 
 type ErrorPool struct {
-	pool Pool
+	Pool
 
 	onlyFirst bool
 
@@ -17,25 +17,20 @@ type ErrorPool struct {
 }
 
 func (p *ErrorPool) Go(f func() error) {
-	p.pool.Go(func() {
+	p.Pool.Go(func() {
 		p.addErr(f())
 	})
 }
 
 func (p *ErrorPool) Wait() error {
-	p.pool.Wait()
+	p.Pool.Wait()
 	return p.errs
-}
-
-func (p *ErrorPool) WithMaxGoroutines(n int) *ErrorPool {
-	p.pool = *p.pool.WithMaxGoroutines(n)
-	return p
 }
 
 func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
 	return &ContextPool{
-		errPool: *p,
-		ctx:     ctx,
+		ErrorPool: *p,
+		ctx:       ctx,
 	}
 }
 
