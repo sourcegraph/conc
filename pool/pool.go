@@ -12,14 +12,14 @@ import (
 
 func New() Pool {
 	return Pool{
-		limiter: make(chan struct{}, runtime.GOMAXPROCS(0)),
+		limiter: make(conc.Limiter, runtime.GOMAXPROCS(0)),
 		tasks:   make(chan func()),
 	}
 }
 
 type Pool struct {
 	handle  conc.WaitGroup
-	limiter chan struct{}
+	limiter conc.Limiter
 	tasks   chan func()
 }
 
@@ -27,7 +27,7 @@ func (p *Pool) Do(f func()) {
 	for {
 		select {
 		case p.limiter <- struct{}{}:
-			p.handle.Spawn(p.worker)
+			p.handle.Go(p.worker)
 		case p.tasks <- f:
 			return
 		}

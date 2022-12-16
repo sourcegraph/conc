@@ -30,17 +30,17 @@ func (g *ContextGroup) Wait() error {
 	return g.errGroup.Wait()
 }
 
-func (g *ContextGroup) WithCancelOnError() *ContextGroup {
+func (g ContextGroup) WithCancelOnError() ContextGroup {
 	g.ctx, g.cancel = context.WithCancel(g.ctx)
 	return g
 }
 
-func (g *ContextGroup) WithMaxConcurrency(limit int) *ContextGroup {
+func (g ContextGroup) WithMaxConcurrency(limit int) ContextGroup {
 	g.errGroup = g.errGroup.WithMaxConcurrency(limit)
 	return g
 }
 
-func (g *ContextGroup) WithFirstError() *ContextGroup {
+func (g ContextGroup) WithFirstError() ContextGroup {
 	g.errGroup = g.errGroup.WithFirstError()
 	return g
 }

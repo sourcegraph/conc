@@ -1,0 +1,59 @@
+package pool
+
+import (
+	"context"
+	"sync"
+
+	"github.com/sourcegraph/sourcegraph/lib/errors"
+)
+
+type ErrorPool struct {
+	pool Pool
+
+	onlyFirst bool
+
+	mu   sync.Mutex
+	errs error
+}
+
+func (p *ErrorPool) Do(f func() error) {
+	p.pool.Do(func() {
+		p.addErr(f())
+	})
+}
+
+func (p *ErrorPool) Wait() error {
+	p.pool.Wait()
+	return p.errs
+}
+
+func (p ErrorPool) WithMaxGoroutines(n int) ErrorPool {
+	p.pool = p.pool.WithMaxGoroutines(n)
+	return p
+}
+
+func (p ErrorPool) WithContext(ctx context.Context) ContextPool {
+	return ContextPool{
+		errPool: p,
+		ctx:     ctx,
+	}
+}
+
+func (p ErrorPool) WithFirstError() ErrorPool {
+	p.onlyFirst = true
+	return p
+}
+
+func (p *ErrorPool) addErr(err error) {
+	if err != nil {
+		p.mu.Lock()
+		if p.onlyFirst {
+			if p.errs == nil {
+				p.errs = err
+			}
+		} else {
+			p.errs = errors.Append(p.errs, err)
+		}
+		p.mu.Unlock()
+	}
+}

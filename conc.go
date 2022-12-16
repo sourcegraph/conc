@@ -10,7 +10,7 @@ type WaitGroup struct {
 	caughtPanic atomic.Pointer[any]
 }
 
-func (h *WaitGroup) Spawn(f func()) {
+func (h *WaitGroup) Go(f func()) {
 	h.wg.Add(1)
 	go func() {
 		defer h.done()

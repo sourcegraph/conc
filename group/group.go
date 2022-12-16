@@ -11,27 +11,16 @@ func New() Group {
 }
 
 type Group struct {
-	handle conc.WaitGroup
-
-	// A nil channel means no limit.
-	// A full channel means the limit is exhausted.
-	limiter chan struct{}
+	handle  conc.WaitGroup
+	limiter conc.Limiter
 }
 
 func (g *Group) Go(f func()) {
-	g.acquire()
-	g.handle.Spawn(func() {
-		defer g.release()
+	g.limiter.Acquire()
+	g.handle.Go(func() {
+		defer g.limiter.Release()
 		f()
 	})
-}
-
-func (g *Group) acquire() {
-	g.limiter <- struct{}{}
-}
-
-func (g *Group) release() {
-	<-g.limiter
 }
 
 func (g *Group) Wait() {
