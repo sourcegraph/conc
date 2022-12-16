@@ -57,7 +57,7 @@ func MapIn[T any, R any](p *Pool, input []T, f func(*T) R) []R {
 	return res
 }
 
-func MapErrIn[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
+func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	p := New()
 	return MapErrIn(&p, input, f)
 }

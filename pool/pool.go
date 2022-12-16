@@ -1,6 +1,7 @@
 package pool
 
 import (
+	"context"
 	"runtime"
 
 	"github.com/camdencheek/conc"
@@ -38,6 +39,19 @@ func (p *Pool) Wait() {
 func (p Pool) WithMaxGoroutines(n int) Pool {
 	p.limiter = make(chan struct{}, n)
 	return p
+}
+
+func (p Pool) WithErrors() ErrorPool {
+	return ErrorPool{
+		pool: p,
+	}
+}
+
+func (p Pool) WithContext(ctx context.Context) ContextPool {
+	return ContextPool{
+		errPool: p.WithErrors(),
+		ctx:     ctx,
+	}
 }
 
 func (p *Pool) MaxGoroutines() int {
