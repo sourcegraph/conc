@@ -47,7 +47,7 @@ func (p *Pool) WithMaxGoroutines(n int) *Pool {
 
 func (p *Pool) WithErrors() *ErrorPool {
 	return &ErrorPool{
-		pool: *p,
+		Pool: *p,
 	}
 }
 

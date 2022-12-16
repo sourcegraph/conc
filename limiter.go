@@ -7,7 +7,7 @@ func NewLimiter(n int) Limiter {
 type Limiter chan struct{}
 
 func (l Limiter) Limit() int {
-	cap(l)
+	return cap(l)
 }
 
 func (l Limiter) Acquire() {

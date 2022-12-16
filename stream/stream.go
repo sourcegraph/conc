@@ -53,7 +53,6 @@ func (s *Stream) init() {
 
 	// Start the callbacker
 	s.callbackerHandle.Go(s.callbacker)
-
 }
 
 func (s *Stream) callbacker() {

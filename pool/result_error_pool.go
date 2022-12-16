@@ -10,7 +10,7 @@ type ResultErrorPool[T any] struct {
 	collectErrored bool
 }
 
-func (p *ResultErrorPool[T]) Do(f func() (T, error)) {
+func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 	p.ErrorPool.Go(func() error {
 		res, err := f()
 		if err == nil || p.collectErrored {

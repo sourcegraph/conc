@@ -11,7 +11,7 @@ type ContextPool struct {
 	cancel context.CancelFunc
 }
 
-func (g *ContextPool) Do(f func(ctx context.Context) error) {
+func (g *ContextPool) Go(f func(ctx context.Context) error) {
 	g.ErrorPool.Go(func() error {
 		err := f(g.ctx)
 		if err != nil && g.cancel != nil {
