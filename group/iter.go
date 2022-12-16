@@ -31,5 +31,5 @@ func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	g := New()
 	defer g.Wait()
 
-	return conc.MapErrIn(New(), input, f)
+	return conc.MapErrIn(g, input, f)
 }
