@@ -5,31 +5,44 @@ import (
 	"sync"
 )
 
-type ResultGroup[T any] struct {
-	Group
-	agg resultAggregator[T]
+func NewWithResults[T any]() *ResultGroup[T] {
+	return &ResultGroup[T]{}
 }
 
-func (g *ResultGroup[T]) Do(f func() T) {
-	g.Group.Go(func() {
+type ResultGroup[T any] struct {
+	group Group
+	agg   resultAggregator[T]
+}
+
+func (g *ResultGroup[T]) Go(f func() T) {
+	g.group.Go(func() {
 		g.agg.add(f())
 	})
 }
 
 func (g *ResultGroup[T]) Wait() []T {
-	g.Group.Wait()
+	g.group.Wait()
 	return g.agg.results
+}
+
+func (g *ResultGroup[T]) MaxGoroutines() int {
+	return g.group.MaxGoroutines()
+}
+
+func (g *ResultGroup[T]) WithMaxGoroutines(n int) *ResultGroup[T] {
+	g.group.WithMaxGoroutines(n)
+	return g
 }
 
 func (g *ResultGroup[T]) WithErrors() *ResultErrorGroup[T] {
 	return &ResultErrorGroup[T]{
-		ErrorGroup: *g.Group.WithErrors(),
+		errorGroup: *g.group.WithErrors(),
 	}
 }
 
 func (g *ResultGroup[T]) WithContext(ctx context.Context) *ResultContextGroup[T] {
 	return &ResultContextGroup[T]{
-		ContextGroup: *g.Group.WithContext(ctx),
+		contextGroup: *g.group.WithContext(ctx),
 	}
 }
 

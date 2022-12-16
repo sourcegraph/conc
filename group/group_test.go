@@ -11,6 +11,7 @@ import (
 
 func TestGroup(t *testing.T) {
 	t.Parallel()
+
 	t.Run("basic", func(t *testing.T) {
 		g := New()
 		var completed atomic.Int64
@@ -28,19 +29,19 @@ func TestGroup(t *testing.T) {
 		t.Parallel()
 		for _, maxConcurrent := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxConcurrent), func(t *testing.T) {
-				g := New().WithMaxConcurrency(maxConcurrent)
+				g := New().WithMaxGoroutines(maxConcurrent)
 
-				currentConcurrent := atomic.NewInt64(0)
-				errCount := atomic.NewInt64(0)
+				var currentConcurrent atomic.Int64
+				var errCount atomic.Int64
 				taskCount := maxConcurrent * 10
 				for i := 0; i < taskCount; i++ {
 					g.Go(func() {
-						cur := currentConcurrent.Inc()
+						cur := currentConcurrent.Add(1)
 						if cur > int64(maxConcurrent) {
-							errCount.Inc()
+							errCount.Add(1)
 						}
 						time.Sleep(time.Millisecond)
-						currentConcurrent.Dec()
+						currentConcurrent.Add(-1)
 					})
 				}
 				g.Wait()

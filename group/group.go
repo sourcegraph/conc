@@ -31,20 +31,20 @@ func (g *Group) MaxGoroutines() int {
 	return g.limiter.Limit()
 }
 
-func (g *Group) WithMaxConcurrency(limit int) *Group {
-	g.limiter = make(chan struct{}, limit)
+func (g *Group) WithMaxGoroutines(limit int) *Group {
+	g.limiter = conc.NewLimiter(limit)
 	return g
 }
 
 func (g *Group) WithErrors() *ErrorGroup {
 	return &ErrorGroup{
-		Group: *g,
+		group: *g,
 	}
 }
 
 func (g *Group) WithContext(ctx context.Context) *ContextGroup {
 	return &ContextGroup{
-		ErrorGroup: *g.WithErrors(),
+		errorGroup: *g.WithErrors(),
 		ctx:        ctx,
 	}
 }
