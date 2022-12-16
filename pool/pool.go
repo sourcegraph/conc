@@ -53,8 +53,8 @@ func (p *Pool) WithErrors() *ErrorPool {
 
 func (p Pool) WithContext(ctx context.Context) *ContextPool {
 	return &ContextPool{
-		errPool: *p.WithErrors(),
-		ctx:     ctx,
+		ErrorPool: *p.WithErrors(),
+		ctx:       ctx,
 	}
 }
 
