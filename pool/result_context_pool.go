@@ -5,13 +5,13 @@ import (
 )
 
 type ResultContextPool[T any] struct {
-	ContextPool
+	contextPool    ContextPool
 	agg            resultAggregator[T]
 	collectErrored bool
 }
 
 func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
-	p.ContextPool.Go(func(ctx context.Context) error {
+	p.contextPool.Go(func(ctx context.Context) error {
 		res, err := f(ctx)
 		if err == nil || p.collectErrored {
 			p.agg.add(res)
@@ -21,11 +21,26 @@ func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
 }
 
 func (p *ResultContextPool[T]) Wait() ([]T, error) {
-	err := p.ContextPool.Wait()
+	err := p.contextPool.Wait()
 	return p.agg.results, err
 }
 
 func (p *ResultContextPool[T]) WithCollectErrored() *ResultContextPool[T] {
 	p.collectErrored = true
+	return p
+}
+
+func (p *ResultContextPool[T]) WithCancelOnError() *ResultContextPool[T] {
+	p.contextPool.WithCancelOnError()
+	return p
+}
+
+func (p *ResultContextPool[T]) WithFirstError() *ResultContextPool[T] {
+	p.contextPool.WithFirstError()
+	return p
+}
+
+func (p *ResultContextPool[T]) WithMaxGoroutines(n int) *ResultContextPool[T] {
+	p.contextPool.WithMaxGoroutines(n)
 	return p
 }
