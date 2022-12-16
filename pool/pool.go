@@ -3,6 +3,7 @@ package pool
 import (
 	"context"
 	"runtime"
+	"sync"
 
 	"github.com/camdencheek/conc"
 )
@@ -10,14 +11,19 @@ import (
 func New() *Pool {
 	return &Pool{
 		limiter: make(conc.Limiter, runtime.GOMAXPROCS(0)),
-		tasks:   make(chan func(), 8),
+		// tasks is not buffered because if it were, it would be possible to
+		// submit tasks but never be forced to start a worker goroutine. If
+		// goroutines were started eagerly, this wouldn't be a problem.
+		tasks: make(chan func()),
 	}
 }
 
 type Pool struct {
 	handle  conc.WaitGroup
 	limiter conc.Limiter
-	tasks   chan func()
+
+	closeTasksOnce sync.Once
+	tasks          chan func()
 }
 
 func (p *Pool) Go(f func()) {

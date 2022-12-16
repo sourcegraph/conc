@@ -10,7 +10,7 @@ import (
 type ErrorPool struct {
 	pool Pool
 
-	onlyFirst bool
+	onlyFirstError bool
 
 	mu   sync.Mutex
 	errs error
@@ -35,14 +35,19 @@ func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
 }
 
 func (p *ErrorPool) WithFirstError() *ErrorPool {
-	p.onlyFirst = true
+	p.onlyFirstError = true
+	return p
+}
+
+func (p *ErrorPool) WithMaxGoroutines(n int) *ErrorPool {
+	p.pool.WithMaxGoroutines(n)
 	return p
 }
 
 func (p *ErrorPool) addErr(err error) {
 	if err != nil {
 		p.mu.Lock()
-		if p.onlyFirst {
+		if p.onlyFirstError {
 			if p.errs == nil {
 				p.errs = err
 			}

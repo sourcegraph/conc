@@ -34,3 +34,13 @@ func (p *ContextPool) WithCancelOnError() *ContextPool {
 	p.ctx, p.cancel = context.WithCancel(p.ctx)
 	return p
 }
+
+func (p *ContextPool) WithFirstError() *ContextPool {
+	p.errorPool.WithFirstError()
+	return p
+}
+
+func (p *ContextPool) WithMaxGoroutines(n int) *ContextPool {
+	p.errorPool.WithMaxGoroutines(n)
+	return p
+}
