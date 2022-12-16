@@ -6,36 +6,31 @@ import (
 )
 
 type ResultGroup[T any] struct {
-	group Group
-	agg   resultAggregator[T]
+	Group
+	agg resultAggregator[T]
 }
 
 func (g *ResultGroup[T]) Do(f func() T) {
-	g.group.Go(func() {
+	g.Group.Go(func() {
 		g.agg.add(f())
 	})
 }
 
 func (g *ResultGroup[T]) Wait() []T {
-	g.group.Wait()
+	g.Group.Wait()
 	return g.agg.results
 }
 
 func (g *ResultGroup[T]) WithErrors() *ResultErrorGroup[T] {
 	return &ResultErrorGroup[T]{
-		errGroup: *g.group.WithErrors(),
+		ErrorGroup: *g.Group.WithErrors(),
 	}
 }
 
 func (g *ResultGroup[T]) WithContext(ctx context.Context) *ResultContextGroup[T] {
 	return &ResultContextGroup[T]{
-		contextGroup: *g.group.WithContext(ctx),
+		ContextGroup: *g.Group.WithContext(ctx),
 	}
-}
-
-func (g *ResultGroup[T]) WithMaxConcurrency(limit int) *ResultGroup[T] {
-	g.group = *g.group.WithMaxConcurrency(limit)
-	return g
 }
 
 // resultAggregator is a utility type that lets us safely append from multiple

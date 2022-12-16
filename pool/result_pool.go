@@ -6,36 +6,31 @@ import (
 )
 
 type ResultPool[T any] struct {
-	pool Pool
-	agg  resultAggregator[T]
+	Pool
+	agg resultAggregator[T]
 }
 
 func (p *ResultPool[T]) Do(f func() T) {
-	p.pool.Go(func() {
+	p.Pool.Go(func() {
 		p.agg.add(f())
 	})
 }
 
 func (p *ResultPool[T]) Wait() []T {
-	p.pool.Wait()
+	p.Pool.Wait()
 	return p.agg.results
 }
 
 func (p *ResultPool[T]) WithErrors() *ResultErrorPool[T] {
 	return &ResultErrorPool[T]{
-		errPool: *p.pool.WithErrors(),
+		ErrorPool: *p.Pool.WithErrors(),
 	}
 }
 
 func (p *ResultPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
 	return &ResultContextPool[T]{
-		contextPool: *p.pool.WithContext(ctx),
+		ContextPool: *p.Pool.WithContext(ctx),
 	}
-}
-
-func (p *ResultPool[T]) WithMaxGoroutines(limit int) *ResultPool[T] {
-	p.pool = *p.pool.WithMaxGoroutines(limit)
-	return p
 }
 
 // resultAggregator is a utility type that lets us safely append from multiple

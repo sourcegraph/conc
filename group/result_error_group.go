@@ -5,13 +5,13 @@ import (
 )
 
 type ResultErrorGroup[T any] struct {
-	errGroup       ErrorGroup
+	ErrorGroup
 	agg            resultAggregator[T]
 	collectErrored bool
 }
 
 func (g *ResultErrorGroup[T]) Do(f func() (T, error)) {
-	g.errGroup.Go(func() error {
+	g.ErrorGroup.Go(func() error {
 		res, err := f()
 		if err == nil || g.collectErrored {
 			g.agg.add(res)
@@ -21,7 +21,7 @@ func (g *ResultErrorGroup[T]) Do(f func() (T, error)) {
 }
 
 func (g *ResultErrorGroup[T]) Wait() ([]T, error) {
-	err := g.errGroup.Wait()
+	err := g.ErrorGroup.Wait()
 	return g.agg.results, err
 }
 
@@ -30,18 +30,8 @@ func (g *ResultErrorGroup[T]) WithCollectErrored() *ResultErrorGroup[T] {
 	return g
 }
 
-func (g *ResultErrorGroup[T]) WithFirstError() *ResultErrorGroup[T] {
-	g.errGroup = *g.errGroup.WithFirstError()
-	return g
-}
-
-func (g *ResultErrorGroup[T]) WithMaxConcurrency(limit int) *ResultErrorGroup[T] {
-	g.errGroup = *g.errGroup.WithMaxConcurrency(limit)
-	return g
-}
-
 func (g *ResultErrorGroup[T]) WithContext(ctx context.Context) *ResultContextGroup[T] {
 	return &ResultContextGroup[T]{
-		contextGroup: *g.errGroup.WithContext(ctx),
+		ContextGroup: *g.ErrorGroup.WithContext(ctx),
 	}
 }

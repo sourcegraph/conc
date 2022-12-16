@@ -5,20 +5,20 @@ import (
 )
 
 type ContextGroup struct {
-	errGroup ErrorGroup
+	ErrorGroup
 
 	ctx    context.Context
 	cancel context.CancelFunc
 }
 
 func (g *ContextGroup) Go(f func(ctx context.Context) error) {
-	g.errGroup.Go(func() error {
+	g.ErrorGroup.Go(func() error {
 		err := f(g.ctx)
 		if err != nil && g.cancel != nil {
 			// Add the error directly because otherwise, canceling could cause
 			// another goroutine to exit and return an error before this error
 			// was added, which breaks the expectations of WithFirstError().
-			g.errGroup.addErr(err)
+			g.ErrorGroup.addErr(err)
 			g.cancel()
 			return nil
 		}
@@ -27,20 +27,10 @@ func (g *ContextGroup) Go(f func(ctx context.Context) error) {
 }
 
 func (g *ContextGroup) Wait() error {
-	return g.errGroup.Wait()
+	return g.ErrorGroup.Wait()
 }
 
 func (g *ContextGroup) WithCancelOnError() *ContextGroup {
 	g.ctx, g.cancel = context.WithCancel(g.ctx)
-	return g
-}
-
-func (g *ContextGroup) WithMaxConcurrency(limit int) *ContextGroup {
-	g.errGroup = *g.errGroup.WithMaxConcurrency(limit)
-	return g
-}
-
-func (g *ContextGroup) WithFirstError() *ContextGroup {
-	g.errGroup = *g.errGroup.WithFirstError()
 	return g
 }

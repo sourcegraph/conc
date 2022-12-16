@@ -8,7 +8,7 @@ import (
 )
 
 type ErrorGroup struct {
-	group Group
+	Group
 
 	mu   sync.Mutex
 	errs error
@@ -17,27 +17,20 @@ type ErrorGroup struct {
 }
 
 func (g *ErrorGroup) Go(f func() error) {
-	g.group.Go(func() {
+	g.Group.Go(func() {
 		g.addErr(f())
 	})
 }
 
 func (g *ErrorGroup) Wait() error {
-	g.group.Wait()
+	g.Group.Wait()
 	return g.errs
 }
 
-func (g *ErrorGroup) WithMaxConcurrency(limit int) *ErrorGroup {
-	g.group = *g.group.WithMaxConcurrency(limit)
-	return g
-}
-
-//nolint
 func (g *ErrorGroup) WithContext(ctx context.Context) *ContextGroup {
-	//abc
 	return &ContextGroup{
-		errGroup: *g,
-		ctx:      ctx,
+		ErrorGroup: *g,
+		ctx:        ctx,
 	}
 }
 

@@ -18,16 +18,16 @@ type Callback func()
 type Stream struct {
 	pool             pool.Pool
 	callbackerHandle conc.WaitGroup
-	free             chan callbackCh
+	free             freePool
 	queue            chan callbackCh
 
 	initOnce sync.Once
 }
 
-func (s *Stream) Do(f StreamTask) {
+func (s *Stream) Go(f StreamTask) {
 	s.initOnce.Do(s.init)
 
-	ch := <-s.free
+	ch := s.free.get()
 	s.queue <- ch
 	s.pool.Go(func() {
 		ch <- f()
@@ -60,8 +60,18 @@ func (s *Stream) callbacker() {
 	for callbackCh := range s.queue {
 		callback := <-callbackCh
 		callback()
-		s.free <- callbackCh
+		s.free.put(callbackCh)
 	}
 }
 
 type callbackCh chan func()
+
+type freePool chan callbackCh
+
+func (fp freePool) get() callbackCh {
+	return <-fp
+}
+
+func (fp freePool) put(ch callbackCh) {
+	fp <- ch
+}

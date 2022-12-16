@@ -27,6 +27,10 @@ func (g *Group) Wait() {
 	g.handle.Wait()
 }
 
+func (g *Group) MaxGoroutines() int {
+	return g.limiter.Limit()
+}
+
 func (g *Group) WithMaxConcurrency(limit int) *Group {
 	g.limiter = make(chan struct{}, limit)
 	return g
@@ -34,13 +38,13 @@ func (g *Group) WithMaxConcurrency(limit int) *Group {
 
 func (g *Group) WithErrors() *ErrorGroup {
 	return &ErrorGroup{
-		group: *g,
+		Group: *g,
 	}
 }
 
 func (g *Group) WithContext(ctx context.Context) *ContextGroup {
 	return &ContextGroup{
-		errGroup: *g.WithErrors(),
-		ctx:      ctx,
+		ErrorGroup: *g.WithErrors(),
+		ctx:        ctx,
 	}
 }

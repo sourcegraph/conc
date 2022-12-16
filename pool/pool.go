@@ -31,13 +31,13 @@ func (p *Pool) Go(f func()) {
 	}
 }
 
-func (p *Pool) MaxGoroutines() int {
-	return p.limiter.Limit()
-}
-
 func (p *Pool) Wait() {
 	close(p.tasks)
 	p.handle.Wait()
+}
+
+func (p *Pool) MaxGoroutines() int {
+	return p.limiter.Limit()
 }
 
 func (p *Pool) WithMaxGoroutines(n int) *Pool {
