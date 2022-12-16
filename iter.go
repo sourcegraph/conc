@@ -1,6 +1,7 @@
 package conc
 
 import (
+	"runtime"
 	"sync"
 	"sync/atomic"
 
@@ -18,12 +19,19 @@ func ForEachIdxIn[T any](goer Goer, input []T, f func(int, *T)) {
 	var wg sync.WaitGroup
 	task := func() {
 		defer wg.Done()
-		for i := int(idx.Add(1) - 1); i < len(input); i = int(idx.Add(1) - 1) {
+		i := int(idx.Add(1) - 1)
+		for ; i < len(input); i = int(idx.Add(1) - 1) {
 			f(i, &input[i])
 		}
 	}
 
 	n := goer.MaxGoroutines()
+	if n > len(input) {
+		n = len(input)
+	} else if n == 0 {
+		n = runtime.GOMAXPROCS(0)
+	}
+
 	wg.Add(n)
 	for i := 0; i < n; i++ {
 		goer.Go(task)

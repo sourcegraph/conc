@@ -1,9 +1,10 @@
 package stream
 
 import (
+	"sync"
+
 	"github.com/camdencheek/conc"
 	"github.com/camdencheek/conc/pool"
-	"sync"
 )
 
 func New() *Stream {

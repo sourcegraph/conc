@@ -8,7 +8,7 @@ import (
 )
 
 type ErrorPool struct {
-	Pool
+	pool Pool
 
 	onlyFirst bool
 
@@ -17,19 +17,19 @@ type ErrorPool struct {
 }
 
 func (p *ErrorPool) Go(f func() error) {
-	p.Pool.Go(func() {
+	p.pool.Go(func() {
 		p.addErr(f())
 	})
 }
 
 func (p *ErrorPool) Wait() error {
-	p.Pool.Wait()
+	p.pool.Wait()
 	return p.errs
 }
 
 func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
 	return &ContextPool{
-		ErrorPool: *p,
+		errorPool: *p,
 		ctx:       ctx,
 	}
 }

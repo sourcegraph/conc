@@ -47,13 +47,13 @@ func (p *Pool) WithMaxGoroutines(n int) *Pool {
 
 func (p *Pool) WithErrors() *ErrorPool {
 	return &ErrorPool{
-		Pool: *p,
+		pool: *p,
 	}
 }
 
-func (p Pool) WithContext(ctx context.Context) *ContextPool {
+func (p *Pool) WithContext(ctx context.Context) *ContextPool {
 	return &ContextPool{
-		ErrorPool: *p.WithErrors(),
+		errorPool: *p.WithErrors(),
 		ctx:       ctx,
 	}
 }

@@ -13,6 +13,7 @@ import (
 
 func TestErrorGroup(t *testing.T) {
 	t.Parallel()
+
 	err1 := errors.New("err1")
 	err2 := errors.New("err2")
 

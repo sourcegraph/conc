@@ -1,6 +1,9 @@
 package conc
 
 func NewLimiter(n int) Limiter {
+	if n < 1 {
+		return nil
+	}
 	return make(Limiter, n)
 }
 
