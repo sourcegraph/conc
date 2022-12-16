@@ -5,19 +5,31 @@ import (
 )
 
 func ForEachIdx[T any](input []T, f func(int, *T)) {
-	conc.ForEachIdxIn(New(), input, f)
+	p := New()
+	defer p.Wait()
+
+	conc.ForEachIdxIn(p, input, f)
 }
 
 func ForEach[T any](input []T, f func(*T)) {
-	conc.ForEachIdxIn(New(), input, func(_ int, t *T) {
+	p := New()
+	defer p.Wait()
+
+	conc.ForEachIdxIn(p, input, func(_ int, t *T) {
 		f(t)
 	})
 }
 
 func Map[T any, R any](input []T, f func(*T) R) []R {
-	return conc.MapIn(New(), input, f)
+	p := New()
+	defer p.Wait()
+
+	return conc.MapIn(p, input, f)
 }
 
 func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
-	return conc.MapErrIn(New(), input, f)
+	p := New()
+	defer p.Wait()
+
+	return conc.MapErrIn(p, input, f)
 }
