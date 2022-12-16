@@ -3,7 +3,6 @@ package pool
 import (
 	"context"
 	"runtime"
-	"sync"
 
 	"github.com/camdencheek/conc"
 )
@@ -21,9 +20,7 @@ func New() *Pool {
 type Pool struct {
 	handle  conc.WaitGroup
 	limiter conc.Limiter
-
-	closeTasksOnce sync.Once
-	tasks          chan func()
+	tasks   chan func()
 }
 
 func (p *Pool) Go(f func()) {
