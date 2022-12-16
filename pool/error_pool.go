@@ -16,8 +16,8 @@ type ErrorPool struct {
 	errs error
 }
 
-func (p *ErrorPool) Do(f func() error) {
-	p.pool.Do(func() {
+func (p *ErrorPool) Go(f func() error) {
+	p.pool.Go(func() {
 		p.addErr(f())
 	})
 }
@@ -27,19 +27,19 @@ func (p *ErrorPool) Wait() error {
 	return p.errs
 }
 
-func (p ErrorPool) WithMaxGoroutines(n int) ErrorPool {
-	p.pool = p.pool.WithMaxGoroutines(n)
+func (p *ErrorPool) WithMaxGoroutines(n int) *ErrorPool {
+	p.pool = *p.pool.WithMaxGoroutines(n)
 	return p
 }
 
-func (p ErrorPool) WithContext(ctx context.Context) ContextPool {
-	return ContextPool{
-		errPool: p,
+func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
+	return &ContextPool{
+		errPool: *p,
 		ctx:     ctx,
 	}
 }
 
-func (p ErrorPool) WithFirstError() ErrorPool {
+func (p *ErrorPool) WithFirstError() *ErrorPool {
 	p.onlyFirst = true
 	return p
 }

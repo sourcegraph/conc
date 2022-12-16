@@ -10,10 +10,10 @@ import (
 type ErrorGroup struct {
 	group Group
 
-	onlyFirst bool
-
 	mu   sync.Mutex
 	errs error
+
+	onlyFirst bool
 }
 
 func (g *ErrorGroup) Go(f func() error) {
@@ -27,19 +27,21 @@ func (g *ErrorGroup) Wait() error {
 	return g.errs
 }
 
-func (g ErrorGroup) WithMaxConcurrency(limit int) ErrorGroup {
-	g.group = g.group.WithMaxConcurrency(limit)
+func (g *ErrorGroup) WithMaxConcurrency(limit int) *ErrorGroup {
+	g.group = *g.group.WithMaxConcurrency(limit)
 	return g
 }
 
-func (g ErrorGroup) WithContext(ctx context.Context) ContextGroup {
-	return ContextGroup{
-		errGroup: g,
+//nolint
+func (g *ErrorGroup) WithContext(ctx context.Context) *ContextGroup {
+	//abc
+	return &ContextGroup{
+		errGroup: *g,
 		ctx:      ctx,
 	}
 }
 
-func (g ErrorGroup) WithFirstError() ErrorGroup {
+func (g *ErrorGroup) WithFirstError() *ErrorGroup {
 	g.onlyFirst = true
 	return g
 }

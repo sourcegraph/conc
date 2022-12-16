@@ -11,7 +11,7 @@ type ResultPool[T any] struct {
 }
 
 func (p *ResultPool[T]) Do(f func() T) {
-	p.pool.Do(func() {
+	p.pool.Go(func() {
 		p.agg.add(f())
 	})
 }
@@ -21,20 +21,20 @@ func (p *ResultPool[T]) Wait() []T {
 	return p.agg.results
 }
 
-func (p ResultPool[T]) WithErrors() ResultErrorPool[T] {
-	return ResultErrorPool[T]{
-		errPool: p.pool.WithErrors(),
+func (p *ResultPool[T]) WithErrors() *ResultErrorPool[T] {
+	return &ResultErrorPool[T]{
+		errPool: *p.pool.WithErrors(),
 	}
 }
 
-func (p ResultPool[T]) WithContext(ctx context.Context) ResultContextPool[T] {
-	return ResultContextPool[T]{
-		contextPool: p.pool.WithContext(ctx),
+func (p *ResultPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
+	return &ResultContextPool[T]{
+		contextPool: *p.pool.WithContext(ctx),
 	}
 }
 
-func (p ResultPool[T]) WithMaxGoroutines(limit int) ResultPool[T] {
-	p.pool = p.pool.WithMaxGoroutines(limit)
+func (p *ResultPool[T]) WithMaxGoroutines(limit int) *ResultPool[T] {
+	p.pool = *p.pool.WithMaxGoroutines(limit)
 	return p
 }
 

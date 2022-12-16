@@ -6,6 +6,10 @@ func NewLimiter(n int) Limiter {
 
 type Limiter chan struct{}
 
+func (l Limiter) Limit() int {
+	cap(l)
+}
+
 func (l Limiter) Acquire() {
 	l <- struct{}{}
 }

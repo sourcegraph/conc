@@ -3,14 +3,49 @@ package stream
 import (
 	"github.com/camdencheek/conc"
 	"github.com/camdencheek/conc/pool"
+	"sync"
 )
 
-func New(maxGoroutines int) Stream {
-	s := Stream{
-		pool:  pool.New().WithMaxGoroutines(maxGoroutines),
-		free:  make(chan callbackCh, maxGoroutines+1),
-		queue: make(chan callbackCh, maxGoroutines+1),
+func New() *Stream {
+	return &Stream{
+		pool: *pool.New(),
 	}
+}
+
+type StreamTask func() Callback
+type Callback func()
+
+type Stream struct {
+	pool             pool.Pool
+	callbackerHandle conc.WaitGroup
+	free             chan callbackCh
+	queue            chan callbackCh
+
+	initOnce sync.Once
+}
+
+func (s *Stream) Do(f StreamTask) {
+	s.initOnce.Do(s.init)
+
+	ch := <-s.free
+	s.queue <- ch
+	s.pool.Go(func() {
+		ch <- f()
+	})
+}
+
+func (s *Stream) Wait() {
+	s.initOnce.Do(s.init)
+
+	s.pool.Wait()
+	close(s.queue)
+	s.callbackerHandle.Wait()
+}
+
+func (s *Stream) init() {
+	s.free = make(chan callbackCh, s.pool.MaxGoroutines()+1)
+	s.queue = make(chan callbackCh, s.pool.MaxGoroutines()+1)
+
 	// Pre-populate the free list with channels
 	for i := 0; i < cap(s.free); i++ {
 		s.free <- make(callbackCh, 1)
@@ -19,29 +54,6 @@ func New(maxGoroutines int) Stream {
 	// Start the callbacker
 	s.callbackerHandle.Go(s.callbacker)
 
-	return s
-}
-
-type Stream struct {
-	pool             pool.Pool
-	callbackerHandle conc.WaitGroup
-	free             chan callbackCh
-	queue            chan callbackCh
-}
-
-func (s *Stream) Do(f func(), callback func()) {
-	ch := <-s.free
-	s.queue <- ch
-	s.pool.Do(func() {
-		defer func() { ch <- callback }()
-		f()
-	})
-}
-
-func (s *Stream) Wait() {
-	s.pool.Wait()
-	close(s.queue)
-	s.callbackerHandle.Wait()
 }
 
 func (s *Stream) callbacker() {
@@ -53,28 +65,3 @@ func (s *Stream) callbacker() {
 }
 
 type callbackCh chan func()
-
-func Submit[T, R any](s *Stream, f func() T, callback func(T)) {
-	var res T
-	newF := func() {
-		res = f()
-	}
-	newCallback := func() {
-		callback(res)
-	}
-	s.Do(newF, newCallback)
-}
-
-func SubmitErr[T, R any](s *Stream, f func() (T, error), callback func(T, error)) {
-	var (
-		res T
-		err error
-	)
-	newF := func() {
-		res, err = f()
-	}
-	newCallback := func() {
-		callback(res, err)
-	}
-	s.Do(newF, newCallback)
-}

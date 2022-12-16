@@ -26,21 +26,21 @@ func (g *ContextPool) Do(f func(ctx context.Context) error) {
 	})
 }
 
-func (p ContextPool) Wait() error {
+func (p *ContextPool) Wait() error {
 	return p.errPool.Wait()
 }
 
-func (p ContextPool) WithCancelOnError() ContextPool {
+func (p *ContextPool) WithCancelOnError() *ContextPool {
 	p.ctx, p.cancel = context.WithCancel(p.ctx)
 	return p
 }
 
-func (p ContextPool) WithMaxGoroutines(limit int) ContextPool {
-	p.errPool = p.errPool.WithMaxGoroutines(limit)
+func (p *ContextPool) WithMaxGoroutines(limit int) *ContextPool {
+	p.errPool = *p.errPool.WithMaxGoroutines(limit)
 	return p
 }
 
-func (p ContextPool) WithFirstError() ContextPool {
-	p.errPool = p.errPool.WithFirstError()
+func (p *ContextPool) WithFirstError() *ContextPool {
+	p.errPool = *p.errPool.WithFirstError()
 	return p
 }

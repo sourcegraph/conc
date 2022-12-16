@@ -21,20 +21,20 @@ func (g *ResultGroup[T]) Wait() []T {
 	return g.agg.results
 }
 
-func (g ResultGroup[T]) WithErrors() ResultErrorGroup[T] {
-	return ResultErrorGroup[T]{
-		errGroup: g.group.WithErrors(),
+func (g *ResultGroup[T]) WithErrors() *ResultErrorGroup[T] {
+	return &ResultErrorGroup[T]{
+		errGroup: *g.group.WithErrors(),
 	}
 }
 
-func (g ResultGroup[T]) WithContext(ctx context.Context) ResultContextGroup[T] {
-	return ResultContextGroup[T]{
-		contextGroup: g.group.WithContext(ctx),
+func (g *ResultGroup[T]) WithContext(ctx context.Context) *ResultContextGroup[T] {
+	return &ResultContextGroup[T]{
+		contextGroup: *g.group.WithContext(ctx),
 	}
 }
 
-func (g ResultGroup[T]) WithMaxConcurrency(limit int) ResultGroup[T] {
-	g.group = g.group.WithMaxConcurrency(limit)
+func (g *ResultGroup[T]) WithMaxConcurrency(limit int) *ResultGroup[T] {
+	g.group = *g.group.WithMaxConcurrency(limit)
 	return g
 }
 

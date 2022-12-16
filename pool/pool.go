@@ -7,10 +7,10 @@ import (
 	"github.com/camdencheek/conc"
 )
 
-func New() Pool {
-	return Pool{
+func New() *Pool {
+	return &Pool{
 		limiter: make(conc.Limiter, runtime.GOMAXPROCS(0)),
-		tasks:   make(chan func()),
+		tasks:   make(chan func(), 8),
 	}
 }
 
@@ -20,7 +20,7 @@ type Pool struct {
 	tasks   chan func()
 }
 
-func (p *Pool) Do(f func()) {
+func (p *Pool) Go(f func()) {
 	for {
 		select {
 		case p.limiter <- struct{}{}:
@@ -31,31 +31,31 @@ func (p *Pool) Do(f func()) {
 	}
 }
 
+func (p *Pool) MaxGoroutines() int {
+	return p.limiter.Limit()
+}
+
 func (p *Pool) Wait() {
 	close(p.tasks)
 	p.handle.Wait()
 }
 
-func (p Pool) WithMaxGoroutines(n int) Pool {
+func (p *Pool) WithMaxGoroutines(n int) *Pool {
 	p.limiter = make(chan struct{}, n)
 	return p
 }
 
-func (p Pool) WithErrors() ErrorPool {
-	return ErrorPool{
-		pool: p,
+func (p *Pool) WithErrors() *ErrorPool {
+	return &ErrorPool{
+		pool: *p,
 	}
 }
 
-func (p Pool) WithContext(ctx context.Context) ContextPool {
-	return ContextPool{
-		errPool: p.WithErrors(),
+func (p Pool) WithContext(ctx context.Context) *ContextPool {
+	return &ContextPool{
+		errPool: *p.WithErrors(),
 		ctx:     ctx,
 	}
-}
-
-func (p *Pool) MaxGoroutines() int {
-	return cap(p.limiter)
 }
 
 func (p *Pool) worker() {

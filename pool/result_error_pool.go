@@ -11,7 +11,7 @@ type ResultErrorPool[T any] struct {
 }
 
 func (p *ResultErrorPool[T]) Do(f func() (T, error)) {
-	p.errPool.Do(func() error {
+	p.errPool.Go(func() error {
 		res, err := f()
 		if err == nil || p.collectErrored {
 			p.agg.add(res)
@@ -25,23 +25,23 @@ func (p *ResultErrorPool[T]) Wait() ([]T, error) {
 	return p.agg.results, err
 }
 
-func (g ResultErrorPool[T]) WithCollectErrored() ResultErrorPool[T] {
-	g.collectErrored = true
-	return g
+func (p *ResultErrorPool[T]) WithCollectErrored() *ResultErrorPool[T] {
+	p.collectErrored = true
+	return p
 }
 
-func (g ResultErrorPool[T]) WithFirstError() ResultErrorPool[T] {
-	g.errPool = g.errPool.WithFirstError()
-	return g
+func (p *ResultErrorPool[T]) WithFirstError() *ResultErrorPool[T] {
+	p.errPool = *p.errPool.WithFirstError()
+	return p
 }
 
-func (g ResultErrorPool[T]) WithMaxGoroutines(limit int) ResultErrorPool[T] {
-	g.errPool = g.errPool.WithMaxGoroutines(limit)
-	return g
+func (p *ResultErrorPool[T]) WithMaxGoroutines(limit int) *ResultErrorPool[T] {
+	p.errPool = *p.errPool.WithMaxGoroutines(limit)
+	return p
 }
 
-func (g ResultErrorPool[T]) WithContext(ctx context.Context) ResultContextPool[T] {
-	return ResultContextPool[T]{
-		contextPool: g.errPool.WithContext(ctx),
+func (p *ResultErrorPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
+	return &ResultContextPool[T]{
+		contextPool: *p.errPool.WithContext(ctx),
 	}
 }

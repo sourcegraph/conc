@@ -6,8 +6,8 @@ import (
 	"github.com/camdencheek/conc"
 )
 
-func New() Group {
-	return Group{}
+func New() *Group {
+	return &Group{}
 }
 
 type Group struct {
@@ -27,20 +27,20 @@ func (g *Group) Wait() {
 	g.handle.Wait()
 }
 
-func (g Group) WithMaxConcurrency(limit int) Group {
+func (g *Group) WithMaxConcurrency(limit int) *Group {
 	g.limiter = make(chan struct{}, limit)
 	return g
 }
 
-func (g Group) WithErrors() ErrorGroup {
-	return ErrorGroup{
-		group: g,
+func (g *Group) WithErrors() *ErrorGroup {
+	return &ErrorGroup{
+		group: *g,
 	}
 }
 
-func (g Group) WithContext(ctx context.Context) ContextGroup {
-	return ContextGroup{
-		errGroup: g.WithErrors(),
+func (g *Group) WithContext(ctx context.Context) *ContextGroup {
+	return &ContextGroup{
+		errGroup: *g.WithErrors(),
 		ctx:      ctx,
 	}
 }
