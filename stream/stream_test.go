@@ -2,30 +2,38 @@ package stream
 
 import (
 	"fmt"
+	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleStream() {
-	s := New()
-	for i := 0; i < 5; i++ {
-		i := i
-		s.Go(func() Callback {
-			i *= 2
-			return func() { fmt.Println(i) }
+	times := []int{20, 52, 16, 45, 4, 80}
+
+	stream := New()
+	for _, millis := range times {
+		dur := time.Duration(millis) * time.Millisecond
+		stream.Go(func() Callback {
+			time.Sleep(dur)
+			return func() { fmt.Println(dur) }
 		})
 	}
-	s.Wait()
+	stream.Wait()
+
 	// Output:
-	// 0
-	// 2
-	// 4
-	// 6
-	// 8
+	// 20ms
+	// 52ms
+	// 16ms
+	// 45ms
+	// 4ms
+	// 80ms
 }
 
 func TestStream(t *testing.T) {
+	t.Parallel()
+
 	t.Run("simple", func(t *testing.T) {
 		s := New()
 		var res []int
@@ -42,4 +50,65 @@ func TestStream(t *testing.T) {
 		require.Equal(t, []int{0, 2, 4, 6, 8}, res)
 	})
 
+	t.Run("max goroutines", func(t *testing.T) {
+		s := New().WithMaxGoroutines(5)
+		var currentTaskCount atomic.Int64
+		var currentCallbackCount atomic.Int64
+		for i := 0; i < 50; i++ {
+			s.Go(func() Callback {
+				curr := currentTaskCount.Add(1)
+				if curr > 5 {
+					t.Fatal("too many concurrent tasks being executed")
+				}
+				defer currentTaskCount.Add(-1)
+
+				time.Sleep(time.Millisecond)
+
+				return func() {
+					curr := currentCallbackCount.Add(1)
+					if curr > 1 {
+						t.Fatal("too many concurrent callbacks being executed")
+					}
+
+					time.Sleep(time.Millisecond)
+
+					defer currentCallbackCount.Add(-1)
+				}
+			})
+		}
+		s.Wait()
+	})
+
+	t.Run("panic in task is propagated", func(t *testing.T) {
+		s := New().WithMaxGoroutines(5)
+		s.Go(func() Callback {
+			panic("something really bad happened in the task")
+		})
+		require.Panics(t, s.Wait)
+	})
+
+	t.Run("panic in callback is propagated", func(t *testing.T) {
+		s := New().WithMaxGoroutines(5)
+		s.Go(func() Callback {
+			return func() {
+				panic("something really bad happened in the callback")
+			}
+		})
+		require.Panics(t, s.Wait)
+	})
+
+	t.Run("panic in callback does not block producers", func(t *testing.T) {
+		s := New().WithMaxGoroutines(5)
+		s.Go(func() Callback {
+			return func() {
+				panic("something really bad happened in the callback")
+			}
+		})
+		for i := 0; i < 100; i++ {
+			s.Go(func() Callback {
+				return func() {}
+			})
+		}
+		require.Panics(t, s.Wait)
+	})
 }

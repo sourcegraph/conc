@@ -8,19 +8,27 @@ import (
 	"github.com/camdencheek/conc/pool"
 )
 
+// Create a new Stream with default settings
 func New() *Stream {
 	return &Stream{
 		pool: *pool.New(),
 	}
 }
 
-// Stream is used to exectue a stream of tasks concurrently while maintaining
+// Stream is used to execute a stream of tasks concurrently while maintaining
 // the order of the results.
 //
-// To use a stream, you submit any number of `StreamTask`s, each of which
+// To use a stream, you submit some number of `StreamTask`s, each of which
 // return a callback. Each task will be executed concurrently in the stream's
-// associated Pool, but the callbacks will be executed sequentially, in the
+// associated Pool, and the callbacks will be executed sequentially in the
 // order the tasks were submitted.
+//
+// Once all your tasks have been submitted, Wait() must be called to clean up
+// running goroutines and propagate any panics.
+//
+// In the case of panic during execution of a task or a callback, all other
+// tasks and callbacks will still execute. The panic will be propagated to the
+// caller when Wait() is called.
 type Stream struct {
 	pool             pool.Pool
 	callbackerHandle conc.WaitGroup
@@ -55,25 +63,42 @@ func (s *Stream) Go(f StreamTask) {
 
 	// Submit the task for execution
 	s.pool.Go(func() {
+		defer func() {
+			// In the case of a panic from f, we don't want the callbacker to
+			// starve waiting for a callback from this channel, so give it an
+			// empty callback.
+			if r := recover(); r != nil {
+				ch <- func() {}
+				panic(r)
+			}
+		}()
+
 		// Run the task, sending its callback down this task's channel
-		ch <- f()
+		callback := f()
+		ch <- callback
 	})
 }
 
 // Wait signals to the stream that all tasks have been submitted. Wait will
 // not return until all tasks and callbacks have been run.
 func (s *Stream) Wait() {
-	s.initOnce.Do(s.init)
+	// Defer the callbacker cleanup so that it occurs even in the case
+	// that one of the tasks panics and is propagated up by s.pool.Wait()
+	defer func() {
+		// queue may be nil if Go was never called and init never ran
+		if s.queue != nil {
+			close(s.queue)
+		}
+		s.callbackerHandle.Wait()
+	}()
 
 	// Wait for all the workers to exit
 	s.pool.Wait()
+}
 
-	// Now that all the workers have finished, close the
-	// callback queue, signalling the callbacker to exit.
-	close(s.queue)
-
-	// Wait for the callbacker to finish.
-	s.callbackerHandle.Wait()
+func (s *Stream) WithMaxGoroutines(n int) *Stream {
+	s.pool.WithMaxGoroutines(n)
+	return s
 }
 
 func (s *Stream) init() {
@@ -89,14 +114,19 @@ func (s *Stream) init() {
 	s.callbackerHandle.Go(s.callbacker)
 }
 
+// callbacker is responsible for calling the returned callbacks in the order
+// they were submitted. There is only a single instance of callbacker running.
 func (s *Stream) callbacker() {
+	var panicCatcher conc.PanicCatcher
+	defer panicCatcher.MaybePanic()
+
 	// For every scheduled task, read that tasks channel from the queue.
 	for callbackCh := range s.queue {
 		// Wait for the task to complete and get its callback from the channel
 		callback := <-callbackCh
 
-		// Execute the callback
-		callback()
+		// Execute the callback (with panic protection)
+		panicCatcher.Try(callback)
 
 		// Return the channel to the pool of unused channels
 		s.free.put(callbackCh)
