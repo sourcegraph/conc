@@ -12,7 +12,8 @@ func New() *Pool {
 		limiter: make(conc.Limiter, runtime.GOMAXPROCS(0)),
 		// tasks is not buffered because if it were, it would be possible to
 		// submit tasks but never be forced to start a worker goroutine. If
-		// goroutines were started eagerly, this wouldn't be a problem.
+		// goroutines were started eagerly, this wouldn't be a problem, but
+		// I think it's preferable to minimize the cost of creating a pool.
 		tasks: make(chan func()),
 	}
 }
@@ -62,6 +63,10 @@ func (p *Pool) WithContext(ctx context.Context) *ContextPool {
 }
 
 func (p *Pool) worker() {
+	// The only time this matters is if the task panics.
+	// This makes it possible to spin up new workers in that case.
+	defer p.limiter.Release()
+
 	for f := range p.tasks {
 		f()
 	}

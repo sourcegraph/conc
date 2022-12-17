@@ -63,6 +63,16 @@ func TestPool(t *testing.T) {
 				}
 			})
 		}
-		require.Panics(t, func() { g.Wait() })
+		require.Panics(t, g.Wait)
+	})
+
+	t.Run("panics do not exhaust goroutines", func(t *testing.T) {
+		g := New().WithMaxGoroutines(2)
+		for i := 0; i < 10; i++ {
+			g.Go(func() {
+				panic(42)
+			})
+		}
+		require.Panics(t, g.Wait)
 	})
 }
