@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestWaitgroup(t *testing.T) {
+func TestWaitGroup(t *testing.T) {
 	t.Parallel()
 
 	t.Run("all spawned run", func(t *testing.T) {
