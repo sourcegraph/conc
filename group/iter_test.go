@@ -239,6 +239,7 @@ func TestMapErr(t *testing.T) {
 		require.Equal(t, expected, res)
 	})
 }
+
 func BenchmarkForEachIdx(b *testing.B) {
 	b.Run("simple mutation", func(b *testing.B) {
 		for _, n := range []int{10, 1000, 1000000} {
