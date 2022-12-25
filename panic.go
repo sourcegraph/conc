@@ -21,7 +21,7 @@ type PanicCatcher struct {
 func (p *PanicCatcher) Try(f func()) {
 	defer func() {
 		if val := recover(); val != nil {
-			var callers [32]uintptr
+			var callers [64]uintptr
 			n := runtime.Callers(1, callers[:])
 			p.recovered.CompareAndSwap(nil, &RecoveredPanic{
 				Value:   val,
@@ -37,14 +37,14 @@ func (p *PanicCatcher) Try(f func()) {
 // panic with the value of the first panic caught, wrapped with
 // caller information.
 func (p *PanicCatcher) Propagate() {
-	if val := p.Value(); val != nil {
+	if val := p.Recovered(); val != nil {
 		panic(val)
 	}
 }
 
-// Value returns the value of the first panic caught by Try, or nil if
+// Recovered returns the value of the first panic caught by Try, or nil if
 // no calls to Try panicked.
-func (p *PanicCatcher) Value() *RecoveredPanic {
+func (p *PanicCatcher) Recovered() *RecoveredPanic {
 	return p.recovered.Load()
 }
 
