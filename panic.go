@@ -13,7 +13,7 @@ import (
 // get the value of the first panic (if any) with Value(), or you can just
 // propagate the panic (re-panic) with Propagate()
 type PanicCatcher struct {
-	caught atomic.Value
+	recovered atomic.Pointer[CaughtPanic]
 }
 
 // Try executes f, catching any panic it might spawn. It is safe
@@ -23,7 +23,7 @@ func (p *PanicCatcher) Try(f func()) {
 		if val := recover(); val != nil {
 			var callers [32]uintptr
 			n := runtime.Callers(1, callers[:])
-			p.caught.CompareAndSwap(nil, &CaughtPanic{
+			p.recovered.CompareAndSwap(nil, &CaughtPanic{
 				Value:   val,
 				Callers: callers[:n],
 				Stack:   debug.Stack(),
@@ -45,11 +45,7 @@ func (p *PanicCatcher) Propagate() {
 // Value returns the value of the first panic caught by Try, or nil if
 // no calls to Try panicked.
 func (p *PanicCatcher) Value() *CaughtPanic {
-	val := p.caught.Load()
-	if val == nil {
-		return nil
-	}
-	return val.(*CaughtPanic)
+	return p.recovered.Load()
 }
 
 // CaughtPanic is a panic that was caught with recover().
