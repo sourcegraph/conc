@@ -118,7 +118,7 @@ func (s *Stream) init() {
 // they were submitted. There is only a single instance of callbacker running.
 func (s *Stream) callbacker() {
 	var panicCatcher conc.PanicCatcher
-	defer panicCatcher.MaybePanic()
+	defer panicCatcher.Propagate()
 
 	// For every scheduled task, read that tasks channel from the queue.
 	for callbackCh := range s.queue {
