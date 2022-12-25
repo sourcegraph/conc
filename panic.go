@@ -62,5 +62,12 @@ type CaughtPanic struct {
 }
 
 func (c *CaughtPanic) Error() string {
-	return fmt.Sprintf("original value: %q\nstacktrace: %s", c.Value, c.Stack)
+	return fmt.Sprintf("panic: %q\nstacktrace:\n%s\n", c.Value, c.Stack)
+}
+
+func (c *CaughtPanic) Unwrap() error {
+	if err, ok := c.Value.(error); ok {
+		return err
+	}
+	return nil
 }

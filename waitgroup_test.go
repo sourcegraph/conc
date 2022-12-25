@@ -52,5 +52,21 @@ func TestWaitGroup(t *testing.T) {
 			}
 			require.Panics(t, wg.Wait)
 		})
+
+		t.Run("nonpanics run successfully", func(t *testing.T) {
+			var wg WaitGroup
+			var i atomic.Int64
+			wg.Go(func() {
+				i.Add(1)
+			})
+			wg.Go(func() {
+				panic("super bad thing")
+			})
+			wg.Go(func() {
+				i.Add(1)
+			})
+			require.Panics(t, wg.Wait)
+			require.Equal(t, int64(2), i.Load())
+		})
 	})
 }
