@@ -25,13 +25,19 @@ type Pool struct {
 }
 
 func (p *Pool) Go(f func()) {
-	for {
-		select {
-		case p.limiter <- struct{}{}:
-			p.handle.Go(p.worker)
-		case p.tasks <- f:
-			return
-		}
+	select {
+	case p.limiter <- struct{}{}:
+		// If we are below our limit, spawn a new worker rather
+		// than waiting for one to become available.
+		p.handle.Go(p.worker)
+
+		// We know there is a least one worker running, so wait
+		// for it to become available. This ensures we never spawn
+		// more workers than the number of tasks.
+		p.tasks <- f
+	case p.tasks <- f:
+		// A worker is available and has accepted the task
+		return
 	}
 }
 
