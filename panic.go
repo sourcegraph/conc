@@ -13,7 +13,7 @@ import (
 // get the value of the first panic (if any) with Value(), or you can just
 // propagate the panic (re-panic) with Propagate()
 type PanicCatcher struct {
-	recovered atomic.Pointer[CaughtPanic]
+	recovered atomic.Pointer[RecoveredPanic]
 }
 
 // Try executes f, catching any panic it might spawn. It is safe
@@ -23,7 +23,7 @@ func (p *PanicCatcher) Try(f func()) {
 		if val := recover(); val != nil {
 			var callers [32]uintptr
 			n := runtime.Callers(1, callers[:])
-			p.recovered.CompareAndSwap(nil, &CaughtPanic{
+			p.recovered.CompareAndSwap(nil, &RecoveredPanic{
 				Value:   val,
 				Callers: callers[:n],
 				Stack:   debug.Stack(),
@@ -44,12 +44,12 @@ func (p *PanicCatcher) Propagate() {
 
 // Value returns the value of the first panic caught by Try, or nil if
 // no calls to Try panicked.
-func (p *PanicCatcher) Value() *CaughtPanic {
+func (p *PanicCatcher) Value() *RecoveredPanic {
 	return p.recovered.Load()
 }
 
-// CaughtPanic is a panic that was caught with recover().
-type CaughtPanic struct {
+// RecoveredPanic is a panic that was caught with recover().
+type RecoveredPanic struct {
 	// The original value of the panic
 	Value any
 	// The caller list as returned by runtime.Callers when the panic was
@@ -61,11 +61,11 @@ type CaughtPanic struct {
 	Stack []byte
 }
 
-func (c *CaughtPanic) Error() string {
+func (c *RecoveredPanic) Error() string {
 	return fmt.Sprintf("panic: %q\nstacktrace:\n%s\n", c.Value, c.Stack)
 }
 
-func (c *CaughtPanic) Unwrap() error {
+func (c *RecoveredPanic) Unwrap() error {
 	if err, ok := c.Value.(error); ok {
 		return err
 	}
