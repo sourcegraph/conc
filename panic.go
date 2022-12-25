@@ -22,7 +22,7 @@ func (p *PanicCatcher) Try(f func()) {
 	defer func() {
 		if val := recover(); val != nil {
 			var callers [64]uintptr
-			n := runtime.Callers(1, callers[:])
+			n := runtime.Callers(2, callers[:])
 			p.recovered.CompareAndSwap(nil, &RecoveredPanic{
 				Value:   val,
 				Callers: callers[:n],
@@ -33,10 +33,10 @@ func (p *PanicCatcher) Try(f func()) {
 	f()
 }
 
-// Propagate panics if any calls to Try caught a panic. It will
-// panic with the value of the first panic caught, wrapped with
-// caller information.
-func (p *PanicCatcher) Propagate() {
+// Repanic panics if any calls to Try caught a panic. It will panic with the
+// value of the first panic caught, wrapped in a RecoveredPanic with caller
+// information.
+func (p *PanicCatcher) Repanic() {
 	if val := p.Recovered(); val != nil {
 		panic(val)
 	}
