@@ -3,28 +3,25 @@ package pool
 import (
 	"context"
 	"runtime"
+	"sync"
 
 	"github.com/camdencheek/conc"
 )
 
 func New() *Pool {
-	return &Pool{
-		limiter: make(conc.Limiter, runtime.GOMAXPROCS(0)),
-		// tasks is not buffered because if it were, it would be possible to
-		// submit tasks but never be forced to start a worker goroutine. If
-		// goroutines were started eagerly, this wouldn't be a problem, but
-		// I think it's preferable to minimize the cost of creating a pool.
-		tasks: make(chan func()),
-	}
+	return &Pool{}
 }
 
 type Pool struct {
-	handle  conc.WaitGroup
-	limiter conc.Limiter
-	tasks   chan func()
+	handle   conc.WaitGroup
+	limiter  conc.Limiter
+	tasks    chan func()
+	initOnce sync.Once
 }
 
 func (p *Pool) Go(f func()) {
+	p.init()
+
 	select {
 	case p.limiter <- struct{}{}:
 		// If we are below our limit, spawn a new worker rather
@@ -42,6 +39,7 @@ func (p *Pool) Go(f func()) {
 }
 
 func (p *Pool) Wait() {
+	p.init()
 	close(p.tasks)
 	p.handle.Wait()
 }
@@ -50,8 +48,26 @@ func (p *Pool) MaxGoroutines() int {
 	return p.limiter.Limit()
 }
 
+// init ensures that the pool is initialized before use. This makes the
+// zero value of the pool usable.
+func (p *Pool) init() {
+	p.initOnce.Do(func() {
+		// Do not override the limiter if set by WithMaxGoroutines
+		if p.limiter == nil {
+			p.limiter = make(conc.Limiter, runtime.GOMAXPROCS(0))
+		}
+
+		p.tasks = make(chan func())
+	})
+}
+
+// WithMaxGoroutines limits the number of goroutines in a pool.
+// Panics if n < 1.
 func (p *Pool) WithMaxGoroutines(n int) *Pool {
-	p.limiter = make(chan struct{}, n)
+	if n < 1 {
+		panic("max goroutines in a pool must be greater than zero")
+	}
+	p.limiter = conc.NewLimiter(n)
 	return p
 }
 
