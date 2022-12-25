@@ -38,7 +38,8 @@ func (h *WaitGroup) Wait() {
 	}
 }
 
-// done should be called in a defer statement in a child goroutine
+// done should be called in a defer statement in a child goroutine.
+// It catches any panics and decrements the counter.
 func (h *WaitGroup) done() {
 	if r := recover(); r != nil {
 		err := errors.Newf(

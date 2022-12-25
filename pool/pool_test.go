@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/camdencheek/conc"
 	"github.com/stretchr/testify/require"
 )
 
@@ -75,4 +76,52 @@ func TestPool(t *testing.T) {
 		}
 		require.Panics(t, g.Wait)
 	})
+}
+
+func BenchmarkPool(b *testing.B) {
+	b.Run("simplest", func(b *testing.B) {
+		p := New()
+		for i := 0; i < b.N; i++ {
+			p.Go(func() {
+				i := 0
+				i = 1
+				_ = i
+			})
+		}
+		p.Wait()
+	})
+
+	b.Run("atomic increment", func(b *testing.B) {
+		p := New()
+		var j atomic.Int64
+		for i := 0; i < b.N; i++ {
+			p.Go(func() {
+				j.Add(1)
+			})
+		}
+		p.Wait()
+		_ = j.Load()
+	})
+
+	b.Run("atomic increment preallocated closure", func(b *testing.B) {
+		p := New()
+		var j atomic.Int64
+		f := func() { j.Add(1) }
+		for i := 0; i < b.N; i++ {
+			p.Go(f)
+		}
+		p.Wait()
+		_ = j.Load()
+	})
+
+	b.Run("conc", func(b *testing.B) {
+		var p conc.WaitGroup
+		var j atomic.Int64
+		for i := 0; i < b.N; i++ {
+			p.Go(func() { j.Add(1) })
+		}
+		p.Wait()
+		_ = j.Load()
+	})
+
 }

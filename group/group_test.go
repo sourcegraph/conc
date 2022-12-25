@@ -64,3 +64,15 @@ func TestGroup(t *testing.T) {
 		require.Panics(t, func() { g.Wait() })
 	})
 }
+
+func BenchmarkGroup(b *testing.B) {
+	g := New()
+	for i := 0; i < b.N; i++ {
+		g.Go(func() {
+			i := 0
+			i = 1
+			_ = i
+		})
+	}
+	g.Wait()
+}
