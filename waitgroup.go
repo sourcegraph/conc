@@ -29,9 +29,7 @@ func (h *WaitGroup) Wait() {
 	h.wg.Wait()
 
 	// Propagate a panic if we caught one from a child goroutine
-	if r := h.pc.Value(); r != nil {
-		panic(r.Value)
-	}
+	h.pc.Propagate()
 }
 
 // done should be called in a defer statement in a child goroutine.
