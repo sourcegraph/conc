@@ -2,6 +2,7 @@ package pool
 
 import (
 	"strconv"
+	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -124,4 +125,76 @@ func BenchmarkPool(b *testing.B) {
 		_ = j.Load()
 	})
 
+}
+
+func BenchmarkGroup(b *testing.B) {
+	g := New()
+	for i := 0; i < b.N; i++ {
+		g.Go(func() {
+			i := 0
+			i = 1
+			_ = i
+		})
+	}
+	g.Wait()
+}
+
+func BenchmarkGroup2(b *testing.B) {
+	g := New()
+	var ai atomic.Uint32
+	for i := 0; i < b.N; i++ {
+		g.Go(func() {
+			ai.Add(1)
+		})
+	}
+	g.Wait()
+}
+
+func BenchmarkGroup21(b *testing.B) {
+	g := New()
+	for i := 0; i < b.N; i++ {
+		g.Go(func() {
+			time.Sleep(10 * time.Nanosecond)
+		})
+	}
+	g.Wait()
+}
+
+func BenchmarkGroup22(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		g := New()
+		var ai atomic.Int32
+		f := func() {
+			time.Sleep(100 * time.Nanosecond)
+			ai.Add(1)
+			time.Sleep(100 * time.Nanosecond)
+		}
+		for j := 0; j < 500; j++ {
+			g.Go(f)
+		}
+		g.Wait()
+	}
+}
+
+func BenchmarkGroup3(b *testing.B) {
+	g := New()
+	var ai atomic.Uint32
+	for i := 0; i < b.N; i++ {
+		ai.Add(1)
+	}
+	g.Wait()
+}
+
+func BenchmarkGroup4(b *testing.B) {
+	var wg sync.WaitGroup
+	var ai atomic.Uint32
+	f := func() {
+		defer wg.Done()
+		ai.Add(1)
+	}
+	for i := 0; i < b.N; i++ {
+		wg.Add(1)
+		go f()
+	}
+	wg.Wait()
 }

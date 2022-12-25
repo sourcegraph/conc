@@ -40,6 +40,7 @@ func (p *Pool) Go(f func()) {
 
 func (p *Pool) Wait() {
 	p.init()
+
 	close(p.tasks)
 	p.handle.Wait()
 }

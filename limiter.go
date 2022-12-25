@@ -12,13 +12,9 @@ func (l Limiter) Limit() int {
 }
 
 func (l Limiter) Acquire() {
-	if l != nil {
-		l <- struct{}{}
-	}
+	l <- struct{}{}
 }
 
 func (l Limiter) Release() {
-	if l != nil {
-		<-l
-	}
+	<-l
 }
