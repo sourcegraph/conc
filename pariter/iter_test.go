@@ -1,4 +1,4 @@
-package pool
+package pariter
 
 import (
 	"strconv"
@@ -258,15 +258,6 @@ func BenchmarkForEachIdx(b *testing.B) {
 						})
 					}
 				})
-
-				g := New()
-				b.Run("share group", func(b *testing.B) {
-					for i := 0; i < b.N; i++ {
-						ForEachIdxIn(g, arr, func(i int, val *int) {
-							*val = i
-						})
-					}
-				})
 			})
 		}
 	})
@@ -288,15 +279,6 @@ func BenchmarkForEach(b *testing.B) {
 				b.Run("parallel", func(b *testing.B) {
 					for i := 0; i < b.N; i++ {
 						ForEach(arr, func(val *int) {
-							*val = i
-						})
-					}
-				})
-
-				g := New()
-				b.Run("share group", func(b *testing.B) {
-					for i := 0; i < b.N; i++ {
-						ForEachIn(g, arr, func(val *int) {
 							*val = i
 						})
 					}

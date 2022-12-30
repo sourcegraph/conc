@@ -47,7 +47,7 @@ func ExamplePanicCatcher_callers() {
 		}
 	}
 	// Output:
-	// github.com/camdencheek/conc.(*PanicCatcher).Try.func1
+	// github.com/camdencheek/conc.(*PanicCatcher).tryRecover
 	// runtime.gopanic
 	// github.com/camdencheek/conc.ExamplePanicCatcher_callers.func1
 	// github.com/camdencheek/conc.(*PanicCatcher).Try

@@ -19,14 +19,15 @@ type PanicCatcher struct {
 // Try executes f, catching any panic it might spawn. It is safe
 // to call from multiple goroutines simultaneously.
 func (p *PanicCatcher) Try(f func()) {
-	defer func() {
-		if val := recover(); val != nil {
-			rp := NewRecoveredPanic(1, val)
-			p.recovered.CompareAndSwap(nil, &rp)
-		}
-	}()
-
+	defer p.tryRecover()
 	f()
+}
+
+func (p *PanicCatcher) tryRecover() {
+	if val := recover(); val != nil {
+		rp := NewRecoveredPanic(1, val)
+		p.recovered.CompareAndSwap(nil, &rp)
+	}
 }
 
 // Repanic panics if any calls to Try caught a panic. It will panic with the
