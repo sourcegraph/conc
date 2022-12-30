@@ -2,12 +2,10 @@ package pool
 
 import (
 	"strconv"
-	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
 
-	"github.com/camdencheek/conc"
 	"github.com/stretchr/testify/require"
 )
 
@@ -77,124 +75,4 @@ func TestPool(t *testing.T) {
 		}
 		require.Panics(t, g.Wait)
 	})
-}
-
-func BenchmarkPool(b *testing.B) {
-	b.Run("simplest", func(b *testing.B) {
-		p := New()
-		for i := 0; i < b.N; i++ {
-			p.Go(func() {
-				i := 0
-				i = 1
-				_ = i
-			})
-		}
-		p.Wait()
-	})
-
-	b.Run("atomic increment", func(b *testing.B) {
-		p := New()
-		var j atomic.Int64
-		for i := 0; i < b.N; i++ {
-			p.Go(func() {
-				j.Add(1)
-			})
-		}
-		p.Wait()
-		_ = j.Load()
-	})
-
-	b.Run("atomic increment preallocated closure", func(b *testing.B) {
-		p := New()
-		var j atomic.Int64
-		f := func() { j.Add(1) }
-		for i := 0; i < b.N; i++ {
-			p.Go(f)
-		}
-		p.Wait()
-		_ = j.Load()
-	})
-
-	b.Run("conc", func(b *testing.B) {
-		var p conc.WaitGroup
-		var j atomic.Int64
-		for i := 0; i < b.N; i++ {
-			p.Go(func() { j.Add(1) })
-		}
-		p.Wait()
-		_ = j.Load()
-	})
-
-}
-
-func BenchmarkGroup(b *testing.B) {
-	g := New()
-	for i := 0; i < b.N; i++ {
-		g.Go(func() {
-			i := 0
-			i = 1
-			_ = i
-		})
-	}
-	g.Wait()
-}
-
-func BenchmarkGroup2(b *testing.B) {
-	g := New()
-	var ai atomic.Uint32
-	for i := 0; i < b.N; i++ {
-		g.Go(func() {
-			ai.Add(1)
-		})
-	}
-	g.Wait()
-}
-
-func BenchmarkGroup21(b *testing.B) {
-	g := New()
-	for i := 0; i < b.N; i++ {
-		g.Go(func() {
-			time.Sleep(10 * time.Nanosecond)
-		})
-	}
-	g.Wait()
-}
-
-func BenchmarkGroup22(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		g := New()
-		var ai atomic.Int32
-		f := func() {
-			time.Sleep(100 * time.Nanosecond)
-			ai.Add(1)
-			time.Sleep(100 * time.Nanosecond)
-		}
-		for j := 0; j < 500; j++ {
-			g.Go(f)
-		}
-		g.Wait()
-	}
-}
-
-func BenchmarkGroup3(b *testing.B) {
-	g := New()
-	var ai atomic.Uint32
-	for i := 0; i < b.N; i++ {
-		ai.Add(1)
-	}
-	g.Wait()
-}
-
-func BenchmarkGroup4(b *testing.B) {
-	var wg sync.WaitGroup
-	var ai atomic.Uint32
-	f := func() {
-		defer wg.Done()
-		ai.Add(1)
-	}
-	for i := 0; i < b.N; i++ {
-		wg.Add(1)
-		go f()
-	}
-	wg.Wait()
 }

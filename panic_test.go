@@ -47,6 +47,7 @@ func ExamplePanicCatcher_callers() {
 		}
 	}
 	// Output:
+	// github.com/camdencheek/conc.(*PanicCatcher).Try.func1
 	// runtime.gopanic
 	// github.com/camdencheek/conc.ExamplePanicCatcher_callers.func1
 	// github.com/camdencheek/conc.(*PanicCatcher).Try
@@ -68,6 +69,19 @@ func TestPanicCatcher(t *testing.T) {
 		recovered := pc.Recovered()
 		require.ErrorIs(t, recovered, err1)
 		require.ErrorAs(t, recovered, &err1)
+		// The exact contents aren't tested because the stacktrace contains local file paths
+		// and even the structure of the stacktrace is bound to be unstable over time. Just
+		// test a couple of basics.
+		require.Contains(t, recovered.Error(), "SOS", "error should contain the panic message")
+		require.Contains(t, recovered.Error(), "conc.(*PanicCatcher).Try", recovered.Error(), "error should contain the stack trace")
+	})
+
+	t.Run("not error", func(t *testing.T) {
+		var pc PanicCatcher
+		pc.Try(func() { panic("definitely not an error") })
+		recovered := pc.Recovered()
+		require.NotErrorIs(t, recovered, err1)
+		require.Nil(t, recovered.Unwrap())
 	})
 
 	t.Run("repanic panics", func(t *testing.T) {

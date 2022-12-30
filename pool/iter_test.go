@@ -6,8 +6,6 @@ import (
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 	"github.com/stretchr/testify/require"
-
-	"github.com/camdencheek/conc"
 )
 
 func TestForEachIdx(t *testing.T) {
@@ -264,7 +262,7 @@ func BenchmarkForEachIdx(b *testing.B) {
 				g := New()
 				b.Run("share group", func(b *testing.B) {
 					for i := 0; i < b.N; i++ {
-						conc.ForEachIdxIn(g, arr, func(i int, val *int) {
+						ForEachIdxIn(g, arr, func(i int, val *int) {
 							*val = i
 						})
 					}
@@ -298,7 +296,7 @@ func BenchmarkForEach(b *testing.B) {
 				g := New()
 				b.Run("share group", func(b *testing.B) {
 					for i := 0; i < b.N; i++ {
-						conc.ForEachIn(g, arr, func(val *int) {
+						ForEachIn(g, arr, func(val *int) {
 							*val = i
 						})
 					}

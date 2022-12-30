@@ -21,15 +21,11 @@ type PanicCatcher struct {
 func (p *PanicCatcher) Try(f func()) {
 	defer func() {
 		if val := recover(); val != nil {
-			var callers [64]uintptr
-			n := runtime.Callers(2, callers[:])
-			p.recovered.CompareAndSwap(nil, &RecoveredPanic{
-				Value:   val,
-				Callers: callers[:n],
-				Stack:   debug.Stack(),
-			})
+			rp := NewRecoveredPanic(1, val)
+			p.recovered.CompareAndSwap(nil, &rp)
 		}
 	}()
+
 	f()
 }
 
@@ -48,6 +44,21 @@ func (p *PanicCatcher) Recovered() *RecoveredPanic {
 	return p.recovered.Load()
 }
 
+// NewRecoveredPanic creates a RecoveredPanic from a panic value and a
+// collected stacktrace. The skip parameter allows the caller to skip stack
+// frames when collecting the stacktrace. Calling with a skip of 0 means
+// include the call to NewRecoveredPanic in the stacktrace.
+func NewRecoveredPanic(skip int, value any) RecoveredPanic {
+	// 64 frames should be plenty
+	var callers [64]uintptr
+	n := runtime.Callers(skip+1, callers[:])
+	return RecoveredPanic{
+		Value:   value,
+		Callers: callers[:n],
+		Stack:   debug.Stack(),
+	}
+}
+
 // RecoveredPanic is a panic that was caught with recover().
 type RecoveredPanic struct {
 	// The original value of the panic
@@ -62,7 +73,7 @@ type RecoveredPanic struct {
 }
 
 func (c *RecoveredPanic) Error() string {
-	return fmt.Sprintf("panic: %q\nstacktrace:\n%s\n", c.Value, c.Stack)
+	return fmt.Sprintf("panic: %v\nstacktrace:\n%s\n", c.Value, c.Stack)
 }
 
 func (c *RecoveredPanic) Unwrap() error {
