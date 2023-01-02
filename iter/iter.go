@@ -26,9 +26,6 @@ func ForEach[T any](input []T, f func(*T)) {
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
 func ForEachIdx[T any](input []T, f func(int, *T)) {
-	var wg conc.WaitGroup
-	defer wg.Wait()
-
 	numTasks := runtime.GOMAXPROCS(0)
 	if numTasks > len(input) {
 		// No more tasks than the number of input items
@@ -44,6 +41,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) {
 		}
 	}
 
+	var wg conc.WaitGroup
 	for i := 0; i < numTasks; i++ {
 		wg.Go(task)
 	}
