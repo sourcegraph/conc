@@ -1,6 +1,7 @@
 package pool
 
 import (
+	"fmt"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -8,6 +9,22 @@ import (
 
 	"github.com/stretchr/testify/require"
 )
+
+func ExamplePool() {
+	p := New().WithMaxGoroutines(3)
+	for i := 0; i < 5; i++ {
+		p.Go(func() {
+			fmt.Println("conc")
+		})
+	}
+	p.Wait()
+	// Output:
+	// conc
+	// conc
+	// conc
+	// conc
+	// conc
+}
 
 func TestPool(t *testing.T) {
 	t.Parallel()

@@ -2,6 +2,7 @@ package pool
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -11,6 +12,24 @@ import (
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
+
+func ExampleContextPool() {
+	p := New().WithContext(context.Background())
+	for i := 0; i < 3; i++ {
+		i := i
+		p.Go(func(ctx context.Context) error {
+			if i == 2 {
+				return errors.New("I will cancel all other tasks!")
+			}
+			<-ctx.Done()
+			return nil
+		})
+	}
+	err := p.Wait()
+	fmt.Println(err)
+	// Output:
+	// I will cancel all other tasks!
+}
 
 func TestContextPool(t *testing.T) {
 	t.Parallel()

@@ -9,6 +9,8 @@ import (
 
 // ErrorPool is a pool that runs tasks that may return an error.
 // Errors are collected and returned by Wait().
+//
+// A new ErrorPool should be created using `New().WithErrors()`.
 type ErrorPool struct {
 	pool Pool
 

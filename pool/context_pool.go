@@ -8,6 +8,8 @@ import (
 // The context passed to the task will be canceled if any
 // of the tasks return an error, which makes its functionality
 // different than just capturing a context with the task closure.
+//
+// A new ContextPool should be created with `New().WithContext(ctx)`.
 type ContextPool struct {
 	errorPool ErrorPool
 

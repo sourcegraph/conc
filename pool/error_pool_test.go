@@ -1,6 +1,7 @@
 package pool
 
 import (
+	"fmt"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -10,6 +11,23 @@ import (
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
+
+func ExampleErrorPool() {
+	p := New().WithErrors()
+	for i := 0; i < 3; i++ {
+		i := i
+		p.Go(func() error {
+			if i == 2 {
+				return errors.New("oh no!")
+			}
+			return nil
+		})
+	}
+	err := p.Wait()
+	fmt.Println(err)
+	// Output:
+	// oh no!
+}
 
 func TestErrorPool(t *testing.T) {
 	t.Parallel()

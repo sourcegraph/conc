@@ -17,6 +17,7 @@ func ExampleStream() {
 		dur := time.Duration(millis) * time.Millisecond
 		stream.Go(func() Callback {
 			time.Sleep(dur)
+			// This will print in the order the tasks were submitted
 			return func() { fmt.Println(dur) }
 		})
 	}
