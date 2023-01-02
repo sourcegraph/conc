@@ -1,3 +1,5 @@
+[![Go Reference](https://pkg.go.dev/badge/github.com/sourcegraph/conc.svg)](https://pkg.go.dev/github.com/sourcegraph/conc)
+
 # `conc`: better structured concurrency for go
 
 `conc` is your toolbelt for structured concurrency in go, making common tasks
