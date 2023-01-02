@@ -5,44 +5,62 @@ import (
 	"sync"
 )
 
+// NewWithResults creates a new ResultPool for tasks with a result of type T.
 func NewWithResults[T any]() *ResultPool[T] {
 	return &ResultPool[T]{
 		pool: *New(),
 	}
 }
 
+// ResultPool is a pool that executes tasks that return a generic result type.
+// Tasks are executed in the pool with Go(), then the results of the tasks are
+// returned by Wait().
+//
+// The order of the results is not guaranteed to be the same as the order the
+// tasks were submitted. If your use case requires consistent ordering,
+// consider using the `stream` package or `Map` from the `iter` package.
 type ResultPool[T any] struct {
 	pool Pool
 	agg  resultAggregator[T]
 }
 
+// Go submits a task to the pool.
 func (p *ResultPool[T]) Go(f func() T) {
 	p.pool.Go(func() {
 		p.agg.add(f())
 	})
 }
 
+// Wait cleans up all spawned goroutines, propagating any panics, and returning
+// a slice of results from tasks that did not panic.
 func (p *ResultPool[T]) Wait() []T {
 	p.pool.Wait()
 	return p.agg.results
 }
 
+// MaxGoroutines returns the maximum size of the pool.
 func (p *ResultPool[T]) MaxGoroutines() int {
 	return p.pool.MaxGoroutines()
 }
 
+// WithErrors converts the pool to an ResultErrorPool so the submitted tasks
+// can return errors.
 func (p *ResultPool[T]) WithErrors() *ResultErrorPool[T] {
 	return &ResultErrorPool[T]{
 		errorPool: *p.pool.WithErrors(),
 	}
 }
 
+// WithContext converts the pool to a ContextPool for tasks that should be
+// canceled on first error.
 func (p *ResultPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
 	return &ResultContextPool[T]{
 		contextPool: *p.pool.WithContext(ctx),
 	}
 }
 
+// WithMaxGoroutines limits the number of goroutines in a pool.
+// Defaults to runtime.GOMAXPROCS(0). Panics if n < 1.
 func (p *ResultPool[T]) WithMaxGoroutines(n int) *ResultPool[T] {
 	p.pool.WithMaxGoroutines(n)
 	return p
