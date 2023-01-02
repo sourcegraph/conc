@@ -238,52 +238,15 @@ func TestMapErr(t *testing.T) {
 	})
 }
 
-func BenchmarkForEachIdx(b *testing.B) {
-	b.Run("simple mutation", func(b *testing.B) {
-		for _, n := range []int{10, 1000, 1000000} {
-			arr := make([]int, n)
-			b.Run(strconv.Itoa(n), func(b *testing.B) {
-				b.Run("baseline", func(b *testing.B) {
-					for i := 0; i < b.N; i++ {
-						for j := 0; j < len(arr); j++ {
-							arr[j] = j
-						}
-					}
-				})
-
-				b.Run("parallel", func(b *testing.B) {
-					for i := 0; i < b.N; i++ {
-						ForEachIdx(arr, func(i int, val *int) {
-							*val = i
-						})
-					}
-				})
-			})
-		}
-	})
-}
-
 func BenchmarkForEach(b *testing.B) {
-	b.Run("simple mutation", func(b *testing.B) {
-		for _, n := range []int{10, 1000, 1000000} {
-			arr := make([]int, n)
-			b.Run(strconv.Itoa(n), func(b *testing.B) {
-				b.Run("baseline", func(b *testing.B) {
-					for i := 0; i < b.N; i++ {
-						for j := 0; j < len(arr); j++ {
-							arr[j] = j
-						}
-					}
+	for _, count := range []int{0, 1, 8, 100, 1000, 10000, 100000} {
+		b.Run(strconv.Itoa(count), func(b *testing.B) {
+			ints := make([]int, count)
+			for i := 0; i < b.N; i++ {
+				ForEach(ints, func(i *int) {
+					*i = 0
 				})
-
-				b.Run("parallel", func(b *testing.B) {
-					for i := 0; i < b.N; i++ {
-						ForEach(arr, func(val *int) {
-							*val = i
-						})
-					}
-				})
-			})
-		}
-	})
+			}
+		})
+	}
 }

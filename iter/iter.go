@@ -9,90 +9,65 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
-type GoWaiter interface {
-	Go(func())
-	Wait()
-}
-
-func ForEachIdx[T any](input []T, f func(int, *T)) {
-	var wg conc.WaitGroup
-	defer wg.Wait()
-
-	ForEachIdxIn(&wg, input, f)
-}
-
+// ForEach executes f in parallel over each element in input.
+//
+// It is safe to mutate the input parameter, which makes it
+// possible to map in place.
+//
+// ForEach always uses at most runtime.GOMAXPROCS goroutines.
+// It takes roughly 2µs to start up the goroutines and adds
+// an overhead of roughly 50ns per element of input.
 func ForEach[T any](input []T, f func(*T)) {
-	var wg conc.WaitGroup
-	defer wg.Wait()
-
-	ForEachIdxIn(&wg, input, func(_ int, t *T) {
+	ForEachIdx(input, func(_ int, t *T) {
 		f(t)
 	})
 }
 
-func Map[T any, R any](input []T, f func(*T) R) []R {
+// ForEachIdx is the same as ForEach except it also provides the
+// index of the element to the callback.
+func ForEachIdx[T any](input []T, f func(int, *T)) {
 	var wg conc.WaitGroup
 	defer wg.Wait()
 
-	return MapIn(&wg, input, f)
-}
-
-func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
-	var wg conc.WaitGroup
-	defer wg.Wait()
-
-	return MapErrIn(&wg, input, f)
-}
-
-func ForEachIdxIn[T any](goer GoWaiter, input []T, f func(int, *T)) {
 	numTasks := runtime.GOMAXPROCS(0)
-	if m, ok := goer.(interface{ MaxGoroutines() int }); ok && m.MaxGoroutines() > numTasks {
-		// No more tasks than the pool's max concurrency
-		numTasks = m.MaxGoroutines()
-	}
 	if numTasks > len(input) {
 		// No more tasks than the number of input items
 		numTasks = len(input)
 	}
 
 	var idx atomic.Int64
-	var wg sync.WaitGroup
+	// create the task outside the loop to avoid extra allocations
 	task := func() {
-		defer wg.Done()
 		i := int(idx.Add(1) - 1)
 		for ; i < len(input); i = int(idx.Add(1) - 1) {
 			f(i, &input[i])
 		}
 	}
 
-	wg.Add(numTasks)
 	for i := 0; i < numTasks; i++ {
-		goer.Go(task)
+		wg.Go(task)
 	}
 	wg.Wait()
 }
 
-func ForEachIn[T any](goer GoWaiter, input []T, f func(*T)) {
-	ForEachIdxIn(goer, input, func(_ int, t *T) {
-		f(t)
-	})
-}
-
-func MapIn[T any, R any](goer GoWaiter, input []T, f func(*T) R) []R {
+// Map applies f to each element of input, returning the mapped result.
+func Map[T, R any](input []T, f func(*T) R) []R {
 	res := make([]R, len(input))
-	ForEachIdxIn(goer, input, func(i int, t *T) {
+	ForEachIdx(input, func(i int, t *T) {
 		res[i] = f(t)
 	})
 	return res
 }
 
-func MapErrIn[T any, R any](goer GoWaiter, input []T, f func(*T) (R, error)) ([]R, error) {
+// MapErr applies f to each element of the input, returning the mapped result
+// and a combined error of all returned errors.
+func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	var (
 		res    = make([]R, len(input))
 		errMux sync.Mutex
 		errs   error
 	)
-	ForEachIdxIn(goer, input, func(i int, t *T) {
+	ForEachIdx(input, func(i int, t *T) {
 		var err error
 		res[i], err = f(t)
 		if err != nil {

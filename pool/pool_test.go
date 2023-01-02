@@ -75,6 +75,15 @@ func TestPool(t *testing.T) {
 		}
 		require.Panics(t, g.Wait)
 	})
+
+	t.Run("panics on invalid WithMaxGoroutines", func(t *testing.T) {
+		require.Panics(t, func() { New().WithMaxGoroutines(0) })
+	})
+
+	t.Run("returns correct MaxGoroutines", func(t *testing.T) {
+		p := New().WithMaxGoroutines(42)
+		require.Equal(t, 42, p.MaxGoroutines())
+	})
 }
 
 func BenchmarkPool(b *testing.B) {
