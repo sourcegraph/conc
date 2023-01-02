@@ -76,16 +76,13 @@ trivial and it requires a lot of boilerplate that makes the important parts of
 the code more difficult to read, so `conc` does this for you.
 
 <table>
-    <tr>
-        <th>
-        `stdlib`
-        </th>
-        <th>
-        `conc`
-        </th>
-    </tr>
-    <tr>
-        <td>
+<tr>
+<th><code>stdlib</code></th>
+<th><code>conc</code></th>
+</tr>
+<tr>
+<td>
+
 ```go
 type caughtPanicError struct {
 	val   any
@@ -117,8 +114,9 @@ func spawn() {
 	}
 }
 ```
-        </td>
-        <td>
+</td>
+<td>
+
 ```go
 func spawn() {
     var wg conc.WaitGroup
@@ -126,8 +124,8 @@ func spawn() {
     wg.Wait()
 }
 ```
-        </td>
-    </tr>
+</td>
+</tr>
 </table>
 
 ## Goal #3: Make concurrent code easier to read
@@ -152,16 +150,13 @@ what kind of complexity that would add, check out the "Goal #2" header above.
 Spawn a set of goroutines and waiting for them to finish:
 
 <table>
-    <tr>
-        <th>
-        `stdlib`
-        </th>
-        <th>
-        `conc`
-        </th>
-    </tr>
-    <tr>
-        <td>
+<tr>
+<th><code>stdlib</code></th>
+<th><code>conc</code></th>
+</tr>
+<tr>
+<td>
+
 ```go
 func main() {
 	var wg sync.WaitGroup
@@ -176,8 +171,9 @@ func main() {
 	wg.Wait()
 }
 ```
-        </td>
-        <td>
+</td>
+<td>
+
 ```go
 func main() {
 	var wg conc.WaitGroup
@@ -187,23 +183,20 @@ func main() {
 	wg.Wait()
 }
 ```
-        </td>
-    </tr>
+</td>
+</tr>
 </table>
 
 Process each element of a stream in a static pool of goroutines:
 
 <table>
-    <tr>
-        <th>
-        `stdlib`
-        </th>
-        <th>
-        `conc`
-        </th>
-    </tr>
-    <tr>
-        <td>
+<tr>
+<th><code>stdlib</code></th>
+<th><code>conc</code></th>
+</tr>
+<tr>
+<td>
+
 ```go
 func process(stream chan int) {
 	var wg sync.WaitGroup
@@ -219,8 +212,9 @@ func process(stream chan int) {
 	wg.Wait()
 }
 ```
-        </td>
-        <td>
+</td>
+<td>
+
 ```go
 func process(stream chan int) {
 	p := pool.New().WithMaxGoroutines(10)
@@ -232,23 +226,20 @@ func process(stream chan int) {
 	p.Wait()
 }
 ```
-        </td>
-    </tr>
+</td>
+</tr>
 </table>
 
 Process each element of a slice in a static pool of goroutines:
 
 <table>
-    <tr>
-        <th>
-        `stdlib`
-        </th>
-        <th>
-        `conc`
-        </th>
-    </tr>
-    <tr>
-        <td>
+<tr>
+<th><code>stdlib</code></th>
+<th><code>conc</code></th>
+</tr>
+<tr>
+<td>
+
 ```go
 func main() {
 	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
@@ -273,32 +264,30 @@ func main() {
 	wg.Wait()
 }
 ```
-        </td>
-        <td>
+</td>
+<td>
+
 ```go
 func main() {
 	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	iter.ForEach(values, handle)
 }
 ```
-        </td>
-    </tr>
+</td>
+</tr>
 </table>
 
 Process an ordered stream concurrently:
 
 
 <table>
-    <tr>
-        <th>
-        `stdlib`
-        </th>
-        <th>
-        `conc`
-        </th>
-    </tr>
-    <tr>
-        <td>
+<tr>
+<th><code>stdlib</code></th>
+<th><code>conc</code></th>
+</tr>
+<tr>
+<td>
+
 ```go
 func mapStream(input chan int, output chan int, f func(int) int) {
 	tasks := make(chan func())
@@ -342,8 +331,9 @@ func mapStream(input chan int, output chan int, f func(int) int) {
 	readerWg.Wait()
 }
 ```
-        </td>
-        <td>
+</td>
+<td>
+
 ```go
 func mapStream(input chan int, output chan int, f func(int) int) {
 	s := stream.New().WithMaxGoroutines(10)
@@ -357,6 +347,6 @@ func mapStream(input chan int, output chan int, f func(int) int) {
 	s.Wait()
 }
 ```
-        </td>
-    </tr>
+</td>
+</tr>
 </table>
