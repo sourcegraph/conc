@@ -46,7 +46,7 @@ func (p *Pool) Wait() {
 }
 
 func (p *Pool) MaxGoroutines() int {
-	return p.limiter.Limit()
+	return p.limiter.limit()
 }
 
 // init ensures that the pool is initialized before use. This makes the
@@ -88,9 +88,23 @@ func (p *Pool) WithContext(ctx context.Context) *ContextPool {
 func (p *Pool) worker() {
 	// The only time this matters is if the task panics.
 	// This makes it possible to spin up new workers in that case.
-	defer p.limiter.Release()
+	defer p.limiter.release()
 
 	for f := range p.tasks {
 		f()
 	}
+}
+
+type limiter chan struct{}
+
+func (l limiter) limit() int {
+	return cap(l)
+}
+
+func (l limiter) acquire() {
+	l <- struct{}{}
+}
+
+func (l limiter) release() {
+	<-l
 }
