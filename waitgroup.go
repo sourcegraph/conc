@@ -18,7 +18,7 @@ type WaitGroup struct {
 func (h *WaitGroup) Go(f func()) {
 	h.wg.Add(1)
 	go func() {
-		defer h.done()
+		defer h.wg.Done()
 		h.pc.Try(f)
 	}()
 }
@@ -30,10 +30,4 @@ func (h *WaitGroup) Wait() {
 
 	// Propagate a panic if we caught one from a child goroutine
 	h.pc.Repanic()
-}
-
-// done should be called in a defer statement in a child goroutine.
-// It catches any panics and decrements the counter.
-func (h *WaitGroup) done() {
-	h.wg.Done()
 }
