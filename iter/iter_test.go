@@ -1,4 +1,4 @@
-package pariter
+package iter
 
 import (
 	"strconv"
