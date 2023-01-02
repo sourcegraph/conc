@@ -32,10 +32,23 @@ func New() *Stream {
 type Stream struct {
 	pool             pool.Pool
 	callbackerHandle conc.WaitGroup
-	free             freePool
 	queue            chan callbackCh
 
 	initOnce sync.Once
+}
+
+var callbackChPool = sync.Pool{
+	New: func() any {
+		return make(callbackCh, 1)
+	},
+}
+
+func getCh() callbackCh {
+	return callbackChPool.Get().(callbackCh)
+}
+
+func putCh(ch callbackCh) {
+	callbackChPool.Put(ch)
 }
 
 // Stream task is a task that is submitted to the stream. Submitted tasks will
@@ -53,10 +66,10 @@ type Callback func()
 // submitted. All callbacks will be executed by the same goroutine, so no
 // synchronization is necessary between callbacks.
 func (s *Stream) Go(f StreamTask) {
-	s.initOnce.Do(s.init)
+	s.init()
 
 	// Get a channel from the cache
-	ch := s.free.get()
+	ch := getCh()
 
 	// Queue the channel for the callbacker
 	s.queue <- ch
@@ -82,13 +95,12 @@ func (s *Stream) Go(f StreamTask) {
 // Wait signals to the stream that all tasks have been submitted. Wait will
 // not return until all tasks and callbacks have been run.
 func (s *Stream) Wait() {
+	s.init()
+
 	// Defer the callbacker cleanup so that it occurs even in the case
 	// that one of the tasks panics and is propagated up by s.pool.Wait()
 	defer func() {
-		// queue may be nil if Go was never called and init never ran
-		if s.queue != nil {
-			close(s.queue)
-		}
+		close(s.queue)
 		s.callbackerHandle.Wait()
 	}()
 
@@ -102,16 +114,12 @@ func (s *Stream) WithMaxGoroutines(n int) *Stream {
 }
 
 func (s *Stream) init() {
-	s.free = make(chan callbackCh, s.pool.MaxGoroutines()+1)
-	s.queue = make(chan callbackCh, s.pool.MaxGoroutines()+1)
+	s.initOnce.Do(func() {
+		s.queue = make(chan callbackCh, s.pool.MaxGoroutines()+1)
 
-	// Pre-populate the free list with channels
-	for i := 0; i < cap(s.free); i++ {
-		s.free <- make(callbackCh, 1)
-	}
-
-	// Start the callbacker
-	s.callbackerHandle.Go(s.callbacker)
+		// Start the callbacker
+		s.callbackerHandle.Go(s.callbacker)
+	})
 }
 
 // callbacker is responsible for calling the returned callbacks in the order
@@ -129,18 +137,8 @@ func (s *Stream) callbacker() {
 		panicCatcher.Try(callback)
 
 		// Return the channel to the pool of unused channels
-		s.free.put(callbackCh)
+		putCh(callbackCh)
 	}
 }
 
 type callbackCh chan func()
-
-type freePool chan callbackCh
-
-func (fp freePool) get() callbackCh {
-	return <-fp
-}
-
-func (fp freePool) put(ch callbackCh) {
-	fp <- ch
-}

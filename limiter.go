@@ -1,6 +1,6 @@
 package conc
 
-// Limiter is a simple channel-based semaphore.
+// Limiter is a simple, goroutine-safe, channel-based semaphore.
 func NewLimiter(n int) Limiter {
 	return make(Limiter, n)
 }

@@ -112,3 +112,16 @@ func TestStream(t *testing.T) {
 		require.Panics(t, s.Wait)
 	})
 }
+
+func BenchmarkStream(b *testing.B) {
+	n := 0
+	s := New()
+	for i := 0; i < b.N; i++ {
+		s.Go(func() Callback {
+			return func() {
+				n += 1
+			}
+		})
+	}
+	s.Wait()
+}
