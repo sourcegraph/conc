@@ -14,7 +14,7 @@ func New() *Pool {
 
 type Pool struct {
 	handle   conc.WaitGroup
-	limiter  conc.Limiter
+	limiter  limiter
 	tasks    chan func()
 	initOnce sync.Once
 }
@@ -55,7 +55,7 @@ func (p *Pool) init() {
 	p.initOnce.Do(func() {
 		// Do not override the limiter if set by WithMaxGoroutines
 		if p.limiter == nil {
-			p.limiter = make(conc.Limiter, runtime.GOMAXPROCS(0))
+			p.limiter = make(limiter, runtime.GOMAXPROCS(0))
 		}
 
 		p.tasks = make(chan func())
@@ -68,7 +68,7 @@ func (p *Pool) WithMaxGoroutines(n int) *Pool {
 	if n < 1 {
 		panic("max goroutines in a pool must be greater than zero")
 	}
-	p.limiter = conc.NewLimiter(n)
+	p.limiter = make(limiter, n)
 	return p
 }
 
