@@ -4,8 +4,8 @@ package stream
 import (
 	"sync"
 
-	"github.com/camdencheek/conc"
-	"github.com/camdencheek/conc/pool"
+	"github.com/sourcegraph/conc"
+	"github.com/sourcegraph/conc/pool"
 )
 
 // Create a new Stream with default settings

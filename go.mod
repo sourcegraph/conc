@@ -1,4 +1,4 @@
-module github.com/camdencheek/conc
+module github.com/sourcegraph/conc
 
 go 1.19
 

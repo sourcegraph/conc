@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/camdencheek/conc"
+	"github.com/sourcegraph/conc"
 )
 
 // New creates a new Pool.

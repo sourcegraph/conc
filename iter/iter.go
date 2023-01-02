@@ -5,7 +5,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/camdencheek/conc"
+	"github.com/sourcegraph/conc"
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
