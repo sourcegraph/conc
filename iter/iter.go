@@ -33,7 +33,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) {
 	}
 
 	var idx atomic.Int64
-	// create the task outside the loop to avoid extra allocations
+	// create the task outside the loop to avoid extra closure allocations
 	task := func() {
 		i := int(idx.Add(1) - 1)
 		for ; i < len(input); i = int(idx.Add(1) - 1) {
@@ -70,6 +70,7 @@ func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 		res[i], err = f(t)
 		if err != nil {
 			errMux.Lock()
+			// TODO: use stdlib errors once multierrors land in go 1.20
 			errs = errors.Append(errs, err)
 			errMux.Unlock()
 		}
