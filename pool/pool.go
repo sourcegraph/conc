@@ -8,10 +8,23 @@ import (
 	"github.com/camdencheek/conc"
 )
 
+// New creates a new Pool.
 func New() *Pool {
 	return &Pool{}
 }
 
+// Pool is a pool of goroutines used to execute tasks concurrently.
+//
+// Tasks are submitted with Go(). Once all your tasks have been submitted, you
+// must call Wait() to clean up any spawned goroutines and propagate any
+// panics.
+//
+// Goroutines are started lazily, so creating a new pool is cheap. There will
+// never be more goroutines spawned than there are tasks submitted.
+//
+// Pool is efficient, but not zero cost. It should not be used for very short
+// tasks. Startup and teardown come with an overhead of around 1µs, and each
+// task has an overhead of around 300ns.
 type Pool struct {
 	handle   conc.WaitGroup
 	limiter  limiter
@@ -19,6 +32,7 @@ type Pool struct {
 	initOnce sync.Once
 }
 
+// Go submits a task to be run in the pool.
 func (p *Pool) Go(f func()) {
 	p.init()
 
@@ -38,6 +52,8 @@ func (p *Pool) Go(f func()) {
 	}
 }
 
+// Wait cleans up spawned goroutines, propagating any panics that were
+// raised by a tasks.
 func (p *Pool) Wait() {
 	p.init()
 
@@ -45,8 +61,19 @@ func (p *Pool) Wait() {
 	p.handle.Wait()
 }
 
+// MaxGoroutines returns the maximum size of the pool.
 func (p *Pool) MaxGoroutines() int {
 	return p.limiter.limit()
+}
+
+// WithMaxGoroutines limits the number of goroutines in a pool.
+// Defaults to runtime.GOMAXPROCS(0). Panics if n < 1.
+func (p *Pool) WithMaxGoroutines(n int) *Pool {
+	if n < 1 {
+		panic("max goroutines in a pool must be greater than zero")
+	}
+	p.limiter = make(limiter, n)
+	return p
 }
 
 // init ensures that the pool is initialized before use. This makes the
@@ -62,26 +89,22 @@ func (p *Pool) init() {
 	})
 }
 
-// WithMaxGoroutines limits the number of goroutines in a pool.
-// Panics if n < 1.
-func (p *Pool) WithMaxGoroutines(n int) *Pool {
-	if n < 1 {
-		panic("max goroutines in a pool must be greater than zero")
-	}
-	p.limiter = make(limiter, n)
-	return p
-}
-
+// WithErrors converts the pool to an ErrorPool so the submitted tasks can
+// return errors.
 func (p *Pool) WithErrors() *ErrorPool {
 	return &ErrorPool{
 		pool: *p,
 	}
 }
 
+// WithContext converts the pool to a ContextPool for tasks that should
+// be canceled on first error.
 func (p *Pool) WithContext(ctx context.Context) *ContextPool {
+	ctx, cancel := context.WithCancel(ctx)
 	return &ContextPool{
 		errorPool: *p.WithErrors(),
 		ctx:       ctx,
+		cancel:    cancel,
 	}
 }
 

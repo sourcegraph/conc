@@ -114,14 +114,24 @@ func TestStream(t *testing.T) {
 }
 
 func BenchmarkStream(b *testing.B) {
-	n := 0
-	s := New()
-	for i := 0; i < b.N; i++ {
-		s.Go(func() Callback {
-			return func() {
-				n += 1
-			}
-		})
-	}
-	s.Wait()
+	b.Run("startup and teardown", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			s := New()
+			s.Go(func() Callback { return func() {} })
+			s.Wait()
+		}
+	})
+
+	b.Run("per task", func(b *testing.B) {
+		n := 0
+		s := New()
+		for i := 0; i < b.N; i++ {
+			s.Go(func() Callback {
+				return func() {
+					n += 1
+				}
+			})
+		}
+		s.Wait()
+	})
 }

@@ -67,8 +67,8 @@ func TestContextPool(t *testing.T) {
 		})
 	})
 
-	t.Run("CancelOnError", func(t *testing.T) {
-		p := New().WithMaxGoroutines(2).WithContext(bgctx).WithCancelOnError()
+	t.Run("cancel on error", func(t *testing.T) {
+		p := New().WithMaxGoroutines(2).WithContext(bgctx)
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
 			return ctx.Err()
@@ -82,7 +82,7 @@ func TestContextPool(t *testing.T) {
 	})
 
 	t.Run("WithFirstError", func(t *testing.T) {
-		p := New().WithContext(bgctx).WithCancelOnError().WithFirstError()
+		p := New().WithContext(bgctx).WithFirstError()
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
 			return err2

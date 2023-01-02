@@ -76,3 +76,22 @@ func TestPool(t *testing.T) {
 		require.Panics(t, g.Wait)
 	})
 }
+
+func BenchmarkPool(b *testing.B) {
+	b.Run("startup and teardown", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			p := New()
+			p.Go(func() {})
+			p.Wait()
+		}
+	})
+
+	b.Run("per task", func(b *testing.B) {
+		p := New()
+		f := func() {}
+		for i := 0; i < b.N; i++ {
+			p.Go(f)
+		}
+		p.Wait()
+	})
+}

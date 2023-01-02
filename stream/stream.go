@@ -29,6 +29,11 @@ func New() *Stream {
 // In the case of panic during execution of a task or a callback, all other
 // tasks and callbacks will still execute. The panic will be propagated to the
 // caller when Wait() is called.
+//
+// A Stream is efficient, but not zero cost. It should not be used for very
+// short tasks. Startup and teardown adds an overhead of a couple of
+// microseconds, and the overhead for each task is roughly 500ns. It should be
+// good enough for any task that requires a network call.
 type Stream struct {
 	pool             pool.Pool
 	callbackerHandle conc.WaitGroup

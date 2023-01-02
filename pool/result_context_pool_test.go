@@ -63,9 +63,9 @@ func TestResultContextPool(t *testing.T) {
 		require.ErrorIs(t, err, context.Canceled)
 	})
 
-	t.Run("CancelOnError", func(t *testing.T) {
+	t.Run("cancel on error", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithContext(context.Background()).WithCancelOnError()
+		g := NewWithResults[int]().WithContext(context.Background())
 		g.Go(func(ctx context.Context) (int, error) {
 			<-ctx.Done()
 			return 0, ctx.Err()
@@ -89,7 +89,7 @@ func TestResultContextPool(t *testing.T) {
 
 	t.Run("WithFirstError", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithContext(context.Background()).WithCancelOnError().WithFirstError()
+		g := NewWithResults[int]().WithContext(context.Background()).WithFirstError()
 		g.Go(func(ctx context.Context) (int, error) {
 			<-ctx.Done()
 			return 0, err2

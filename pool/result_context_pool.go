@@ -30,11 +30,6 @@ func (p *ResultContextPool[T]) WithCollectErrored() *ResultContextPool[T] {
 	return p
 }
 
-func (p *ResultContextPool[T]) WithCancelOnError() *ResultContextPool[T] {
-	p.contextPool.WithCancelOnError()
-	return p
-}
-
 func (p *ResultContextPool[T]) WithFirstError() *ResultContextPool[T] {
 	p.contextPool.WithFirstError()
 	return p
