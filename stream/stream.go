@@ -37,20 +37,6 @@ type Stream struct {
 	initOnce sync.Once
 }
 
-var callbackChPool = sync.Pool{
-	New: func() any {
-		return make(callbackCh, 1)
-	},
-}
-
-func getCh() callbackCh {
-	return callbackChPool.Get().(callbackCh)
-}
-
-func putCh(ch callbackCh) {
-	callbackChPool.Put(ch)
-}
-
 // Stream task is a task that is submitted to the stream. Submitted tasks will
 // be executed concurrently. It returns a callback that will be called after
 // the task has completed.
@@ -142,3 +128,17 @@ func (s *Stream) callbacker() {
 }
 
 type callbackCh chan func()
+
+var callbackChPool = sync.Pool{
+	New: func() any {
+		return make(callbackCh, 1)
+	},
+}
+
+func getCh() callbackCh {
+	return callbackChPool.Get().(callbackCh)
+}
+
+func putCh(ch callbackCh) {
+	callbackChPool.Put(ch)
+}
