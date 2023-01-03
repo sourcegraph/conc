@@ -20,16 +20,16 @@ type ContextPool struct {
 // Go submits a task. If it returns an error, the error will be
 // collected and returned by Wait() and the context passed to other
 // tasks will be canceled.
-func (g *ContextPool) Go(f func(ctx context.Context) error) {
-	g.errorPool.Go(func() error {
-		err := f(g.ctx)
+func (p *ContextPool) Go(f func(ctx context.Context) error) {
+	p.errorPool.Go(func() error {
+		err := f(p.ctx)
 		if err != nil {
 			// Leaky abstraction warning: We add the error directly because
 			// otherwise, canceling could cause another goroutine to exit and
 			// return an error before this error was added, which breaks the
 			// expectations of WithFirstError().
-			g.errorPool.addErr(err)
-			g.cancel()
+			p.errorPool.addErr(err)
+			p.cancel()
 			return nil
 		}
 		return err
