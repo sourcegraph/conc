@@ -18,7 +18,7 @@ easier and safer.
 - Use [`pool.ResultPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ResultPool) if you want a concurrent task runner that collects task results
 - Use [`pool.(Result)?ErrorPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ErrorPool) if your tasks are fallible
 - Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ContextPool) if your tasks should be canceled on failure
-- Use [`stream.Stream`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/stream#Stream) if you want to concurrently process an ordered stream of tasks, maintaining order
+- Use [`stream.Stream`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/stream#Stream) if you want to concurrently process an ordered stream of tasks with ordered, serial followups
 - Use [`iter.Map`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently map a slice
 - Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently iterate over a slice
 - Use [`conc.PanicCatcher`](https://pkg.go.dev/github.com/sourcegraph/conc#PanicCatcher) if you want to catch panics in your own goroutines
