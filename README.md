@@ -437,7 +437,7 @@ func mapStream(
     s := stream.New().WithMaxGoroutines(10)
     for elem := range in {
         elem := elem
-        s.Go(func() {
+        s.Go(func() stream.Callback {
             res := f(elem)
             return func() { out <- res }
         })
