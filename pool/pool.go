@@ -93,7 +93,16 @@ func (p *Pool) init() {
 // return errors.
 func (p *Pool) WithErrors() *ErrorPool {
 	return &ErrorPool{
-		pool: *p,
+		pool: p.deref(),
+	}
+}
+
+// deref is a helper that creates a shallow copy of the pool with the same
+// settings. We don't want to just dereference the pointer because that makes
+// the copylock lint angry.
+func (p *Pool) deref() Pool {
+	return Pool{
+		limiter: p.limiter,
 	}
 }
 
@@ -102,7 +111,7 @@ func (p *Pool) WithErrors() *ErrorPool {
 func (p *Pool) WithContext(ctx context.Context) *ContextPool {
 	ctx, cancel := context.WithCancel(ctx)
 	return &ContextPool{
-		errorPool: *p.WithErrors(),
+		errorPool: p.WithErrors().deref(),
 		ctx:       ctx,
 		cancel:    cancel,
 	}
