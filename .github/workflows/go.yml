@@ -25,4 +25,10 @@ jobs:
       run: go build -v ./...
 
     - name: Test
-      run: go test -v ./...
+      run: go test -v ./... -coverprofile ./coverage.txt
+
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.1
+      with:
+        files: ./coverage.txt
+
