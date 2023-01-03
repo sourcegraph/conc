@@ -97,7 +97,7 @@ func (e *caughtPanicError) Error() string {
 	return fmt.Sprintf("panic: %q\n%s", e.val, string(e.stack))
 }
 
-func spawn() {
+func main() {
 	done := make(chan error)
 	go func() {
 		defer func() {
@@ -122,10 +122,10 @@ func spawn() {
 <td>
 
 ```go
-func spawn() {
+func main() {
     var wg conc.WaitGroup
     wg.Go(doSomethingThatMightPanic)
-    wg.Wait()
+    wg.Wait() // panics with a nice stacktrace
 }
 ```
 </td>
