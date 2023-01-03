@@ -1,5 +1,4 @@
-
-![conch](https://user-images.githubusercontent.com/12631702/210295795-b7ad4289-0bff-4b0b-b631-c99e1fa43362.svg)
+![conch](https://user-images.githubusercontent.com/12631702/210295964-785cc63d-d697-420c-99ff-f492eb81dec9.svg)
 
 
 # `conc`: better structured concurrency for go
