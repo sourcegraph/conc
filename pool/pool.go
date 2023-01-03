@@ -133,10 +133,6 @@ func (l limiter) limit() int {
 	return cap(l)
 }
 
-func (l limiter) acquire() {
-	l <- struct{}{}
-}
-
 func (l limiter) release() {
 	<-l
 }

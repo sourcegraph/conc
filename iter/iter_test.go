@@ -156,9 +156,11 @@ func TestMapErr(t *testing.T) {
 	t.Run("empty", func(t *testing.T) {
 		f := func() {
 			ints := []int{}
-			MapErr(ints, func(val *int) (int, error) {
+			res, err := MapErr(ints, func(val *int) (int, error) {
 				panic("this should never be called")
 			})
+			require.NoError(t, err)
+			require.Equal(t, ints, res)
 		}
 		require.NotPanics(t, f)
 	})
@@ -166,7 +168,7 @@ func TestMapErr(t *testing.T) {
 	t.Run("panic is propagated", func(t *testing.T) {
 		f := func() {
 			ints := []int{1}
-			MapErr(ints, func(val *int) (int, error) {
+			_, _ = MapErr(ints, func(val *int) (int, error) {
 				panic("super bad thing happened")
 			})
 		}
@@ -175,11 +177,13 @@ func TestMapErr(t *testing.T) {
 
 	t.Run("mutating inputs is fine, though not recommended", func(t *testing.T) {
 		ints := []int{1, 2, 3, 4, 5}
-		MapErr(ints, func(val *int) (int, error) {
+		res, err := MapErr(ints, func(val *int) (int, error) {
 			*val += 1
 			return 0, nil
 		})
+		require.NoError(t, err)
 		require.Equal(t, []int{2, 3, 4, 5, 6}, ints)
+		require.Equal(t, []int{0, 0, 0, 0, 0}, res)
 	})
 
 	t.Run("basic increment", func(t *testing.T) {
