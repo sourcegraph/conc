@@ -14,7 +14,7 @@ import (
 )
 
 func ExampleContextPool() {
-	p := New().WithContext(context.Background())
+	p := New().WithMaxGoroutines(4).WithContext(context.Background())
 	for i := 0; i < 3; i++ {
 		i := i
 		p.Go(func(ctx context.Context) error {
