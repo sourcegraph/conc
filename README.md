@@ -114,33 +114,33 @@ the code more difficult to read, so `conc` does this for you.
 
 ```go
 type caughtPanicError struct {
-	val   any
-	stack []byte
+    val   any
+    stack []byte
 }
 
 func (e *caughtPanicError) Error() string {
-	return fmt.Sprintf("panic: %q\n%s", e.val, string(e.stack))
+    return fmt.Sprintf("panic: %q\n%s", e.val, string(e.stack))
 }
 
 func main() {
-	done := make(chan error)
-	go func() {
-		defer func() {
-			if val := recover(); val != nil {
-				done <- caughtPanicError{
-					val: val, 
-					stack: debug.Stack()
-				}
-			} else {
-				done <- nil
-			}
-		}()
-		doSomethingThatMightPanic()
-	}()
-	err := <-done
-	if err != nil {
-		panic(err)
-	}
+    done := make(chan error)
+    go func() {
+        defer func() {
+            if val := recover(); val != nil {
+                done <- caughtPanicError{
+                    val: val, 
+                    stack: debug.Stack()
+                }
+            } else {
+                done <- nil
+            }
+        }()
+        doSomethingThatMightPanic()
+    }()
+    err := <-done
+    if err != nil {
+        panic(err)
+    }
 }
 ```
 </td>
@@ -188,16 +188,16 @@ Spawn a set of goroutines and waiting for them to finish:
 
 ```go
 func main() {
-	var wg sync.WaitGroup
-	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			// if doSomething panics, the process crashes!
-			doSomething()
-		}()
-	}
-	wg.Wait()
+    var wg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            // if doSomething panics, the process crashes!
+            doSomething()
+        }()
+    }
+    wg.Wait()
 }
 ```
 </td>
@@ -205,11 +205,11 @@ func main() {
 
 ```go
 func main() {
-	var wg conc.WaitGroup
-	for i := 0; i < 10; i++ {
-		wg.Go(doSomething)
-	}
-	wg.Wait()
+    var wg conc.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Go(doSomething)
+    }
+    wg.Wait()
 }
 ```
 </td>
@@ -228,17 +228,17 @@ Process each element of a stream in a static pool of goroutines:
 
 ```go
 func process(stream chan int) {
-	var wg sync.WaitGroup
-	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			for elem := range stream {
-				handle(elem)
-			}
-		}()
-	}
-	wg.Wait()
+    var wg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            for elem := range stream {
+                handle(elem)
+            }
+        }()
+    }
+    wg.Wait()
 }
 ```
 </td>
@@ -246,14 +246,14 @@ func process(stream chan int) {
 
 ```go
 func process(stream chan int) {
-	p := pool.New().WithMaxGoroutines(10)
-	for elem := range stream {
-		elem := elem
-		p.Go(func() {
-			handle(elem)
-		})
-	}
-	p.Wait()
+    p := pool.New().WithMaxGoroutines(10)
+    for elem := range stream {
+        elem := elem
+        p.Go(func() {
+            handle(elem)
+        })
+    }
+    p.Wait()
 }
 ```
 </td>
@@ -272,26 +272,26 @@ Process each element of a slice in a static pool of goroutines:
 
 ```go
 func main() {
-	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+    values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
-	feeder := make(chan int, 8)
+    feeder := make(chan int, 8)
 
-	var wg sync.WaitGroup
-	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			for elem := range feeder {
-				handle(elem)
-			}
-		}()
-	}
+    var wg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            for elem := range feeder {
+                handle(elem)
+            }
+        }()
+    }
 
-	for _, value := range values {
-		feeder <- value
-	}
+    for _, value := range values {
+        feeder <- value
+    }
 
-	wg.Wait()
+    wg.Wait()
 }
 ```
 </td>
@@ -299,8 +299,8 @@ func main() {
 
 ```go
 func main() {
-	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	iter.ForEach(values, handle)
+    values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+    iter.ForEach(values, handle)
 }
 ```
 </td>
@@ -319,27 +319,27 @@ Concurrently map a slice:
 
 ```go
 func concMap(input []int, f func(int) int) []int {
-	res := make([]int, len(input))
-	var idx atomic.Int64
+    res := make([]int, len(input))
+    var idx atomic.Int64
 
-	var wg sync.WaitGroup
-	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+    var wg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
 
-			for {
-				i := int(idx.Add(1) - 1)
-				if i >= len(input) {
-					return
-				}
+            for {
+                i := int(idx.Add(1) - 1)
+                if i >= len(input) {
+                    return
+                }
 
-				res[i] = f(input[i])
-			}
-		}()
-	}
-	wg.Wait()
-	return res
+                res[i] = f(input[i])
+            }
+        }()
+    }
+    wg.Wait()
+    return res
 }
 ```
 </td>
@@ -347,7 +347,7 @@ func concMap(input []int, f func(int) int) []int {
 
 ```go
 func concMap(input []int, f func(int) int) []int {
-	iter.Map(input, f)
+    iter.Map(input, f)
 }
 ```
 </td>
@@ -367,45 +367,45 @@ Process an ordered stream concurrently:
 
 ```go
 func mapStream(input chan int, output chan int, f func(int) int) {
-	tasks := make(chan func())
-	taskResults := make(chan chan int)
+    tasks := make(chan func())
+    taskResults := make(chan chan int)
 
-	// Spawn the worker goroutines
-	var workerWg sync.WaitGroup
-	for i := 0; i < 10; i++ {
-		workerWg.Add(1)
-		go func() {
-			defer workerWg.Done()
-			for task := range tasks {
-				task()
-			}
-		}()
-	}
+    // Spawn the worker goroutines
+    var workerWg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        workerWg.Add(1)
+        go func() {
+            defer workerWg.Done()
+            for task := range tasks {
+                task()
+            }
+        }()
+    }
 
-	// Spawn the goroutine that reads results in order
-	var readerWg sync.WaitGroup
-	readerWg.Add(1)
-	go func() {
-		defer readerWg.Done()
-		for taskResult := range taskResults {
-			output <- taskResult
-		}
-	}
+    // Spawn the goroutine that reads results in order
+    var readerWg sync.WaitGroup
+    readerWg.Add(1)
+    go func() {
+        defer readerWg.Done()
+        for taskResult := range taskResults {
+            output <- taskResult
+        }
+    }
 
-	// Feed the workers with tasks
-	for elem := range input {
-		resultCh := make(chan int, 1)
-		taskResults <- resultCh
-		tasks <- func() {
-			resultCh <- f(elem)
-		}
-	}
+    // Feed the workers with tasks
+    for elem := range input {
+        resultCh := make(chan int, 1)
+        taskResults <- resultCh
+        tasks <- func() {
+            resultCh <- f(elem)
+        }
+    }
 
-	// We've exhausted input. Wait for everything to finish
-	close(tasks)
-	workerWg.Wait()
-	close(taskResults)
-	readerWg.Wait()
+    // We've exhausted input. Wait for everything to finish
+    close(tasks)
+    workerWg.Wait()
+    close(taskResults)
+    readerWg.Wait()
 }
 ```
 </td>
@@ -413,15 +413,15 @@ func mapStream(input chan int, output chan int, f func(int) int) {
 
 ```go
 func mapStream(input chan int, output chan int, f func(int) int) {
-	s := stream.New().WithMaxGoroutines(10)
-	for elem := range input {
-		elem := elem
-		s.Go(func() {
-			res := f(elem)
-			return func() { output <- res }
-		})
-	}
-	s.Wait()
+    s := stream.New().WithMaxGoroutines(10)
+    for elem := range input {
+        elem := elem
+        s.Go(func() {
+            res := f(elem)
+            return func() { output <- res }
+        })
+    }
+    s.Wait()
 }
 ```
 </td>
