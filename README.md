@@ -359,7 +359,7 @@ func concMap(
     input []int,
     f func(int) int,
 ) []int {
-    iter.Map(input, f)                    
+    return iter.Map(input, f)                    
 }
 ```
 </td>
