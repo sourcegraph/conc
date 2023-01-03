@@ -1,11 +1,16 @@
+
+![conch](https://user-images.githubusercontent.com/12631702/210295795-b7ad4289-0bff-4b0b-b631-c99e1fa43362.svg)
+
+
+# `conc`: better structured concurrency for go
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/sourcegraph/conc.svg)](https://pkg.go.dev/github.com/sourcegraph/conc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sourcegraph/conc)](https://goreportcard.com/report/github.com/sourcegraph/conc)
 [![codecov](https://codecov.io/gh/sourcegraph/conc/branch/main/graph/badge.svg?token=MQZTEA1QWT)](https://codecov.io/gh/sourcegraph/conc)
 
-# `conc`: better structured concurrency for go
-
 `conc` is your toolbelt for structured concurrency in go, making common tasks
 easier and safer.
+
 
 # At a glance
 
