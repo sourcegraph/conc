@@ -11,7 +11,7 @@ import (
 //
 // A new ContextPool should be created with `New().WithContext(ctx)`.
 type ContextPool struct {
-	errorPool ErrorPool
+	errorPool *ErrorPool
 
 	ctx    context.Context
 	cancel context.CancelFunc

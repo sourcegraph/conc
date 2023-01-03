@@ -12,7 +12,7 @@ import (
 //
 // A new ErrorPool should be created using `New().WithErrors()`.
 type ErrorPool struct {
-	pool Pool
+	pool *Pool
 
 	onlyFirstError bool
 
@@ -39,7 +39,7 @@ func (p *ErrorPool) Wait() error {
 func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
 	ctx, cancel := context.WithCancel(ctx)
 	return &ContextPool{
-		errorPool: *p,
+		errorPool: p,
 		ctx:       ctx,
 		cancel:    cancel,
 	}
