@@ -248,7 +248,7 @@ func process(stream chan int) {
 func process(stream chan int) {
 	p := pool.New().WithMaxGoroutines(10)
 	for elem := range stream {
-        elem := elem
+		elem := elem
 		p.Go(func() {
 			handle(elem)
 		})
