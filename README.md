@@ -123,16 +123,20 @@ type caughtPanicError struct {
 }
 
 func (e *caughtPanicError) Error() string {
-    return fmt.Sprintf("panic: %q\n%s", e.val, string(e.stack))
+    return fmt.Sprintf(
+        "panic: %q\n%s", 
+        e.val, 
+        string(e.stack)
+    )
 }
 
 func main() {
     done := make(chan error)
     go func() {
         defer func() {
-            if val := recover(); val != nil {
+            if v := recover(); v != nil {
                 done <- caughtPanicError{
-                    val: val, 
+                    val: v,
                     stack: debug.Stack()
                 }
             } else {
@@ -154,7 +158,8 @@ func main() {
 func main() {
     var wg conc.WaitGroup
     wg.Go(doSomethingThatMightPanic)
-    wg.Wait() // panics with a nice stacktrace
+    // panics with a nice stacktrace      
+    wg.Wait()
 }
 ```
 </td>
@@ -197,7 +202,7 @@ func main() {
         wg.Add(1)
         go func() {
             defer wg.Done()
-            // if doSomething panics, the process crashes!
+            // crashes on panic!          
             doSomething()
         }()
     }
@@ -210,7 +215,7 @@ func main() {
 ```go
 func main() {
     var wg conc.WaitGroup
-    for i := 0; i < 10; i++ {
+    for i := 0; i < 10; i++ {             
         wg.Go(doSomething)
     }
     wg.Wait()
@@ -237,7 +242,7 @@ func process(stream chan int) {
         wg.Add(1)
         go func() {
             defer wg.Done()
-            for elem := range stream {
+            for elem := range stream {    
                 handle(elem)
             }
         }()
@@ -250,7 +255,7 @@ func process(stream chan int) {
 
 ```go
 func process(stream chan int) {
-    p := pool.New().WithMaxGoroutines(10)
+    p := pool.New().WithMaxGoroutines(10) 
     for elem := range stream {
         elem := elem
         p.Go(func() {
@@ -275,9 +280,7 @@ Process each element of a slice in a static pool of goroutines:
 <td>
 
 ```go
-func main() {
-    values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-
+func process(values []int) {
     feeder := make(chan int, 8)
 
     var wg sync.WaitGroup
@@ -285,7 +288,7 @@ func main() {
         wg.Add(1)
         go func() {
             defer wg.Done()
-            for elem := range feeder {
+            for elem := range feeder {    
                 handle(elem)
             }
         }()
@@ -302,9 +305,8 @@ func main() {
 <td>
 
 ```go
-func main() {
-    values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-    iter.ForEach(values, handle)
+func process(values []int) {
+    iter.ForEach(values, handle)          
 }
 ```
 </td>
@@ -322,7 +324,10 @@ Concurrently map a slice:
 <td>
 
 ```go
-func concMap(input []int, f func(int) int) []int {
+func concMap(
+    input []int,
+    f func(int) int,
+) []int {
     res := make([]int, len(input))
     var idx atomic.Int64
 
@@ -333,7 +338,7 @@ func concMap(input []int, f func(int) int) []int {
             defer wg.Done()
 
             for {
-                i := int(idx.Add(1) - 1)
+                i := int(idx.Add(1) - 1)  
                 if i >= len(input) {
                     return
                 }
@@ -350,8 +355,11 @@ func concMap(input []int, f func(int) int) []int {
 <td>
 
 ```go
-func concMap(input []int, f func(int) int) []int {
-    iter.Map(input, f)
+func concMap(
+    input []int,
+    f func(int) int,
+) []int {
+    iter.Map(input, f)                    
 }
 ```
 </td>
@@ -370,11 +378,15 @@ Process an ordered stream concurrently:
 <td>
 
 ```go
-func mapStream(input chan int, output chan int, f func(int) int) {
+func mapStream
+    in chan int,
+    out chan int,
+    f func(int) int,
+) {
     tasks := make(chan func())
     taskResults := make(chan chan int)
 
-    // Spawn the worker goroutines
+    // Worker goroutines
     var workerWg sync.WaitGroup
     for i := 0; i < 10; i++ {
         workerWg.Add(1)
@@ -386,18 +398,18 @@ func mapStream(input chan int, output chan int, f func(int) int) {
         }()
     }
 
-    // Spawn the goroutine that reads results in order
+    // Ordered reader goroutines
     var readerWg sync.WaitGroup
     readerWg.Add(1)
     go func() {
         defer readerWg.Done()
-        for taskResult := range taskResults {
-            output <- taskResult
+        for result := range taskResults {
+            out <- result
         }
     }
 
     // Feed the workers with tasks
-    for elem := range input {
+    for elem := range in {
         resultCh := make(chan int, 1)
         taskResults <- resultCh
         tasks <- func() {
@@ -405,7 +417,8 @@ func mapStream(input chan int, output chan int, f func(int) int) {
         }
     }
 
-    // We've exhausted input. Wait for everything to finish
+    // We've exhausted input. 
+    // Wait for everything to finish
     close(tasks)
     workerWg.Wait()
     close(taskResults)
@@ -416,13 +429,17 @@ func mapStream(input chan int, output chan int, f func(int) int) {
 <td>
 
 ```go
-func mapStream(input chan int, output chan int, f func(int) int) {
+func mapStream(
+    in chan int,
+    out chan int,
+    f func(int) int,
+) {
     s := stream.New().WithMaxGoroutines(10)
-    for elem := range input {
+    for elem := range in {
         elem := elem
         s.Go(func() {
             res := f(elem)
-            return func() { output <- res }
+            return func() { out <- res }
         })
     }
     s.Wait()
