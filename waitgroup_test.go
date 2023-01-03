@@ -1,11 +1,28 @@
 package conc
 
 import (
+	"fmt"
 	"sync/atomic"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
+
+func ExampleWaitGroup() {
+	var count atomic.Int64
+
+	var wg WaitGroup
+	for i := 0; i < 10; i++ {
+		wg.Go(func() {
+			count.Add(1)
+		})
+	}
+	wg.Wait()
+
+	fmt.Println(count.Load())
+	// Output:
+	// 10
+}
 
 func TestWaitGroup(t *testing.T) {
 	t.Parallel()
