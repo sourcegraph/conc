@@ -7,6 +7,29 @@
 `conc` is your toolbelt for structured concurrency in go, making common tasks
 easier and safer.
 
+# At a glance
+
+- Use [`conc.WaitGroup`](https://pkg.go.dev/github.com/sourcegraph/conc#WaitGroup) if you just want a safer version of `sync.WaitGroup`
+- Use [`pool.Pool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool) if you want a concurrency-limited task runner
+- Use [`pool.ResultPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ResultPool) if you want a concurrent task runner that collects task results
+- Use [`pool.(Result)?ErrorPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ErrorPool) if your tasks are fallible
+- Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ContextPool) if your tasks should be canceled on failure
+- Use [`iter.Map`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently map a slice
+- Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently iterate over a slice
+
+All pools are created with
+[`pool.New()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#New)
+or
+[`pool.NewWithResults[T]()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#NewWithResults),
+then configured with methods:
+- [`p.WithMaxGoroutines()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool.MaxGoroutines) configures the maximum number of goroutines in the pool
+- [`p.WithErrors()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool.WithErrors) configures the pool to run tasks that return errors
+- [`p.WithContext(ctx)`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool.WithContext) configures the pool to run tasks that should be canceled on first error
+- [`p.WithFirstError()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ErrorPool.WithFirstError) configures error pools to only keep the first returned error rather than an aggregated error
+- [`p.WithCollectErrored()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ResultContextPool.WithCollectErrored) configures result pools to only collect results that did not error
+
+# Goals
+
 The main goals of the package are:
 1) Make it harder to leak goroutines
 2) Handle panics gracefully
