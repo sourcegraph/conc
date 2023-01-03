@@ -438,8 +438,7 @@ func mapStream(
     for elem := range in {
         elem := elem
         s.Go(func() {
-            res := f(elem)
-            return func() { out <- res }
+            out <- f(elem)
         })
     }
     s.Wait()
