@@ -57,6 +57,20 @@ func TestErrorPool(t *testing.T) {
 		require.ErrorIs(t, err, err2)
 	})
 
+	t.Run("propagates panics", func(t *testing.T) {
+		g := New().WithErrors()
+		for i := 0; i < 10; i++ {
+			i := i
+			g.Go(func() error {
+				if i == 5 {
+					panic("fatal")
+				}
+				return nil
+			})
+		}
+		require.Panics(t, func() { g.Wait() })
+	})
+
 	t.Run("limit", func(t *testing.T) {
 		t.Parallel()
 		for _, maxGoroutines := range []int{1, 10, 100} {
