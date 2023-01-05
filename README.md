@@ -24,7 +24,7 @@ go get github.com/sourcegraph/conc
 - Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ContextPool) if your tasks should be canceled on failure
 - Use [`stream.Stream`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/stream#Stream) if you want to process an ordered stream of tasks in parallel with serial callbacks
 - Use [`iter.Map`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently map a slice
-- Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently iterate over a slice
+- Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#ForEach) if you want to concurrently iterate over a slice
 - Use [`conc.PanicCatcher`](https://pkg.go.dev/github.com/sourcegraph/conc#PanicCatcher) if you want to catch panics in your own goroutines
 
 All pools are created with
@@ -84,7 +84,7 @@ post](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-co
 
 A frequent problem with goroutines in long-running applications is handling
 panics. A goroutine spawned without a panic handler will crash the whole process
-on panic. This is usually undesirable. 
+on panic. This is usually undesirable.
 
 However, if you do add a panic handler to a goroutine, what do you do with the
 panic once you catch it? Some options:
@@ -103,7 +103,7 @@ program is in a really bad state.
 Both (3) and (4) are reasonable options, but both require the goroutine to have
 an owner that can actually receive the message that something went wrong. This
 is generally not true with a goroutine spawned with `go`, but in the `conc`
-package, all goroutines have an owner that must collect the spawned goroutine. 
+package, all goroutines have an owner that must collect the spawned goroutine.
 In the conc package, any call to `Wait()` will panic if any of the spawned goroutines
 panicked. Additionally, it decorates the panic value with a stacktrace from the child
 goroutine so that you don't lose information about what caused the panic.
@@ -128,8 +128,8 @@ type caughtPanicError struct {
 
 func (e *caughtPanicError) Error() string {
     return fmt.Sprintf(
-        "panic: %q\n%s", 
-        e.val, 
+        "panic: %q\n%s",
+        e.val,
         string(e.stack)
     )
 }
@@ -162,7 +162,7 @@ func main() {
 func main() {
     var wg conc.WaitGroup
     wg.Go(doSomethingThatMightPanic)
-    // panics with a nice stacktrace      
+    // panics with a nice stacktrace
     wg.Wait()
 }
 ```
@@ -206,7 +206,7 @@ func main() {
         wg.Add(1)
         go func() {
             defer wg.Done()
-            // crashes on panic!          
+            // crashes on panic!
             doSomething()
         }()
     }
@@ -219,7 +219,7 @@ func main() {
 ```go
 func main() {
     var wg conc.WaitGroup
-    for i := 0; i < 10; i++ {             
+    for i := 0; i < 10; i++ {
         wg.Go(doSomething)
     }
     wg.Wait()
@@ -246,7 +246,7 @@ func process(stream chan int) {
         wg.Add(1)
         go func() {
             defer wg.Done()
-            for elem := range stream {    
+            for elem := range stream {
                 handle(elem)
             }
         }()
@@ -259,7 +259,7 @@ func process(stream chan int) {
 
 ```go
 func process(stream chan int) {
-    p := pool.New().WithMaxGoroutines(10) 
+    p := pool.New().WithMaxGoroutines(10)
     for elem := range stream {
         elem := elem
         p.Go(func() {
@@ -292,7 +292,7 @@ func process(values []int) {
         wg.Add(1)
         go func() {
             defer wg.Done()
-            for elem := range feeder {    
+            for elem := range feeder {
                 handle(elem)
             }
         }()
@@ -310,7 +310,7 @@ func process(values []int) {
 
 ```go
 func process(values []int) {
-    iter.ForEach(values, handle)          
+    iter.ForEach(values, handle)
 }
 ```
 </td>
@@ -342,7 +342,7 @@ func concMap(
             defer wg.Done()
 
             for {
-                i := int(idx.Add(1) - 1)  
+                i := int(idx.Add(1) - 1)
                 if i >= len(input) {
                     return
                 }
@@ -363,7 +363,7 @@ func concMap(
     input []int,
     f func(int) int,
 ) []int {
-    return iter.Map(input, f)                    
+    return iter.Map(input, f)
 }
 ```
 </td>
@@ -421,7 +421,7 @@ func mapStream
         }
     }
 
-    // We've exhausted input. 
+    // We've exhausted input.
     // Wait for everything to finish
     close(tasks)
     workerWg.Wait()
