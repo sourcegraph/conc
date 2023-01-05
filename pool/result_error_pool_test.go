@@ -81,6 +81,8 @@ func TestResultErrorGroup(t *testing.T) {
 	t.Run("limit", func(t *testing.T) {
 		for _, maxConcurrency := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxConcurrency), func(t *testing.T) {
+				maxConcurrency := maxConcurrency // copy
+
 				t.Parallel()
 				g := NewWithResults[int]().WithErrors().WithMaxGoroutines(maxConcurrency)
 

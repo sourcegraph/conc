@@ -107,6 +107,8 @@ func TestResultContextPool(t *testing.T) {
 		t.Parallel()
 		for _, maxConcurrency := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxConcurrency), func(t *testing.T) {
+				maxConcurrency := maxConcurrency // copy
+
 				t.Parallel()
 				ctx := context.Background()
 				g := NewWithResults[int]().WithContext(ctx).WithMaxGoroutines(maxConcurrency)
