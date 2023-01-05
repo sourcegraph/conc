@@ -2,7 +2,6 @@ package pool
 
 import (
 	"context"
-	"runtime"
 	"sync"
 
 	"github.com/sourcegraph/conc"
@@ -36,20 +35,34 @@ type Pool struct {
 func (p *Pool) Go(f func()) {
 	p.init()
 
-	select {
-	case p.limiter <- struct{}{}:
-		// If we are below our limit, spawn a new worker rather
-		// than waiting for one to become available.
-		p.handle.Go(p.worker)
+	if p.limiter == nil {
+		// No limit on the number of goroutines.
+		select {
+		case p.tasks <- f:
+			// A goroutine was available to handle the task
+		default:
+			// No goroutine was available to handle the task.
+			// Spawn a new one and send it the task.
+			p.handle.Go(p.worker)
+			p.tasks <- f
+		}
+	} else {
+		select {
+		case p.limiter <- struct{}{}:
+			// If we are below our limit, spawn a new worker rather
+			// than waiting for one to become available.
+			p.handle.Go(p.worker)
 
-		// We know there is a least one worker running, so wait
-		// for it to become available. This ensures we never spawn
-		// more workers than the number of tasks.
-		p.tasks <- f
-	case p.tasks <- f:
-		// A worker is available and has accepted the task
-		return
+			// We know there is a least one worker running, so wait
+			// for it to become available. This ensures we never spawn
+			// more workers than the number of tasks.
+			p.tasks <- f
+		case p.tasks <- f:
+			// A worker is available and has accepted the task
+			return
+		}
 	}
+
 }
 
 // Wait cleans up spawned goroutines, propagating any panics that were
@@ -67,7 +80,7 @@ func (p *Pool) MaxGoroutines() int {
 }
 
 // WithMaxGoroutines limits the number of goroutines in a pool.
-// Defaults to runtime.GOMAXPROCS(0). Panics if n < 1.
+// Defaults to unlimited. Panics if n < 1.
 func (p *Pool) WithMaxGoroutines(n int) *Pool {
 	if n < 1 {
 		panic("max goroutines in a pool must be greater than zero")
@@ -80,11 +93,6 @@ func (p *Pool) WithMaxGoroutines(n int) *Pool {
 // zero value of the pool usable.
 func (p *Pool) init() {
 	p.initOnce.Do(func() {
-		// Do not override the limiter if set by WithMaxGoroutines
-		if p.limiter == nil {
-			p.limiter = make(limiter, runtime.GOMAXPROCS(0))
-		}
-
 		p.tasks = make(chan func())
 	})
 }
@@ -134,5 +142,7 @@ func (l limiter) limit() int {
 }
 
 func (l limiter) release() {
-	<-l
+	if l != nil {
+		<-l
+	}
 }

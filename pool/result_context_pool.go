@@ -48,7 +48,7 @@ func (p *ResultContextPool[T]) WithFirstError() *ResultContextPool[T] {
 }
 
 // WithMaxGoroutines limits the number of goroutines in a pool.
-// Defaults to runtime.GOMAXPROCS(0). Panics if n < 1.
+// Defaults to unlimited. Panics if n < 1.
 func (p *ResultContextPool[T]) WithMaxGoroutines(n int) *ResultContextPool[T] {
 	p.contextPool.WithMaxGoroutines(n)
 	return p

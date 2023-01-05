@@ -53,7 +53,7 @@ func (p *ErrorPool) WithFirstError() *ErrorPool {
 }
 
 // WithMaxGoroutines limits the number of goroutines in a pool.
-// Defaults to runtime.GOMAXPROCS(0). Panics if n < 1.
+// Defaults to unlimited. Panics if n < 1.
 func (p *ErrorPool) WithMaxGoroutines(n int) *ErrorPool {
 	p.pool.WithMaxGoroutines(n)
 	return p
