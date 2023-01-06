@@ -53,7 +53,7 @@ func (p *Pool) Go(f func()) {
 			// than waiting for one to become available.
 			p.handle.Go(p.worker)
 
-			// We know there is a least one worker running, so wait
+			// We know there is at least one worker running, so wait
 			// for it to become available. This ensures we never spawn
 			// more workers than the number of tasks.
 			p.tasks <- f
