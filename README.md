@@ -452,3 +452,11 @@ func mapStream(
 </td>
 </tr>
 </table>
+
+# Status
+
+This package is currently pre-1.0. There are likely to be minor breaking
+changes before a 1.0 release as we stabilize the APIs and tweak defaults.
+Please open an issue if you have questions, concerns, or requests that you'd
+like addressed before the 1.0 release. Currently, a 1.0 is targeted for 
+March 2023.
