@@ -122,13 +122,38 @@ func TestContextPool(t *testing.T) {
 	})
 
 	t.Run("WithFirstError", func(t *testing.T) {
-		p := New().WithContext(bgctx).WithFirstError().WithFailFast()
+		t.Parallel()
+		p := New().WithContext(bgctx).WithFirstError()
+		sync := make(chan struct{})
 		p.Go(func(ctx context.Context) error {
-			<-ctx.Done()
-			return err2
+			defer close(sync)
+			return err1
 		})
 		p.Go(func(ctx context.Context) error {
+			// This test has a race condition. After the first goroutine
+			// completes, this goroutine is woken up because sync is closed.
+			// However, this goroutine might be woken up before the error from
+			// the first goroutine is registered. To prevent that, we sleep for
+			// another 10 milliseconds, giving the other goroutine time to return
+			// and register its error before this goroutine returns its error.
+			<-sync
+			time.Sleep(10 * time.Millisecond)
+			return err2
+		})
+		err := p.Wait()
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, err2)
+	})
+
+	t.Run("WithFirstError and WithFailFast", func(t *testing.T) {
+		t.Parallel()
+		p := New().WithContext(bgctx).WithFirstError().WithFailFast()
+		p.Go(func(ctx context.Context) error {
 			return err1
+		})
+		p.Go(func(ctx context.Context) error {
+			<-ctx.Done()
+			return ctx.Err()
 		})
 		err := p.Wait()
 		require.ErrorIs(t, err, err1)
