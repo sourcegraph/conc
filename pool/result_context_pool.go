@@ -47,6 +47,14 @@ func (p *ResultContextPool[T]) WithFirstError() *ResultContextPool[T] {
 	return p
 }
 
+// WithFailFast configures the pool to cancel its context as soon as
+// any task returns an error. By default, the pool's context is not
+// canceled until Wait() completes or the parent context is canceled.
+func (p *ResultContextPool[T]) WithFailFast() *ResultContextPool[T] {
+	p.contextPool.WithFailFast()
+	return p
+}
+
 // WithMaxGoroutines limits the number of goroutines in a pool.
 // Defaults to unlimited. Panics if n < 1.
 func (p *ResultContextPool[T]) WithMaxGoroutines(n int) *ResultContextPool[T] {

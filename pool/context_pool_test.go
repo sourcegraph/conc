@@ -13,8 +13,11 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
-func ExampleContextPool() {
-	p := New().WithMaxGoroutines(4).WithContext(context.Background())
+func ExampleContextPool_WithFailFast() {
+	p := New().
+		WithMaxGoroutines(4).
+		WithContext(context.Background()).
+		WithFailFast()
 	for i := 0; i < 3; i++ {
 		i := i
 		p.Go(func(ctx context.Context) error {
@@ -86,8 +89,8 @@ func TestContextPool(t *testing.T) {
 		})
 	})
 
-	t.Run("cancel on error", func(t *testing.T) {
-		p := New().WithMaxGoroutines(2).WithContext(bgctx)
+	t.Run("WithFailFast", func(t *testing.T) {
+		p := New().WithContext(bgctx).WithFailFast()
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
 			return ctx.Err()
@@ -100,8 +103,26 @@ func TestContextPool(t *testing.T) {
 		require.ErrorIs(t, err, err1)
 	})
 
+	t.Run("no WithFailFast", func(t *testing.T) {
+		p := New().WithContext(bgctx)
+		p.Go(func(ctx context.Context) error {
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			case <-time.After(10 * time.Millisecond):
+				return nil
+			}
+		})
+		p.Go(func(ctx context.Context) error {
+			return err1
+		})
+		err := p.Wait()
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, context.Canceled)
+	})
+
 	t.Run("WithFirstError", func(t *testing.T) {
-		p := New().WithContext(bgctx).WithFirstError()
+		p := New().WithContext(bgctx).WithFirstError().WithFailFast()
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
 			return err2

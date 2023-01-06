@@ -63,9 +63,9 @@ func TestResultContextPool(t *testing.T) {
 		require.ErrorIs(t, err, context.Canceled)
 	})
 
-	t.Run("cancel on error", func(t *testing.T) {
+	t.Run("WithFailFast", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithContext(context.Background())
+		g := NewWithResults[int]().WithContext(context.Background()).WithFailFast()
 		g.Go(func(ctx context.Context) (int, error) {
 			<-ctx.Done()
 			return 0, ctx.Err()
@@ -79,6 +79,26 @@ func TestResultContextPool(t *testing.T) {
 		require.ErrorIs(t, err, err1)
 	})
 
+	t.Run("no WithFailFast", func(t *testing.T) {
+		t.Parallel()
+		g := NewWithResults[int]().WithContext(context.Background())
+		g.Go(func(ctx context.Context) (int, error) {
+			select {
+			case <-ctx.Done():
+				return 0, ctx.Err()
+			case <-time.After(10 * time.Millisecond):
+				return 0, nil
+			}
+		})
+		g.Go(func(ctx context.Context) (int, error) {
+			return 0, err1
+		})
+		res, err := g.Wait()
+		require.Len(t, res, 1)
+		require.NotErrorIs(t, err, context.Canceled)
+		require.ErrorIs(t, err, err1)
+	})
+
 	t.Run("WithCollectErrored", func(t *testing.T) {
 		g := NewWithResults[int]().WithContext(context.Background()).WithCollectErrored()
 		g.Go(func(context.Context) (int, error) { return 0, err1 })
@@ -89,7 +109,7 @@ func TestResultContextPool(t *testing.T) {
 
 	t.Run("WithFirstError", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithContext(context.Background()).WithFirstError()
+		g := NewWithResults[int]().WithContext(context.Background()).WithFirstError().WithFailFast()
 		g.Go(func(ctx context.Context) (int, error) {
 			<-ctx.Done()
 			return 0, err2
