@@ -9,10 +9,10 @@ import (
 type ContextPool struct {
 	errorPool ErrorPool
 
-	failFast bool
-
 	ctx    context.Context
 	cancel context.CancelFunc
+
+	failFast bool
 }
 
 // Go submits a task. If it returns an error, the error will be
