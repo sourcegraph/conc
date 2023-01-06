@@ -27,6 +27,11 @@ func ExampleWaitGroup() {
 func TestWaitGroup(t *testing.T) {
 	t.Parallel()
 
+	t.Run("ctor", func(t *testing.T) {
+		wg := NewWaitGroup()
+		require.IsType(t, &WaitGroup{}, wg)
+	})
+
 	t.Run("all spawned run", func(t *testing.T) {
 		var count atomic.Int64
 		var wg WaitGroup
