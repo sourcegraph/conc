@@ -1,7 +1,9 @@
 package conc
 
 import (
+	"context"
 	"sync"
+	"time"
 )
 
 // WaitGroup is the primary building block for scoped concurrency.
@@ -21,6 +23,31 @@ func (h *WaitGroup) Go(f func()) {
 		defer h.wg.Done()
 		h.pc.Try(f)
 	}()
+}
+
+// GoWithContext spawns a new goroutine in the WaitGroup
+func (h *WaitGroup) GoWithContext(f func(), ctx context.Context) {
+	h.wg.Add(1)
+	result := make(chan struct{}, 1)
+	defer h.wg.Done()
+
+	go func() {
+		result <- h.pc.TryWithReturn(f)
+	}()
+
+	select {
+	case <-ctx.Done():
+		return
+	case _ = <-result:
+		return
+	}
+}
+
+// GoWithTimeout spawns a new goroutine in the WaitGroup
+func (h *WaitGroup) GoWithTimeout(f func(), timeout time.Duration) {
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	h.GoWithContext(f, ctx)
 }
 
 // Wait will block until all goroutines spawned with Go exit and will

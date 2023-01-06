@@ -23,6 +23,14 @@ func (p *PanicCatcher) Try(f func()) {
 	f()
 }
 
+// TryWithReturn executes f, catching any panic it might spawn. It is safe
+// to call from multiple goroutines simultaneously.
+func (p *PanicCatcher) TryWithReturn(f func()) struct{} {
+	p.Try(f)
+
+	return struct{}{}
+}
+
 func (p *PanicCatcher) tryRecover() {
 	if val := recover(); val != nil {
 		rp := NewRecoveredPanic(1, val)

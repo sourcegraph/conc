@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -84,6 +85,23 @@ func TestWaitGroup(t *testing.T) {
 			})
 			require.Panics(t, wg.Wait)
 			require.Equal(t, int64(2), i.Load())
+		})
+
+		t.Run("nonpanics run with timeout", func(t *testing.T) {
+			var wg WaitGroup
+			var i atomic.Int64
+			wg.GoWithTimeout(func() {
+				time.Sleep(2 * time.Second)
+				i.Add(1)
+			}, time.Millisecond)
+			wg.Go(func() {
+				panic("super bad thing")
+			})
+			wg.Go(func() {
+				i.Add(1)
+			})
+			require.Panics(t, wg.Wait)
+			require.Equal(t, int64(1), i.Load())
 		})
 	})
 }
