@@ -36,7 +36,6 @@ func (p *ContextPool) Go(f func(ctx context.Context) error) {
 // Wait cleans up all spawned goroutines, propagates any panics, and
 // returns an error if any of the tasks errored.
 func (p *ContextPool) Wait() error {
-	defer p.cancel()
 	return p.errorPool.Wait()
 }
 
@@ -51,7 +50,7 @@ func (p *ContextPool) WithFirstError() *ContextPool {
 
 // WithFailFast configures the pool to cancel its context as soon as
 // any task returns an error. By default, the pool's context is not
-// canceled until Wait() completes or the parent context is canceled.
+// canceled until the parent context is canceled.
 func (p *ContextPool) WithFailFast() *ContextPool {
 	p.failFast = true
 	return p

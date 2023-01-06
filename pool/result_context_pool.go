@@ -49,7 +49,7 @@ func (p *ResultContextPool[T]) WithFirstError() *ResultContextPool[T] {
 
 // WithFailFast configures the pool to cancel its context as soon as
 // any task returns an error. By default, the pool's context is not
-// canceled until Wait() completes or the parent context is canceled.
+// canceled until the parent context is canceled.
 func (p *ResultContextPool[T]) WithFailFast() *ResultContextPool[T] {
 	p.contextPool.WithFailFast()
 	return p
