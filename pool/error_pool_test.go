@@ -68,7 +68,7 @@ func TestErrorPool(t *testing.T) {
 				return nil
 			})
 		}
-		require.Panics(t, func() { g.Wait() })
+		require.Panics(t, func() { _ = g.Wait() })
 	})
 
 	t.Run("limit", func(t *testing.T) {
