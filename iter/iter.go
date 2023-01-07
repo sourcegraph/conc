@@ -41,7 +41,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) {
 		}
 	}
 
-	var wg conc.WaitGroup
+	wg := conc.NewWaitGroup()
 	for i := 0; i < numTasks; i++ {
 		wg.Go(task)
 	}
