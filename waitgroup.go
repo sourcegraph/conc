@@ -22,7 +22,7 @@ type WaitGroup struct {
 	pc PanicCatcher
 }
 
-// Go spawns a new goroutine in the WaitGroup
+// Go spawns a new goroutine in the WaitGroup.
 func (h *WaitGroup) Go(f func()) {
 	h.wg.Add(1)
 	go func() {
@@ -36,6 +36,6 @@ func (h *WaitGroup) Go(f func()) {
 func (h *WaitGroup) Wait() {
 	h.wg.Wait()
 
-	// Propagate a panic if we caught one from a child goroutine
+	// Propagate a panic if we caught one from a child goroutine.
 	h.pc.Repanic()
 }

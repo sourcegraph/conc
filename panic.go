@@ -11,7 +11,7 @@ import (
 // which will catch any spawned panic. Try can be called any number of times,
 // from any number of goroutines. Once all calls to Try have completed, you can
 // get the value of the first panic (if any) with Value(), or you can just
-// propagate the panic (re-panic) with Repanic()
+// propagate the panic (re-panic) with Repanic().
 type PanicCatcher struct {
 	recovered atomic.Pointer[RecoveredPanic]
 }
@@ -62,7 +62,7 @@ func NewRecoveredPanic(skip int, value any) RecoveredPanic {
 
 // RecoveredPanic is a panic that was caught with recover().
 type RecoveredPanic struct {
-	// The original value of the panic
+	// The original value of the panic.
 	Value any
 	// The caller list as returned by runtime.Callers when the panic was
 	// recovered. Can be used to produce a more detailed stack information with

@@ -39,7 +39,7 @@ func (p *Pool) Go(f func()) {
 		// No limit on the number of goroutines.
 		select {
 		case p.tasks <- f:
-			// A goroutine was available to handle the task
+			// A goroutine was available to handle the task.
 		default:
 			// No goroutine was available to handle the task.
 			// Spawn a new one and send it the task.
@@ -58,7 +58,7 @@ func (p *Pool) Go(f func()) {
 			// more workers than the number of tasks.
 			p.tasks <- f
 		case p.tasks <- f:
-			// A worker is available and has accepted the task
+			// A worker is available and has accepted the task.
 			return
 		}
 	}

@@ -17,7 +17,7 @@ type ResultErrorPool[T any] struct {
 	collectErrored bool
 }
 
-// Go submits a task to the pool
+// Go submits a task to the pool.
 func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 	p.errorPool.Go(func() error {
 		res, err := f()
