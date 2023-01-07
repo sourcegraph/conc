@@ -5,25 +5,22 @@ import (
 )
 
 // ContextPool is a pool that runs tasks that take a context.
-// The context passed to the task will be canceled if any
-// of the tasks return an error, which makes its functionality
-// different than just capturing a context with the task closure.
-//
 // A new ContextPool should be created with `New().WithContext(ctx)`.
 type ContextPool struct {
 	errorPool ErrorPool
 
 	ctx    context.Context
 	cancel context.CancelFunc
+
+	failFast bool
 }
 
 // Go submits a task. If it returns an error, the error will be
-// collected and returned by Wait() and the context passed to other
-// tasks will be canceled.
+// collected and returned by Wait().
 func (p *ContextPool) Go(f func(ctx context.Context) error) {
 	p.errorPool.Go(func() error {
 		err := f(p.ctx)
-		if err != nil {
+		if err != nil && p.failFast {
 			// Leaky abstraction warning: We add the error directly because
 			// otherwise, canceling could cause another goroutine to exit and
 			// return an error before this error was added, which breaks the
@@ -48,6 +45,14 @@ func (p *ContextPool) Wait() error {
 // first are likely to be context.Canceled.
 func (p *ContextPool) WithFirstError() *ContextPool {
 	p.errorPool.WithFirstError()
+	return p
+}
+
+// WithCancelOnError configures the pool to cancel its context as soon as
+// any task returns an error. By default, the pool's context is not
+// canceled until the parent context is canceled.
+func (p *ContextPool) WithCancelOnError() *ContextPool {
+	p.failFast = true
 	return p
 }
 

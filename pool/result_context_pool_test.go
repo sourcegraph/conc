@@ -63,9 +63,9 @@ func TestResultContextPool(t *testing.T) {
 		require.ErrorIs(t, err, context.Canceled)
 	})
 
-	t.Run("cancel on error", func(t *testing.T) {
+	t.Run("WithCancelOnError", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithContext(context.Background())
+		g := NewWithResults[int]().WithContext(context.Background()).WithCancelOnError()
 		g.Go(func(ctx context.Context) (int, error) {
 			<-ctx.Done()
 			return 0, ctx.Err()
@@ -76,6 +76,26 @@ func TestResultContextPool(t *testing.T) {
 		res, err := g.Wait()
 		require.Len(t, res, 0)
 		require.ErrorIs(t, err, context.Canceled)
+		require.ErrorIs(t, err, err1)
+	})
+
+	t.Run("no WithCancelOnError", func(t *testing.T) {
+		t.Parallel()
+		g := NewWithResults[int]().WithContext(context.Background())
+		g.Go(func(ctx context.Context) (int, error) {
+			select {
+			case <-ctx.Done():
+				return 0, ctx.Err()
+			case <-time.After(10 * time.Millisecond):
+				return 0, nil
+			}
+		})
+		g.Go(func(ctx context.Context) (int, error) {
+			return 0, err1
+		})
+		res, err := g.Wait()
+		require.Len(t, res, 1)
+		require.NotErrorIs(t, err, context.Canceled)
 		require.ErrorIs(t, err, err1)
 	})
 
@@ -90,17 +110,26 @@ func TestResultContextPool(t *testing.T) {
 	t.Run("WithFirstError", func(t *testing.T) {
 		t.Parallel()
 		g := NewWithResults[int]().WithContext(context.Background()).WithFirstError()
+		sync := make(chan struct{})
 		g.Go(func(ctx context.Context) (int, error) {
-			<-ctx.Done()
-			return 0, err2
+			defer close(sync)
+			return 0, err1
 		})
 		g.Go(func(ctx context.Context) (int, error) {
-			return 0, err1
+			// This test has a race condition. After the first goroutine
+			// completes, this goroutine is woken up because sync is closed.
+			// However, this goroutine might be woken up before the error from
+			// the first goroutine is registered. To prevent that, we sleep for
+			// another 10 milliseconds, giving the other goroutine time to return
+			// and register its error before this goroutine returns its error.
+			<-sync
+			time.Sleep(10 * time.Millisecond)
+			return 0, err2
 		})
 		res, err := g.Wait()
 		require.Len(t, res, 0)
 		require.ErrorIs(t, err, err1)
-		require.NotErrorIs(t, err, context.Canceled)
+		require.NotErrorIs(t, err, err2)
 	})
 
 	t.Run("limit", func(t *testing.T) {

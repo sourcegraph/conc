@@ -13,8 +13,11 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
-func ExampleContextPool() {
-	p := New().WithMaxGoroutines(4).WithContext(context.Background())
+func ExampleContextPool_WithCancelOnError() {
+	p := New().
+		WithMaxGoroutines(4).
+		WithContext(context.Background()).
+		WithCancelOnError()
 	for i := 0; i < 3; i++ {
 		i := i
 		p.Go(func(ctx context.Context) error {
@@ -86,8 +89,8 @@ func TestContextPool(t *testing.T) {
 		})
 	})
 
-	t.Run("cancel on error", func(t *testing.T) {
-		p := New().WithMaxGoroutines(2).WithContext(bgctx)
+	t.Run("WithCancelOnError", func(t *testing.T) {
+		p := New().WithContext(bgctx).WithCancelOnError()
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
 			return ctx.Err()
@@ -100,14 +103,57 @@ func TestContextPool(t *testing.T) {
 		require.ErrorIs(t, err, err1)
 	})
 
-	t.Run("WithFirstError", func(t *testing.T) {
-		p := New().WithContext(bgctx).WithFirstError()
+	t.Run("no WithCancelOnError", func(t *testing.T) {
+		p := New().WithContext(bgctx)
 		p.Go(func(ctx context.Context) error {
-			<-ctx.Done()
-			return err2
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			case <-time.After(10 * time.Millisecond):
+				return nil
+			}
 		})
 		p.Go(func(ctx context.Context) error {
 			return err1
+		})
+		err := p.Wait()
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, context.Canceled)
+	})
+
+	t.Run("WithFirstError", func(t *testing.T) {
+		t.Parallel()
+		p := New().WithContext(bgctx).WithFirstError()
+		sync := make(chan struct{})
+		p.Go(func(ctx context.Context) error {
+			defer close(sync)
+			return err1
+		})
+		p.Go(func(ctx context.Context) error {
+			// This test has a race condition. After the first goroutine
+			// completes, this goroutine is woken up because sync is closed.
+			// However, this goroutine might be woken up before the error from
+			// the first goroutine is registered. To prevent that, we sleep for
+			// another 10 milliseconds, giving the other goroutine time to return
+			// and register its error before this goroutine returns its error.
+			<-sync
+			time.Sleep(10 * time.Millisecond)
+			return err2
+		})
+		err := p.Wait()
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, err2)
+	})
+
+	t.Run("WithFirstError and WithCancelOnError", func(t *testing.T) {
+		t.Parallel()
+		p := New().WithContext(bgctx).WithFirstError().WithCancelOnError()
+		p.Go(func(ctx context.Context) error {
+			return err1
+		})
+		p.Go(func(ctx context.Context) error {
+			<-ctx.Done()
+			return ctx.Err()
 		})
 		err := p.Wait()
 		require.ErrorIs(t, err, err1)
