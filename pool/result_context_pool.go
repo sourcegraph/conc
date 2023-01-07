@@ -14,7 +14,7 @@ type ResultContextPool[T any] struct {
 	collectErrored bool
 }
 
-// Go submits a task to the pool
+// Go submits a task to the pool.
 func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
 	p.contextPool.Go(func(ctx context.Context) error {
 		res, err := f(ctx)

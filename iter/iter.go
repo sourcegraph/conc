@@ -33,7 +33,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) {
 	}
 
 	var idx atomic.Int64
-	// create the task outside the loop to avoid extra closure allocations
+	// Create the task outside the loop to avoid extra closure allocations.
 	task := func() {
 		i := int(idx.Add(1) - 1)
 		for ; i < len(input); i = int(idx.Add(1) - 1) {

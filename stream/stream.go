@@ -8,7 +8,7 @@ import (
 	"github.com/sourcegraph/conc/pool"
 )
 
-// Create a new Stream with default settings
+// Create a new Stream with default settings.
 func New() *Stream {
 	return &Stream{
 		pool: *pool.New(),
@@ -59,13 +59,13 @@ type Callback func()
 func (s *Stream) Go(f StreamTask) {
 	s.init()
 
-	// Get a channel from the cache
+	// Get a channel from the cache.
 	ch := getCh()
 
-	// Queue the channel for the callbacker
+	// Queue the channel for the callbacker.
 	s.queue <- ch
 
-	// Submit the task for execution
+	// Submit the task for execution.
 	s.pool.Go(func() {
 		defer func() {
 			// In the case of a panic from f, we don't want the callbacker to
@@ -77,7 +77,7 @@ func (s *Stream) Go(f StreamTask) {
 			}
 		}()
 
-		// Run the task, sending its callback down this task's channel
+		// Run the task, sending its callback down this task's channel.
 		callback := f()
 		ch <- callback
 	})
@@ -89,13 +89,13 @@ func (s *Stream) Wait() {
 	s.init()
 
 	// Defer the callbacker cleanup so that it occurs even in the case
-	// that one of the tasks panics and is propagated up by s.pool.Wait()
+	// that one of the tasks panics and is propagated up by s.pool.Wait().
 	defer func() {
 		close(s.queue)
 		s.callbackerHandle.Wait()
 	}()
 
-	// Wait for all the workers to exit
+	// Wait for all the workers to exit.
 	s.pool.Wait()
 }
 
@@ -108,7 +108,7 @@ func (s *Stream) init() {
 	s.initOnce.Do(func() {
 		s.queue = make(chan callbackCh, s.pool.MaxGoroutines()+1)
 
-		// Start the callbacker
+		// Start the callbacker.
 		s.callbackerHandle.Go(s.callbacker)
 	})
 }
@@ -121,13 +121,13 @@ func (s *Stream) callbacker() {
 
 	// For every scheduled task, read that tasks channel from the queue.
 	for callbackCh := range s.queue {
-		// Wait for the task to complete and get its callback from the channel
+		// Wait for the task to complete and get its callback from the channel.
 		callback := <-callbackCh
 
-		// Execute the callback (with panic protection)
+		// Execute the callback (with panic protection).
 		panicCatcher.Try(callback)
 
-		// Return the channel to the pool of unused channels
+		// Return the channel to the pool of unused channels.
 		putCh(callbackCh)
 	}
 }
