@@ -24,6 +24,12 @@ jobs:
     - name: Build
       run: go build -v ./...
 
+    - name: Lint
+      uses: golangci/golangci-lint-action@v3.3.1
+      with:
+        version: latest
+        args: --timeout 5m
+
     - name: Test
       run: go test -race -v ./... -coverprofile ./coverage.txt
 
