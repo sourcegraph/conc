@@ -4,6 +4,11 @@ import (
 	"sync"
 )
 
+// NewWaitGroup creates a new WaitGroup.
+func NewWaitGroup() *WaitGroup {
+	return &WaitGroup{}
+}
+
 // WaitGroup is the primary building block for scoped concurrency.
 // Goroutines can be spawned in the WaitGroup with the Go method,
 // and calling Wait() will ensure that each of those goroutines exits
