@@ -14,6 +14,9 @@ func NewWaitGroup() *WaitGroup {
 // and calling Wait() will ensure that each of those goroutines exits
 // before continuing. Any panics in a child goroutine will be caught
 // and propagated to the caller of Wait().
+//
+// The zero value of WaitGroup is usable, just like sync.WaitGroup.
+// Also like sync.WaitGroup, it must not be copied after first use.
 type WaitGroup struct {
 	wg sync.WaitGroup
 	pc PanicCatcher
