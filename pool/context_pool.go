@@ -52,7 +52,7 @@ func (p *ContextPool) WithFirstError() *ContextPool {
 // any task returns an error. By default, the pool's context is not
 // canceled until the parent context is canceled.
 //
-// In this case, all errors returned from the pool after the frst will
+// In this case, all errors returned from the pool after the first will
 // likely be context.Canceled - you may want to also use
 // (*ContextPool).WithFirstError() to configure the pool to only return
 // the first error.
