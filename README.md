@@ -302,7 +302,7 @@ func process(values []int) {
     for _, value := range values {
         feeder <- value
     }
-
+    close(feeder)
     wg.Wait()
 }
 ```
