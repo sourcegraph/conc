@@ -62,11 +62,11 @@ func Map[T, R any](input []T, f func(*T) R) []R {
 func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	var (
 		res    = make([]R, len(input))
+		err    error
 		errMux sync.Mutex
 		errs   error
 	)
 	ForEachIdx(input, func(i int, t *T) {
-		var err error
 		res[i], err = f(t)
 		if err != nil {
 			errMux.Lock()
