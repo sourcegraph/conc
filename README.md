@@ -26,7 +26,7 @@ go get github.com/sourcegraph/conc
 - Use [`stream.Stream`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/stream#Stream) if you want to process an ordered stream of tasks in parallel with serial callbacks
 - Use [`iter.Map`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently map a slice
 - Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#ForEach) if you want to concurrently iterate over a slice
-- Use [`conc.PanicCatcher`](https://pkg.go.dev/github.com/sourcegraph/conc#PanicCatcher) if you want to catch panics in your own goroutines
+- Use [`panics.Catcher`](https://pkg.go.dev/github.com/sourcegraph/conc/panics#Catcher) if you want to catch panics in your own goroutines
 
 All pools are created with
 [`pool.New()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#New)

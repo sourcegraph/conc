@@ -1,4 +1,4 @@
-package conc
+package panics
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func ExamplePanicCatcher() {
-	var pc PanicCatcher
+func ExampleCatcher() {
+	var pc Catcher
 	i := 0
 	pc.Try(func() { i += 1 })
 	pc.Try(func() { panic("abort!") })
@@ -26,8 +26,8 @@ func ExamplePanicCatcher() {
 	// abort!
 }
 
-func ExamplePanicCatcher_callers() {
-	var pc PanicCatcher
+func ExampleCatcher_callers() {
+	var pc Catcher
 	pc.Try(func() { panic("mayday!") })
 
 	recovered := pc.Recovered()
@@ -47,11 +47,11 @@ func ExamplePanicCatcher_callers() {
 		}
 	}
 	// Output:
-	// github.com/sourcegraph/conc.(*PanicCatcher).tryRecover
+	// github.com/sourcegraph/conc/panics.(*Catcher).tryRecover
 	// runtime.gopanic
-	// github.com/sourcegraph/conc.ExamplePanicCatcher_callers.func1
-	// github.com/sourcegraph/conc.(*PanicCatcher).Try
-	// github.com/sourcegraph/conc.ExamplePanicCatcher_callers
+	// github.com/sourcegraph/conc/panics.ExampleCatcher_callers.func1
+	// github.com/sourcegraph/conc/panics.(*Catcher).Try
+	// github.com/sourcegraph/conc/panics.ExampleCatcher_callers
 	// testing.runExample
 	// testing.runExamples
 	// testing.(*M).Run
@@ -60,11 +60,11 @@ func ExamplePanicCatcher_callers() {
 	// runtime.goexit
 }
 
-func TestPanicCatcher(t *testing.T) {
+func TestCatcher(t *testing.T) {
 	err1 := errors.New("SOS")
 
 	t.Run("error", func(t *testing.T) {
-		var pc PanicCatcher
+		var pc Catcher
 		pc.Try(func() { panic(err1) })
 		recovered := pc.Recovered()
 		require.ErrorIs(t, recovered, err1)
@@ -73,11 +73,11 @@ func TestPanicCatcher(t *testing.T) {
 		// and even the structure of the stacktrace is bound to be unstable over time. Just
 		// test a couple of basics.
 		require.Contains(t, recovered.Error(), "SOS", "error should contain the panic message")
-		require.Contains(t, recovered.Error(), "conc.(*PanicCatcher).Try", recovered.Error(), "error should contain the stack trace")
+		require.Contains(t, recovered.Error(), "panics.(*Catcher).Try", recovered.Error(), "error should contain the stack trace")
 	})
 
 	t.Run("not error", func(t *testing.T) {
-		var pc PanicCatcher
+		var pc Catcher
 		pc.Try(func() { panic("definitely not an error") })
 		recovered := pc.Recovered()
 		require.NotErrorIs(t, recovered, err1)
@@ -85,20 +85,20 @@ func TestPanicCatcher(t *testing.T) {
 	})
 
 	t.Run("repanic panics", func(t *testing.T) {
-		var pc PanicCatcher
+		var pc Catcher
 		pc.Try(func() { panic(err1) })
 		require.Panics(t, pc.Repanic)
 	})
 
 	t.Run("repanic does not panic without child panic", func(t *testing.T) {
-		var pc PanicCatcher
+		var pc Catcher
 		pc.Try(func() { _ = 1 })
 		require.NotPanics(t, pc.Repanic)
 	})
 
 	t.Run("is goroutine safe", func(t *testing.T) {
 		var wg sync.WaitGroup
-		var pc PanicCatcher
+		var pc Catcher
 		for i := 0; i < 100; i++ {
 			i := i
 			wg.Add(1)
