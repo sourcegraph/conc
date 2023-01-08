@@ -12,7 +12,7 @@ type ContextPool struct {
 	ctx    context.Context
 	cancel context.CancelFunc
 
-	failFast bool
+	cancelOnError bool
 }
 
 // Go submits a task. If it returns an error, the error will be
@@ -20,7 +20,7 @@ type ContextPool struct {
 func (p *ContextPool) Go(f func(ctx context.Context) error) {
 	p.errorPool.Go(func() error {
 		err := f(p.ctx)
-		if err != nil && p.failFast {
+		if err != nil && p.cancelOnError {
 			// Leaky abstraction warning: We add the error directly because
 			// otherwise, canceling could cause another goroutine to exit and
 			// return an error before this error was added, which breaks the
@@ -41,8 +41,8 @@ func (p *ContextPool) Wait() error {
 
 // WithFirstError configures the pool to only return the first error
 // returned by a task. By default, Wait() will return a combined error.
-// This is particularly useful for ContextPool where all errors after the
-// first are likely to be context.Canceled.
+// This is particularly useful for (*ContextPool).WithCancelOnError(),
+// where all errors after the first are likely to be context.Canceled.
 func (p *ContextPool) WithFirstError() *ContextPool {
 	p.errorPool.WithFirstError()
 	return p
@@ -51,8 +51,13 @@ func (p *ContextPool) WithFirstError() *ContextPool {
 // WithCancelOnError configures the pool to cancel its context as soon as
 // any task returns an error. By default, the pool's context is not
 // canceled until the parent context is canceled.
+//
+// In this case, all errors returned from the pool after the frst will
+// likely be context.Canceled - you may want to also use
+// (*ContextPool).WithFirstError() to configure the pool to only return
+// the first error.
 func (p *ContextPool) WithCancelOnError() *ContextPool {
-	p.failFast = true
+	p.cancelOnError = true
 	return p
 }
 
