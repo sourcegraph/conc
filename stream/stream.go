@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"github.com/sourcegraph/conc"
+	"github.com/sourcegraph/conc/panics"
 	"github.com/sourcegraph/conc/pool"
 )
 
@@ -116,7 +117,7 @@ func (s *Stream) init() {
 // callbacker is responsible for calling the returned callbacks in the order
 // they were submitted. There is only a single instance of callbacker running.
 func (s *Stream) callbacker() {
-	var panicCatcher conc.PanicCatcher
+	var panicCatcher panics.Catcher
 	defer panicCatcher.Repanic()
 
 	// For every scheduled task, read that tasks channel from the queue.

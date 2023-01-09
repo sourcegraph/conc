@@ -2,6 +2,8 @@ package conc
 
 import (
 	"sync"
+
+	"github.com/sourcegraph/conc/panics"
 )
 
 // NewWaitGroup creates a new WaitGroup.
@@ -19,7 +21,7 @@ func NewWaitGroup() *WaitGroup {
 // Also like sync.WaitGroup, it must not be copied after first use.
 type WaitGroup struct {
 	wg sync.WaitGroup
-	pc PanicCatcher
+	pc panics.Catcher
 }
 
 // Go spawns a new goroutine in the WaitGroup.

@@ -1,4 +1,4 @@
-package conc
+package panics
 
 import (
 	"fmt"
@@ -7,23 +7,23 @@ import (
 	"sync/atomic"
 )
 
-// PanicCatcher is used to catch panics. You can execute a function with Try,
+// Catcher is used to catch panics. You can execute a function with Try,
 // which will catch any spawned panic. Try can be called any number of times,
 // from any number of goroutines. Once all calls to Try have completed, you can
-// get the value of the first panic (if any) with Recovered(), or you can just
+// get the value of the first panic (if any) with Value(), or you can just
 // propagate the panic (re-panic) with Repanic().
-type PanicCatcher struct {
+type Catcher struct {
 	recovered atomic.Pointer[RecoveredPanic]
 }
 
 // Try executes f, catching any panic it might spawn. It is safe
 // to call from multiple goroutines simultaneously.
-func (p *PanicCatcher) Try(f func()) {
+func (p *Catcher) Try(f func()) {
 	defer p.tryRecover()
 	f()
 }
 
-func (p *PanicCatcher) tryRecover() {
+func (p *Catcher) tryRecover() {
 	if val := recover(); val != nil {
 		rp := NewRecoveredPanic(1, val)
 		p.recovered.CompareAndSwap(nil, &rp)
@@ -33,7 +33,7 @@ func (p *PanicCatcher) tryRecover() {
 // Repanic panics if any calls to Try caught a panic. It will panic with the
 // value of the first panic caught, wrapped in a RecoveredPanic with caller
 // information.
-func (p *PanicCatcher) Repanic() {
+func (p *Catcher) Repanic() {
 	if val := p.Recovered(); val != nil {
 		panic(val)
 	}
@@ -41,7 +41,7 @@ func (p *PanicCatcher) Repanic() {
 
 // Recovered returns the value of the first panic caught by Try, or nil if
 // no calls to Try panicked.
-func (p *PanicCatcher) Recovered() *RecoveredPanic {
+func (p *Catcher) Recovered() *RecoveredPanic {
 	return p.recovered.Load()
 }
 
