@@ -9,7 +9,7 @@ import (
 	"github.com/sourcegraph/conc/pool"
 )
 
-// Create a new Stream with default settings.
+// New creates a new Stream with default settings.
 func New() *Stream {
 	return &Stream{
 		pool: *pool.New(),
