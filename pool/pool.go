@@ -109,8 +109,12 @@ func (p *Pool) WithErrors() *ErrorPool {
 // settings. We don't want to just dereference the pointer because that makes
 // the copylock lint angry.
 func (p *Pool) deref() Pool {
+	n := cap(p.limiter)
+	if n == 0 {
+		return Pool{}
+	}
 	return Pool{
-		limiter: p.limiter,
+		limiter: make(limiter, n),
 	}
 }
 

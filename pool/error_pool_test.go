@@ -35,6 +35,15 @@ func TestErrorPool(t *testing.T) {
 	err1 := errors.New("err1")
 	err2 := errors.New("err2")
 
+	t.Run("compare pool limiter", func(t *testing.T) {
+		p := New().WithMaxGoroutines(1)
+		require.Equal(t, len(p.limiter), 0)
+		p.Go(func() {})
+		require.Equal(t, len(p.limiter), 1)
+		ep := p.WithErrors()
+		require.Equal(t, len(ep.pool.limiter), 0)
+	})
+
 	t.Run("wait returns no error if no errors", func(t *testing.T) {
 		g := New().WithErrors()
 		g.Go(func() error { return nil })
