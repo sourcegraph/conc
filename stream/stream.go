@@ -43,10 +43,10 @@ type Stream struct {
 	initOnce sync.Once
 }
 
-// Stream task is a task that is submitted to the stream. Submitted tasks will
+// Task is a task that is submitted to the stream. Submitted tasks will
 // be executed concurrently. It returns a callback that will be called after
 // the task has completed.
-type StreamTask func() Callback
+type Task func() Callback
 
 // Callback is a function that is returned by a StreamTask. Callbacks are
 // called in the same order that tasks are submitted.
@@ -57,7 +57,7 @@ type Callback func()
 // returned by the tasks will be executed in the order that the tasks were
 // submitted. All callbacks will be executed by the same goroutine, so no
 // synchronization is necessary between callbacks.
-func (s *Stream) Go(f StreamTask) {
+func (s *Stream) Go(f Task) {
 	s.init()
 
 	// Get a channel from the cache.
