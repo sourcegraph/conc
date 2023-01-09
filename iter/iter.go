@@ -59,7 +59,7 @@ func Map[T, R any](input []T, f func(*T) R) []R {
 
 // MapErr applies f to each element of the input, returning the mapped result
 // and a combined error of all returned errors.
-func MapErr[T any, R any](input []T, f func(*T) (R, error)) ([]R, error) {
+func MapErr[T, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	var (
 		res    = make([]R, len(input))
 		errMux sync.Mutex

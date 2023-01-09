@@ -1,6 +1,5 @@
 ![conch](https://user-images.githubusercontent.com/12631702/210295964-785cc63d-d697-420c-99ff-f492eb81dec9.svg)
 
-
 # `conc`: better structured concurrency for go
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/sourcegraph/conc.svg)](https://pkg.go.dev/github.com/sourcegraph/conc)
@@ -19,25 +18,26 @@ go get github.com/sourcegraph/conc
 # At a glance
 
 - Use [`conc.WaitGroup`](https://pkg.go.dev/github.com/sourcegraph/conc#WaitGroup) if you just want a safer version of `sync.WaitGroup`
-- Use [`pool.Pool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool) if you want a concurrency-limited task runner
-- Use [`pool.ResultPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ResultPool) if you want a concurrent task runner that collects task results
-- Use [`pool.(Result)?ErrorPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ErrorPool) if your tasks are fallible
-- Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ContextPool) if your tasks should be canceled on failure
-- Use [`stream.Stream`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/stream#Stream) if you want to process an ordered stream of tasks in parallel with serial callbacks
-- Use [`iter.Map`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#Map) if you want to concurrently map a slice
-- Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/iter#ForEach) if you want to concurrently iterate over a slice
+- Use [`pool.Pool`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#Pool) if you want a concurrency-limited task runner
+- Use [`pool.ResultPool`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#ResultPool) if you want a concurrent task runner that collects task results
+- Use [`pool.(Result)?ErrorPool`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#ErrorPool) if your tasks are fallible
+- Use [`pool.(Result)?ContextPool`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#ContextPool) if your tasks should be canceled on failure
+- Use [`stream.Stream`](https://pkg.go.dev/github.com/sourcegraph/conc/stream#Stream) if you want to process an ordered stream of tasks in parallel with serial callbacks
+- Use [`iter.Map`](https://pkg.go.dev/github.com/sourcegraph/conc/iter#Map) if you want to concurrently map a slice
+- Use [`iter.ForEach`](https://pkg.go.dev/github.com/sourcegraph/conc/iter#ForEach) if you want to concurrently iterate over a slice
 - Use [`panics.Catcher`](https://pkg.go.dev/github.com/sourcegraph/conc/panics#Catcher) if you want to catch panics in your own goroutines
 
 All pools are created with
-[`pool.New()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#New)
+[`pool.New()`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#New)
 or
-[`pool.NewWithResults[T]()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#NewWithResults),
+[`pool.NewWithResults[T]()`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#NewWithResults),
 then configured with methods:
-- [`p.WithMaxGoroutines()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool.MaxGoroutines) configures the maximum number of goroutines in the pool
-- [`p.WithErrors()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool.WithErrors) configures the pool to run tasks that return errors
-- [`p.WithContext(ctx)`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#Pool.WithContext) configures the pool to run tasks that should be canceled on first error
-- [`p.WithFirstError()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ErrorPool.WithFirstError) configures error pools to only keep the first returned error rather than an aggregated error
-- [`p.WithCollectErrored()`](https://pkg.go.dev/github.com/sourcegraph/conc@v0.1.0/pool#ResultContextPool.WithCollectErrored) configures result pools to only collect results that did not error
+
+- [`p.WithMaxGoroutines()`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#Pool.MaxGoroutines) configures the maximum number of goroutines in the pool
+- [`p.WithErrors()`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#Pool.WithErrors) configures the pool to run tasks that return errors
+- [`p.WithContext(ctx)`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#Pool.WithContext) configures the pool to run tasks that should be canceled on first error
+- [`p.WithFirstError()`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#ErrorPool.WithFirstError) configures error pools to only keep the first returned error rather than an aggregated error
+- [`p.WithCollectErrored()`](https://pkg.go.dev/github.com/sourcegraph/conc/pool#ResultContextPool.WithCollectErrored) configures result pools to only collect results that did not error
 
 # Goals
 
@@ -302,7 +302,7 @@ func process(values []int) {
     for _, value := range values {
         feeder <- value
     }
-
+    close(feeder)
     wg.Wait()
 }
 ```
