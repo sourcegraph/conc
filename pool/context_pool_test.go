@@ -42,19 +42,24 @@ func TestContextPool(t *testing.T) {
 	bgctx := context.Background()
 
 	t.Run("behaves the same as ErrorGroup", func(t *testing.T) {
+		t.Parallel()
+
 		t.Run("wait returns no error if no errors", func(t *testing.T) {
+			t.Parallel()
 			p := New().WithContext(bgctx)
 			p.Go(func(context.Context) error { return nil })
 			require.NoError(t, p.Wait())
 		})
 
 		t.Run("wait errors if func returns error", func(t *testing.T) {
+			t.Parallel()
 			p := New().WithContext(bgctx)
 			p.Go(func(context.Context) error { return err1 })
 			require.ErrorIs(t, p.Wait(), err1)
 		})
 
 		t.Run("wait error is all returned errors", func(t *testing.T) {
+			t.Parallel()
 			p := New().WithErrors().WithContext(bgctx)
 			p.Go(func(context.Context) error { return err1 })
 			p.Go(func(context.Context) error { return nil })
@@ -66,7 +71,10 @@ func TestContextPool(t *testing.T) {
 	})
 
 	t.Run("context error propagates", func(t *testing.T) {
+		t.Parallel()
+
 		t.Run("canceled", func(t *testing.T) {
+			t.Parallel()
 			ctx, cancel := context.WithCancel(bgctx)
 			p := New().WithContext(ctx)
 			p.Go(func(ctx context.Context) error {
@@ -78,6 +86,7 @@ func TestContextPool(t *testing.T) {
 		})
 
 		t.Run("timed out", func(t *testing.T) {
+			t.Parallel()
 			ctx, cancel := context.WithTimeout(bgctx, time.Millisecond)
 			defer cancel()
 			p := New().WithContext(ctx)
@@ -90,6 +99,7 @@ func TestContextPool(t *testing.T) {
 	})
 
 	t.Run("WithCancelOnError", func(t *testing.T) {
+		t.Parallel()
 		p := New().WithContext(bgctx).WithCancelOnError()
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
@@ -104,6 +114,7 @@ func TestContextPool(t *testing.T) {
 	})
 
 	t.Run("no WithCancelOnError", func(t *testing.T) {
+		t.Parallel()
 		p := New().WithContext(bgctx)
 		p.Go(func(ctx context.Context) error {
 			select {
