@@ -3,6 +3,7 @@ linters:
   enable:
     - errcheck
     - gosimple
+    - godot
     - govet
     - ineffassign
     - staticcheck
