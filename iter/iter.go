@@ -27,16 +27,17 @@ func ForEach[T any](input []T, f func(*T)) {
 // index of the element to the callback.
 func ForEachIdx[T any](input []T, f func(int, *T)) {
 	numTasks := runtime.GOMAXPROCS(0)
-	if numTasks > len(input) {
+	numInput := len(input)
+	if numTasks > numInput {
 		// No more tasks than the number of input items.
-		numTasks = len(input)
+		numTasks = numInput
 	}
 
 	var idx atomic.Int64
 	// Create the task outside the loop to avoid extra closure allocations.
 	task := func() {
 		i := int(idx.Add(1) - 1)
-		for ; i < len(input); i = int(idx.Add(1) - 1) {
+		for ; i < numInput; i = int(idx.Add(1) - 1) {
 			f(i, &input[i])
 		}
 	}
