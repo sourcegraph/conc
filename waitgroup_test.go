@@ -28,11 +28,13 @@ func TestWaitGroup(t *testing.T) {
 	t.Parallel()
 
 	t.Run("ctor", func(t *testing.T) {
+		t.Parallel()
 		wg := NewWaitGroup()
 		require.IsType(t, &WaitGroup{}, wg)
 	})
 
 	t.Run("all spawned run", func(t *testing.T) {
+		t.Parallel()
 		var count atomic.Int64
 		var wg WaitGroup
 		for i := 0; i < 100; i++ {
@@ -45,7 +47,10 @@ func TestWaitGroup(t *testing.T) {
 	})
 
 	t.Run("panic", func(t *testing.T) {
+		t.Parallel()
+
 		t.Run("is propagated", func(t *testing.T) {
+			t.Parallel()
 			var wg WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
@@ -54,6 +59,7 @@ func TestWaitGroup(t *testing.T) {
 		})
 
 		t.Run("one is propagated", func(t *testing.T) {
+			t.Parallel()
 			var wg WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
@@ -65,6 +71,7 @@ func TestWaitGroup(t *testing.T) {
 		})
 
 		t.Run("nonpanics do not overwrite panic", func(t *testing.T) {
+			t.Parallel()
 			var wg WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
@@ -76,6 +83,7 @@ func TestWaitGroup(t *testing.T) {
 		})
 
 		t.Run("nonpanics run successfully", func(t *testing.T) {
+			t.Parallel()
 			var wg WaitGroup
 			var i atomic.Int64
 			wg.Go(func() {

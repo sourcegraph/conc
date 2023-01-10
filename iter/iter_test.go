@@ -12,6 +12,7 @@ func TestForEachIdx(t *testing.T) {
 	t.Parallel()
 
 	t.Run("empty", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{}
 			ForEachIdx(ints, func(i int, val *int) {
@@ -22,6 +23,7 @@ func TestForEachIdx(t *testing.T) {
 	})
 
 	t.Run("panic is propagated", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{1}
 			ForEachIdx(ints, func(i int, val *int) {
@@ -32,6 +34,7 @@ func TestForEachIdx(t *testing.T) {
 	})
 
 	t.Run("mutating inputs is fine", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		ForEachIdx(ints, func(i int, val *int) {
 			*val += 1
@@ -40,6 +43,7 @@ func TestForEachIdx(t *testing.T) {
 	})
 
 	t.Run("huge inputs", func(t *testing.T) {
+		t.Parallel()
 		ints := make([]int, 10000)
 		ForEachIdx(ints, func(i int, val *int) {
 			*val = i
@@ -56,6 +60,7 @@ func TestForEach(t *testing.T) {
 	t.Parallel()
 
 	t.Run("empty", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{}
 			ForEach(ints, func(val *int) {
@@ -66,6 +71,7 @@ func TestForEach(t *testing.T) {
 	})
 
 	t.Run("panic is propagated", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{1}
 			ForEach(ints, func(val *int) {
@@ -76,6 +82,7 @@ func TestForEach(t *testing.T) {
 	})
 
 	t.Run("mutating inputs is fine", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		ForEach(ints, func(val *int) {
 			*val += 1
@@ -84,6 +91,7 @@ func TestForEach(t *testing.T) {
 	})
 
 	t.Run("huge inputs", func(t *testing.T) {
+		t.Parallel()
 		ints := make([]int, 10000)
 		ForEach(ints, func(val *int) {
 			*val = 1
@@ -100,6 +108,7 @@ func TestMap(t *testing.T) {
 	t.Parallel()
 
 	t.Run("empty", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{}
 			Map(ints, func(val *int) int {
@@ -110,6 +119,7 @@ func TestMap(t *testing.T) {
 	})
 
 	t.Run("panic is propagated", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{1}
 			Map(ints, func(val *int) int {
@@ -120,6 +130,7 @@ func TestMap(t *testing.T) {
 	})
 
 	t.Run("mutating inputs is fine, though not recommended", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		Map(ints, func(val *int) int {
 			*val += 1
@@ -129,6 +140,7 @@ func TestMap(t *testing.T) {
 	})
 
 	t.Run("basic increment", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		res := Map(ints, func(val *int) int {
 			return *val + 1
@@ -138,6 +150,7 @@ func TestMap(t *testing.T) {
 	})
 
 	t.Run("huge inputs", func(t *testing.T) {
+		t.Parallel()
 		ints := make([]int, 10000)
 		res := Map(ints, func(val *int) int {
 			return 1
@@ -154,6 +167,7 @@ func TestMapErr(t *testing.T) {
 	t.Parallel()
 
 	t.Run("empty", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{}
 			res, err := MapErr(ints, func(val *int) (int, error) {
@@ -166,6 +180,7 @@ func TestMapErr(t *testing.T) {
 	})
 
 	t.Run("panic is propagated", func(t *testing.T) {
+		t.Parallel()
 		f := func() {
 			ints := []int{1}
 			_, _ = MapErr(ints, func(val *int) (int, error) {
@@ -176,6 +191,7 @@ func TestMapErr(t *testing.T) {
 	})
 
 	t.Run("mutating inputs is fine, though not recommended", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		res, err := MapErr(ints, func(val *int) (int, error) {
 			*val += 1
@@ -187,6 +203,7 @@ func TestMapErr(t *testing.T) {
 	})
 
 	t.Run("basic increment", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		res, err := MapErr(ints, func(val *int) (int, error) {
 			return *val + 1, nil
@@ -200,6 +217,7 @@ func TestMapErr(t *testing.T) {
 	err2 := errors.New("error1")
 
 	t.Run("error is propagated", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		res, err := MapErr(ints, func(val *int) (int, error) {
 			if *val == 3 {
@@ -213,6 +231,7 @@ func TestMapErr(t *testing.T) {
 	})
 
 	t.Run("multiple errors are propagated", func(t *testing.T) {
+		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
 		res, err := MapErr(ints, func(val *int) (int, error) {
 			if *val == 3 {
@@ -230,6 +249,7 @@ func TestMapErr(t *testing.T) {
 	})
 
 	t.Run("huge inputs", func(t *testing.T) {
+		t.Parallel()
 		ints := make([]int, 10000)
 		res := Map(ints, func(val *int) int {
 			return 1

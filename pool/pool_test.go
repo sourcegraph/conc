@@ -71,6 +71,7 @@ func TestPool(t *testing.T) {
 	})
 
 	t.Run("propagate panic", func(t *testing.T) {
+		t.Parallel()
 		g := New()
 		for i := 0; i < 10; i++ {
 			i := i
@@ -84,6 +85,7 @@ func TestPool(t *testing.T) {
 	})
 
 	t.Run("panics do not exhaust goroutines", func(t *testing.T) {
+		t.Parallel()
 		g := New().WithMaxGoroutines(2)
 		for i := 0; i < 10; i++ {
 			g.Go(func() {
@@ -94,10 +96,12 @@ func TestPool(t *testing.T) {
 	})
 
 	t.Run("panics on invalid WithMaxGoroutines", func(t *testing.T) {
+		t.Parallel()
 		require.Panics(t, func() { New().WithMaxGoroutines(0) })
 	})
 
 	t.Run("returns correct MaxGoroutines", func(t *testing.T) {
+		t.Parallel()
 		p := New().WithMaxGoroutines(42)
 		require.Equal(t, 42, p.MaxGoroutines())
 	})

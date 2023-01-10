@@ -32,6 +32,7 @@ func TestResultGroup(t *testing.T) {
 	t.Parallel()
 
 	t.Run("basic", func(t *testing.T) {
+		t.Parallel()
 		g := NewWithResults[int]()
 		expected := []int{}
 		for i := 0; i < 100; i++ {
