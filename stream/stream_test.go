@@ -36,6 +36,7 @@ func TestStream(t *testing.T) {
 	t.Parallel()
 
 	t.Run("simple", func(t *testing.T) {
+		t.Parallel()
 		s := New()
 		var res []int
 		for i := 0; i < 5; i++ {
@@ -52,6 +53,7 @@ func TestStream(t *testing.T) {
 	})
 
 	t.Run("max goroutines", func(t *testing.T) {
+		t.Parallel()
 		s := New().WithMaxGoroutines(5)
 		var currentTaskCount atomic.Int64
 		var currentCallbackCount atomic.Int64
@@ -81,6 +83,7 @@ func TestStream(t *testing.T) {
 	})
 
 	t.Run("panic in task is propagated", func(t *testing.T) {
+		t.Parallel()
 		s := New().WithMaxGoroutines(5)
 		s.Go(func() Callback {
 			panic("something really bad happened in the task")
@@ -89,6 +92,7 @@ func TestStream(t *testing.T) {
 	})
 
 	t.Run("panic in callback is propagated", func(t *testing.T) {
+		t.Parallel()
 		s := New().WithMaxGoroutines(5)
 		s.Go(func() Callback {
 			return func() {
@@ -99,6 +103,7 @@ func TestStream(t *testing.T) {
 	})
 
 	t.Run("panic in callback does not block producers", func(t *testing.T) {
+		t.Parallel()
 		s := New().WithMaxGoroutines(5)
 		s.Go(func() Callback {
 			return func() {

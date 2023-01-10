@@ -20,8 +20,10 @@ func TestResultContextPool(t *testing.T) {
 	err2 := errors.New("err2")
 
 	t.Run("behaves the same as ErrorGroup", func(t *testing.T) {
+		t.Parallel()
 		bgctx := context.Background()
 		t.Run("wait returns no error if no errors", func(t *testing.T) {
+			t.Parallel()
 			g := NewWithResults[int]().WithContext(bgctx)
 			g.Go(func(context.Context) (int, error) { return 0, nil })
 			res, err := g.Wait()
@@ -30,6 +32,7 @@ func TestResultContextPool(t *testing.T) {
 		})
 
 		t.Run("wait error if func returns error", func(t *testing.T) {
+			t.Parallel()
 			g := NewWithResults[int]().WithContext(bgctx)
 			g.Go(func(context.Context) (int, error) { return 0, err1 })
 			res, err := g.Wait()
@@ -38,6 +41,7 @@ func TestResultContextPool(t *testing.T) {
 		})
 
 		t.Run("wait error is all returned errors", func(t *testing.T) {
+			t.Parallel()
 			g := NewWithResults[int]().WithErrors().WithContext(bgctx)
 			g.Go(func(context.Context) (int, error) { return 0, err1 })
 			g.Go(func(context.Context) (int, error) { return 0, nil })
@@ -100,6 +104,7 @@ func TestResultContextPool(t *testing.T) {
 	})
 
 	t.Run("WithCollectErrored", func(t *testing.T) {
+		t.Parallel()
 		g := NewWithResults[int]().WithContext(context.Background()).WithCollectErrored()
 		g.Go(func(context.Context) (int, error) { return 0, err1 })
 		res, err := g.Wait()

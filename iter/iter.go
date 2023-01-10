@@ -29,7 +29,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) {
 	numTasks := runtime.GOMAXPROCS(0)
 	numInput := len(input)
 	if numTasks > numInput {
-		// No more tasks than the number of input items
+		// No more tasks than the number of input items.
 		numTasks = numInput
 	}
 

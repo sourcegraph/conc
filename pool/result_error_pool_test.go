@@ -18,6 +18,7 @@ func TestResultErrorGroup(t *testing.T) {
 	err2 := errors.New("err2")
 
 	t.Run("wait returns no error if no errors", func(t *testing.T) {
+		t.Parallel()
 		g := NewWithResults[int]().WithErrors()
 		g.Go(func() (int, error) { return 1, nil })
 		res, err := g.Wait()
@@ -26,6 +27,7 @@ func TestResultErrorGroup(t *testing.T) {
 	})
 
 	t.Run("wait error if func returns error", func(t *testing.T) {
+		t.Parallel()
 		g := NewWithResults[int]().WithErrors()
 		g.Go(func() (int, error) { return 0, err1 })
 		res, err := g.Wait()
@@ -34,6 +36,7 @@ func TestResultErrorGroup(t *testing.T) {
 	})
 
 	t.Run("WithCollectErrored", func(t *testing.T) {
+		t.Parallel()
 		g := NewWithResults[int]().WithErrors().WithCollectErrored()
 		g.Go(func() (int, error) { return 0, err1 })
 		res, err := g.Wait()
@@ -68,6 +71,7 @@ func TestResultErrorGroup(t *testing.T) {
 	})
 
 	t.Run("wait error is all returned errors", func(t *testing.T) {
+		t.Parallel()
 		g := NewWithResults[int]().WithErrors()
 		g.Go(func() (int, error) { return 0, err1 })
 		g.Go(func() (int, error) { return 0, nil })
@@ -79,6 +83,7 @@ func TestResultErrorGroup(t *testing.T) {
 	})
 
 	t.Run("limit", func(t *testing.T) {
+		t.Parallel()
 		for _, maxConcurrency := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxConcurrency), func(t *testing.T) {
 				maxConcurrency := maxConcurrency // copy

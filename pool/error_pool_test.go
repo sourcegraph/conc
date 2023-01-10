@@ -36,18 +36,21 @@ func TestErrorPool(t *testing.T) {
 	err2 := errors.New("err2")
 
 	t.Run("wait returns no error if no errors", func(t *testing.T) {
+		t.Parallel()
 		g := New().WithErrors()
 		g.Go(func() error { return nil })
 		require.NoError(t, g.Wait())
 	})
 
 	t.Run("wait error if func returns error", func(t *testing.T) {
+		t.Parallel()
 		g := New().WithErrors()
 		g.Go(func() error { return err1 })
 		require.ErrorIs(t, g.Wait(), err1)
 	})
 
 	t.Run("wait error is all returned errors", func(t *testing.T) {
+		t.Parallel()
 		g := New().WithErrors()
 		g.Go(func() error { return err1 })
 		g.Go(func() error { return nil })
@@ -58,6 +61,7 @@ func TestErrorPool(t *testing.T) {
 	})
 
 	t.Run("propagates panics", func(t *testing.T) {
+		t.Parallel()
 		g := New().WithErrors()
 		for i := 0; i < 10; i++ {
 			i := i
