@@ -19,7 +19,7 @@ func New() *Stream {
 // Stream is used to execute a stream of tasks concurrently while maintaining
 // the order of the results.
 //
-// To use a stream, you submit some number of `StreamTask`s, each of which
+// To use a stream, you submit some number of `Task`s, each of which
 // return a callback. Each task will be executed concurrently in the stream's
 // associated Pool, and the callbacks will be executed sequentially in the
 // order the tasks were submitted.
@@ -48,7 +48,7 @@ type Stream struct {
 // the task has completed.
 type Task func() Callback
 
-// Callback is a function that is returned by a StreamTask. Callbacks are
+// Callback is a function that is returned by a Task. Callbacks are
 // called in the same order that tasks are submitted.
 type Callback func()
 
