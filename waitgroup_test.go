@@ -98,5 +98,46 @@ func TestWaitGroup(t *testing.T) {
 			require.Panics(t, wg.Wait)
 			require.Equal(t, int64(2), i.Load())
 		})
+
+		t.Run("is caught by waitsafe", func(t *testing.T) {
+			t.Parallel()
+			var wg WaitGroup
+			wg.Go(func() {
+				panic("super bad thing")
+			})
+			p := wg.WaitSafe()
+			require.Contains(t, p.Error(), "super bad thing", p.Error())
+		})
+
+		t.Run("one is caught by waitsafe", func(t *testing.T) {
+			t.Parallel()
+			var wg WaitGroup
+			wg.Go(func() {
+				panic("one bad thing")
+			})
+			wg.Go(func() {
+				panic("another bad thing")
+			})
+			p := wg.WaitSafe()
+			require.Contains(t, p.Error(), "bad thing", p.Error())
+		})
+
+		t.Run("nonpanics run successfully with waitsafe", func(t *testing.T) {
+			t.Parallel()
+			var wg WaitGroup
+			var i atomic.Int64
+			wg.Go(func() {
+				i.Add(1)
+			})
+			wg.Go(func() {
+				panic("super bad thing")
+			})
+			wg.Go(func() {
+				i.Add(1)
+			})
+			p := wg.WaitSafe()
+			require.Contains(t, p.Error(), "super bad thing", p.Error())
+			require.Equal(t, int64(2), i.Load())
+		})
 	})
 }
