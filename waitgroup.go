@@ -42,9 +42,9 @@ func (h *WaitGroup) Wait() {
 	h.pc.Repanic()
 }
 
-// WaitSafe will block until all goroutines spawned with Go exit and will
-// return a *panics.RecoveredPanic if one of the child goroutines panics.
-func (h *WaitGroup) WaitSafe() *panics.RecoveredPanic {
+// WaitAndRecover will block until all goroutines spawned with Go exit and
+// will return a *panics.RecoveredPanic if one of the child goroutines panics.
+func (h *WaitGroup) WaitAndRecover() *panics.RecoveredPanic {
 	h.wg.Wait()
 
 	// Return a recovered panic if we caught one from a child goroutine.
