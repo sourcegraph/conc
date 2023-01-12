@@ -14,15 +14,24 @@ import (
 type ErrorPool struct {
 	pool Pool
 
-	onlyFirstError bool
+	onlyFirstError   bool
+	exitOnFirstError bool
 
-	mu   sync.Mutex
+	mu   sync.RWMutex
 	errs error
 }
 
 // Go submits a task to the pool.
 func (p *ErrorPool) Go(f func() error) {
+	if p.shouldExitOnFirstError() {
+		return
+	}
+
 	p.pool.Go(func() {
+		if p.shouldExitOnFirstError() {
+			return
+		}
+
 		p.addErr(f())
 	})
 }
@@ -49,6 +58,13 @@ func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
 // returned by a task. By default, Wait() will return a combined error.
 func (p *ErrorPool) WithFirstError() *ErrorPool {
 	p.onlyFirstError = true
+	return p
+}
+
+// WithExitOnFirstError configures the pool to exit on the first error
+// encountered. By default, Wait() will always run Go().
+func (p *ErrorPool) WithExitOnFirstError() *ErrorPool {
+	p.exitOnFirstError = true
 	return p
 }
 
@@ -81,4 +97,14 @@ func (p *ErrorPool) addErr(err error) {
 		}
 		p.mu.Unlock()
 	}
+}
+
+func (p *ErrorPool) shouldExitOnFirstError() bool {
+	if !p.exitOnFirstError {
+		return false
+	}
+
+	p.mu.RLock()
+	defer p.mu.RUnlock()
+	return p.errs != nil
 }

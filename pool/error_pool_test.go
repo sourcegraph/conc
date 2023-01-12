@@ -100,3 +100,28 @@ func TestErrorPool(t *testing.T) {
 		}
 	})
 }
+
+func TestErrorPool_WithExitOnFirstError(t *testing.T) {
+	var (
+		p        = New().WithErrors().WithExitOnFirstError()
+		runCount = atomic.Int32{} // should be 3
+	)
+	for i := 0; i < 5; i++ {
+		time.Sleep(time.Millisecond)
+
+		i := i
+		p.Go(func() error {
+			t.Log(i)
+			runCount.Add(1)
+			if i == 2 {
+				return errors.New("demo error")
+			}
+			return nil
+		})
+	}
+	_ = p.Wait()
+
+	if c := runCount.Load(); c != 3 {
+		t.Errorf("runCount should be 3, while got %d", c)
+	}
+}
