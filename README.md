@@ -140,7 +140,7 @@ func main() {
     go func() {
         defer func() {
             if v := recover(); v != nil {
-                done <- caughtPanicError{
+                done <- &caughtPanicError{
                     val: v,
                     stack: debug.Stack()
                 }
