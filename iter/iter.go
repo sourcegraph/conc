@@ -9,6 +9,13 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
+// Iterator can be used to control iterations like ForEach.
+// The zero value is safe to use with reasonable defaults.
+type Iterator[T any] struct {
+	// Concurrency, if unset, defaults to runtime.GOMAXPROCS(0).
+	Concurrency int
+}
+
 // ForEach executes f in parallel over each element in input.
 //
 // It is safe to mutate the input parameter, which makes it
@@ -17,20 +24,27 @@ import (
 // ForEach always uses at most runtime.GOMAXPROCS goroutines.
 // It takes roughly 2µs to start up the goroutines and adds
 // an overhead of roughly 50ns per element of input.
-func ForEach[T any](input []T, f func(*T)) {
-	ForEachIdx(input, func(_ int, t *T) {
+func ForEach[T any](input []T, f func(*T)) { Iterator[T]{}.ForEach(input, f) }
+
+func (iter Iterator[T]) ForEach(input []T, f func(*T)) {
+	iter.ForEachIdx(input, func(_ int, t *T) {
 		f(t)
 	})
 }
 
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
-func ForEachIdx[T any](input []T, f func(int, *T)) {
-	numTasks := runtime.GOMAXPROCS(0)
+func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(input, f) }
+
+func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
+	if iter.Concurrency == 0 {
+		iter.Concurrency = runtime.GOMAXPROCS(0)
+	}
+
 	numInput := len(input)
-	if numTasks > numInput {
-		// No more tasks than the number of input items.
-		numTasks = numInput
+	if iter.Concurrency > numInput {
+		// No more concurrent tasks than the number of input items.
+		iter.Concurrency = numInput
 	}
 
 	var idx atomic.Int64
@@ -43,7 +57,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) {
 	}
 
 	var wg conc.WaitGroup
-	for i := 0; i < numTasks; i++ {
+	for i := 0; i < iter.Concurrency; i++ {
 		wg.Go(task)
 	}
 	wg.Wait()
