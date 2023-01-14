@@ -383,7 +383,7 @@ Process an ordered stream concurrently:
 <td>
 
 ```go
-func mapStream
+func mapStream(
     in chan int,
     out chan int,
     f func(int) int,
@@ -409,9 +409,10 @@ func mapStream
     go func() {
         defer readerWg.Done()
         for result := range taskResults {
-            out <- result
+            item := <-result
+            out <- item
         }
-    }
+    }()
 
     // Feed the workers with tasks
     for elem := range in {
