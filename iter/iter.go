@@ -9,10 +9,16 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
-// Iterator can be used to control iterations like ForEach.
-// The zero value is safe to use with reasonable defaults.
+// Iterator can be used to configure the behaviour of ForEach
+// and ForEachIdx. The zero value is safe to use with reasonable
+// defaults.
+//
+// Iterator is safe for reuse and concurrent use.
 type Iterator[T any] struct {
-	// Concurrency, if unset, defaults to runtime.GOMAXPROCS(0).
+	// Concurrency controls the maximum number of goroutines
+	// to use on this Iterator's methods.
+	//
+	// If unset, Concurrency defaults to runtime.GOMAXPROCS(0).
 	Concurrency int
 }
 
@@ -23,9 +29,18 @@ type Iterator[T any] struct {
 //
 // ForEach always uses at most runtime.GOMAXPROCS goroutines.
 // It takes roughly 2µs to start up the goroutines and adds
-// an overhead of roughly 50ns per element of input.
+// an overhead of roughly 50ns per element of input. For
+// configurable concurrency, use a custom Iterator.
 func ForEach[T any](input []T, f func(*T)) { Iterator[T]{}.ForEach(input, f) }
 
+// ForEach executes f in parallel over each element in input,
+// using up to the Iterator's configured concurrency.
+//
+// It is safe to mutate the input parameter, which makes it
+// possible to map in place.
+//
+// It takes roughly 2µs to start up the goroutines and adds
+// an overhead of roughly 50ns per element of input.
 func (iter Iterator[T]) ForEach(input []T, f func(*T)) {
 	iter.ForEachIdx(input, func(_ int, t *T) {
 		f(t)
@@ -36,6 +51,8 @@ func (iter Iterator[T]) ForEach(input []T, f func(*T)) {
 // index of the element to the callback.
 func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(input, f) }
 
+// ForEachIdx is the same as ForEach except it also provides the
+// index of the element to the callback.
 func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 	if iter.Concurrency == 0 {
 		iter.Concurrency = runtime.GOMAXPROCS(0)
