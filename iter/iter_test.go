@@ -1,7 +1,6 @@
 package iter
 
 import (
-	"runtime"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -26,11 +25,10 @@ func TestIterator(t *testing.T) {
 		assert.Equal(t, iterator.Concurrency, 999)
 	})
 
-	t.Run("allows more than runtime.GOMAXPROCS(0) concurrent tasks", func(t *testing.T) {
+	t.Run("allows more than defaultConcurrency() concurrent tasks", func(t *testing.T) {
 		t.Parallel()
 
-		wantConcurrency := 2 * runtime.GOMAXPROCS(0)
-		iterator := Iterator[int]{Concurrency: wantConcurrency}
+		wantConcurrency := 2 * defaultConcurrency()
 
 		testDone, forEachDone := make(chan struct{}), make(chan struct{})
 
@@ -39,13 +37,17 @@ func TestIterator(t *testing.T) {
 			// Run in a goroutine because we don't allow the callbacks
 			// to return until the conclusion of the test, so ForEach
 			// will block.
-			iterator.ForEach(make([]int, wantConcurrency), func(t *int) {
+			tasks := make([]int, wantConcurrency)
+			iterator := Iterator[int]{Concurrency: wantConcurrency}
+
+			iterator.ForEach(tasks, func(t *int) {
 				concurrentTasks.Add(1)
 				// Block until conclusion of test. This ensures that
 				// all jobs must be submitted, despite the input
 				// being larger than runtime.GOMAXPROCS(0)
 				<-testDone
 			})
+
 			// Signal that iterator.ForEach has exited.
 			forEachDone <- struct{}{}
 		}()

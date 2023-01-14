@@ -9,6 +9,10 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
+// defaultConcurrency returns the default maximum concurrency to
+// use within this package.
+func defaultConcurrency() int { return runtime.GOMAXPROCS(0) }
+
 // Iterator can be used to configure the behaviour of ForEach
 // and ForEachIdx. The zero value is safe to use with reasonable
 // defaults.
@@ -55,7 +59,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(in
 // index of the element to the callback.
 func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 	if iter.Concurrency == 0 {
-		iter.Concurrency = runtime.GOMAXPROCS(0)
+		iter.Concurrency = defaultConcurrency()
 	}
 
 	numInput := len(input)
