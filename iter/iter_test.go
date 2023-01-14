@@ -17,18 +17,18 @@ func TestIterator(t *testing.T) {
 	t.Run("safe for reuse", func(t *testing.T) {
 		t.Parallel()
 
-		iterator := Iterator[int]{Concurrency: 999}
+		iterator := Iterator[int]{MaxGoroutines: 999}
 
 		// iter.Concurrency > numInput case that updates iter.Concurrency
 		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
 
-		assert.Equal(t, iterator.Concurrency, 999)
+		assert.Equal(t, iterator.MaxGoroutines, 999)
 	})
 
-	t.Run("allows more than defaultConcurrency() concurrent tasks", func(t *testing.T) {
+	t.Run("allows more than defaultMaxGoroutines() concurrent tasks", func(t *testing.T) {
 		t.Parallel()
 
-		wantConcurrency := 2 * defaultConcurrency()
+		wantConcurrency := 2 * defaultMaxGoroutines()
 
 		testDone, forEachDone := make(chan struct{}), make(chan struct{})
 
@@ -38,7 +38,7 @@ func TestIterator(t *testing.T) {
 			// to return until the conclusion of the test, so ForEach
 			// will block.
 			tasks := make([]int, wantConcurrency)
-			iterator := Iterator[int]{Concurrency: wantConcurrency}
+			iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
 
 			iterator.ForEach(tasks, func(t *int) {
 				concurrentTasks.Add(1)

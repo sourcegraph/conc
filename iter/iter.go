@@ -9,9 +9,9 @@ import (
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
-// defaultConcurrency returns the default maximum concurrency to
-// use within this package.
-func defaultConcurrency() int { return runtime.GOMAXPROCS(0) }
+// defaultMaxGoroutines returns the default maximum number of
+// goroutines to use within this package.
+func defaultMaxGoroutines() int { return runtime.GOMAXPROCS(0) }
 
 // Iterator can be used to configure the behaviour of ForEach
 // and ForEachIdx. The zero value is safe to use with reasonable
@@ -19,11 +19,11 @@ func defaultConcurrency() int { return runtime.GOMAXPROCS(0) }
 //
 // Iterator is safe for reuse and concurrent use.
 type Iterator[T any] struct {
-	// Concurrency controls the maximum number of goroutines
+	// MaxGoroutines controls the maximum number of goroutines
 	// to use on this Iterator's methods.
 	//
-	// If unset, Concurrency defaults to runtime.GOMAXPROCS(0).
-	Concurrency int
+	// If unset, MaxGoroutines defaults to runtime.GOMAXPROCS(0).
+	MaxGoroutines int
 }
 
 // ForEach executes f in parallel over each element in input.
@@ -34,11 +34,12 @@ type Iterator[T any] struct {
 // ForEach always uses at most runtime.GOMAXPROCS goroutines.
 // It takes roughly 2µs to start up the goroutines and adds
 // an overhead of roughly 50ns per element of input. For
-// configurable concurrency, use a custom Iterator.
+// a configurable goroutine limit, use a custom Iterator.
 func ForEach[T any](input []T, f func(*T)) { Iterator[T]{}.ForEach(input, f) }
 
 // ForEach executes f in parallel over each element in input,
-// using up to the Iterator's configured concurrency.
+// using up to the Iterator's configured maximum number of
+// goroutines.
 //
 // It is safe to mutate the input parameter, which makes it
 // possible to map in place.
@@ -58,14 +59,14 @@ func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(in
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
 func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
-	if iter.Concurrency == 0 {
-		iter.Concurrency = defaultConcurrency()
+	if iter.MaxGoroutines == 0 {
+		iter.MaxGoroutines = defaultMaxGoroutines()
 	}
 
 	numInput := len(input)
-	if iter.Concurrency > numInput {
+	if iter.MaxGoroutines > numInput {
 		// No more concurrent tasks than the number of input items.
-		iter.Concurrency = numInput
+		iter.MaxGoroutines = numInput
 	}
 
 	var idx atomic.Int64
@@ -78,7 +79,7 @@ func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 	}
 
 	var wg conc.WaitGroup
-	for i := 0; i < iter.Concurrency; i++ {
+	for i := 0; i < iter.MaxGoroutines; i++ {
 		wg.Go(task)
 	}
 	wg.Wait()
