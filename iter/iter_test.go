@@ -5,8 +5,24 @@ import (
 	"testing"
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func TestIterator(t *testing.T) {
+	t.Parallel()
+
+	t.Run("safe for reuse", func(t *testing.T) {
+		t.Parallel()
+
+		iterator := Iterator[int]{Concurrency: 999}
+
+		// iter.Concurrency > numInput case that updates iter.Concurrency
+		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
+
+		assert.Equal(t, iterator.Concurrency, 999)
+	})
+}
 
 func TestForEachIdx(t *testing.T) {
 	t.Parallel()
