@@ -32,8 +32,7 @@ func TestIterator(t *testing.T) {
 		wantConcurrency := 2 * runtime.GOMAXPROCS(0)
 		iterator := Iterator[int]{Concurrency: wantConcurrency}
 
-		done := make(chan struct{})
-		t.Cleanup(func() { close(done) })
+		testDone, forEachDone := make(chan struct{}), make(chan struct{})
 
 		var concurrentTasks atomic.Int64
 		go func() {
@@ -45,18 +44,35 @@ func TestIterator(t *testing.T) {
 				// Block until conclusion of test. This ensures that
 				// all jobs must be submitted, despite the input
 				// being larger than runtime.GOMAXPROCS(0)
-				<-done
+				<-testDone
 			})
+			// Signal that iterator.ForEach has exited.
+			forEachDone <- struct{}{}
 		}()
 
 		// Wait up to ~3 seconds for all jobs to be submitted. Realistically,
 		// this will take less than a second.
 		var ms int
 		for ms < 3000 && concurrentTasks.Load() < int64(wantConcurrency) {
-			ms += 1
-			time.Sleep(time.Millisecond)
+			select {
+			case <-forEachDone:
+				t.Error("iterator.ForEach exited before tasks were all submitted")
+			default:
+				ms += 1
+				time.Sleep(time.Millisecond)
+			}
 		}
 		assert.Equal(t, concurrentTasks.Load(), int64(wantConcurrency))
+
+		// Allow all tasks to return, and make sure iterator.ForEach also
+		// returns.
+		close(testDone)
+		select {
+		case <-forEachDone:
+		case <-time.After(1 * time.Second):
+			t.Error("iterator.ForEach did not exit within 1 second")
+		}
+		close(forEachDone)
 	})
 }
 
