@@ -1,8 +1,11 @@
 package iter
 
 import (
+	"runtime"
 	"strconv"
+	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 	"github.com/stretchr/testify/assert"
@@ -21,6 +24,39 @@ func TestIterator(t *testing.T) {
 		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
 
 		assert.Equal(t, iterator.Concurrency, 999)
+	})
+
+	t.Run("allows more than runtime.GOMAXPROCS(0) concurrent tasks", func(t *testing.T) {
+		t.Parallel()
+
+		wantConcurrency := 2 * runtime.GOMAXPROCS(0)
+		iterator := Iterator[int]{Concurrency: wantConcurrency}
+
+		done := make(chan struct{})
+		t.Cleanup(func() { close(done) })
+
+		var concurrentTasks atomic.Int64
+		go func() {
+			// Run in a goroutine because we don't allow the callbacks
+			// to return until the conclusion of the test, so ForEach
+			// will block.
+			iterator.ForEach(make([]int, wantConcurrency), func(t *int) {
+				concurrentTasks.Add(1)
+				// Block until conclusion of test. This ensures that
+				// all jobs must be submitted, despite the input
+				// being larger than runtime.GOMAXPROCS(0)
+				<-done
+			})
+		}()
+
+		// Wait up to ~3 seconds for all jobs to be submitted. Realistically,
+		// this will take less than a second.
+		var ms int
+		for ms < 3000 && concurrentTasks.Load() < int64(wantConcurrency) {
+			ms += 1
+			time.Sleep(time.Millisecond)
+		}
+		assert.Equal(t, concurrentTasks.Load(), int64(wantConcurrency))
 	})
 }
 
