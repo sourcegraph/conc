@@ -115,58 +115,15 @@ the code more difficult to read, so `conc` does this for you.
 
 <table>
 <tr>
-<th><code>stdlib</code></th>
-<th><code>conc</code></th>
-</tr>
-<tr>
 <td>
 
-```go
-type caughtPanicError struct {
-    val   any
-    stack []byte
-}
+https://github.com/sourcegraph/conc/blob/main/examples/example1_test.go#L15-39
 
-func (e *caughtPanicError) Error() string {
-    return fmt.Sprintf(
-        "panic: %q\n%s",
-        e.val,
-        string(e.stack)
-    )
-}
-
-func main() {
-    done := make(chan error)
-    go func() {
-        defer func() {
-            if v := recover(); v != nil {
-                done <- &caughtPanicError{
-                    val: v,
-                    stack: debug.Stack()
-                }
-            } else {
-                done <- nil
-            }
-        }()
-        doSomethingThatMightPanic()
-    }()
-    err := <-done
-    if err != nil {
-        panic(err)
-    }
-}
-```
 </td>
 <td>
 
-```go
-func main() {
-    var wg conc.WaitGroup
-    wg.Go(doSomethingThatMightPanic)
-    // panics with a nice stacktrace
-    wg.Wait()
-}
-```
+https://github.com/sourcegraph/conc/blob/main/examples/example1_test.go#L41-46
+
 </td>
 </tr>
 </table>
