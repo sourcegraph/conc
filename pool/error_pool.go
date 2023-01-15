@@ -20,7 +20,8 @@ type ErrorPool struct {
 	errs error
 }
 
-// Go submits a task to the pool.
+// Go submits a task to the pool. If all goroutines in the pool
+// are busy, a call to Go() will block until the task can be started.
 func (p *ErrorPool) Go(f func() error) {
 	p.pool.Go(func() {
 		p.addErr(f())

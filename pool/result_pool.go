@@ -24,7 +24,8 @@ type ResultPool[T any] struct {
 	agg  resultAggregator[T]
 }
 
-// Go submits a task to the pool.
+// Go submits a task to the pool. If all goroutines in the pool
+// are busy, a call to Go() will block until the task can be started.
 func (p *ResultPool[T]) Go(f func() T) {
 	p.pool.Go(func() {
 		p.agg.add(f())

@@ -31,7 +31,8 @@ type Pool struct {
 	initOnce sync.Once
 }
 
-// Go submits a task to be run in the pool.
+// Go submits a task to be run in the pool. If all goroutines in the pool
+// are busy, a call to Go() will block until the task can be started.
 func (p *Pool) Go(f func()) {
 	p.init()
 
