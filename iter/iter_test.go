@@ -4,7 +4,6 @@ import (
 	"strconv"
 	"sync/atomic"
 	"testing"
-	"time"
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
 	"github.com/stretchr/testify/assert"
@@ -45,7 +44,10 @@ func TestIterator(t *testing.T) {
 				// Signal to the rest of the tasks to stop.
 				close(maxConcurrencyHit)
 			} else {
-				// Wait until we hit max concurrency before exiting
+				// Wait until we hit max concurrency before exiting.
+				// This ensures that all tasks have been started
+				// in parallel, despite being a larger input set than
+				// defaultMaxGoroutines().
 				<-maxConcurrencyHit
 			}
 		})
