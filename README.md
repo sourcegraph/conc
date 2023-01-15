@@ -117,12 +117,12 @@ the code more difficult to read, so `conc` does this for you.
 <tr>
 <td>
 
-https://github.com/sourcegraph/conc/blob/main/examples/example1_test.go#L15-39
+https://github.com/sourcegraph/conc/blob/1e899ceb5c7f387a00e866fa61936cb04320c9a9/examples/example1_test.go#L15-L39
 
 </td>
 <td>
 
-https://github.com/sourcegraph/conc/blob/main/examples/example1_test.go#L41-46
+https://github.com/sourcegraph/conc/blob/1e899ceb5c7f387a00e866fa61936cb04320c9a9/examples/example1_test.go#L41-L46
 
 </td>
 </tr>
