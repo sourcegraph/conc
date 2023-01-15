@@ -60,6 +60,7 @@ func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(in
 // index of the element to the callback.
 func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 	if iter.MaxGoroutines == 0 {
+		// iter is a value receiver and is hence safe to mutate
 		iter.MaxGoroutines = defaultMaxGoroutines()
 	}
 
