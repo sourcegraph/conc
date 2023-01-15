@@ -30,51 +30,25 @@ func TestIterator(t *testing.T) {
 
 		wantConcurrency := 2 * defaultMaxGoroutines()
 
-		testDone, forEachDone := make(chan struct{}), make(chan struct{})
+		maxConcurrencyHit := make(chan struct{})
+
+		tasks := make([]int, wantConcurrency)
+		iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
 
 		var concurrentTasks atomic.Int64
-		go func() {
-			// Run in a goroutine because we don't allow the callbacks
-			// to return until the conclusion of the test, so ForEach
-			// will block.
-			tasks := make([]int, wantConcurrency)
-			iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
+		iterator.ForEach(tasks, func(t *int) {
+			n := concurrentTasks.Add(1)
+			defer concurrentTasks.Add(-1)
 
-			iterator.ForEach(tasks, func(t *int) {
-				concurrentTasks.Add(1)
-				// Block until conclusion of test. This ensures that
-				// all jobs must be submitted, despite the input
-				// being larger than runtime.GOMAXPROCS(0)
-				<-testDone
-			})
-
-			// Signal that iterator.ForEach has exited.
-			forEachDone <- struct{}{}
-		}()
-
-		// Wait up to ~3 seconds for all jobs to be submitted. Realistically,
-		// this will take less than a second.
-		var ms int
-		for ms < 3000 && concurrentTasks.Load() < int64(wantConcurrency) {
-			select {
-			case <-forEachDone:
-				t.Error("iterator.ForEach exited before tasks were all submitted")
-			default:
-				ms += 1
-				time.Sleep(time.Millisecond)
+			if int(n) == wantConcurrency {
+				// All our tasks are running concurrently.
+				// Signal to the rest of the tasks to stop.
+				close(maxConcurrencyHit)
+			} else {
+				// Wait until we hit max concurrency before exiting
+				<-maxConcurrencyHit
 			}
-		}
-		assert.Equal(t, concurrentTasks.Load(), int64(wantConcurrency))
-
-		// Allow all tasks to return, and make sure iterator.ForEach also
-		// returns.
-		close(testDone)
-		select {
-		case <-forEachDone:
-		case <-time.After(1 * time.Second):
-			t.Error("iterator.ForEach did not exit within 1 second")
-		}
-		close(forEachDone)
+		})
 	})
 }
 
