@@ -61,9 +61,12 @@ func ExampleCatcher_callers() {
 }
 
 func TestCatcher(t *testing.T) {
+	t.Parallel()
+
 	err1 := errors.New("SOS")
 
 	t.Run("error", func(t *testing.T) {
+		t.Parallel()
 		var pc Catcher
 		pc.Try(func() { panic(err1) })
 		recovered := pc.Recovered()
@@ -91,12 +94,14 @@ func TestCatcher(t *testing.T) {
 	})
 
 	t.Run("repanic does not panic without child panic", func(t *testing.T) {
+		t.Parallel()
 		var pc Catcher
 		pc.Try(func() { _ = 1 })
 		require.NotPanics(t, pc.Repanic)
 	})
 
 	t.Run("is goroutine safe", func(t *testing.T) {
+		t.Parallel()
 		var wg sync.WaitGroup
 		var pc Catcher
 		for i := 0; i < 100; i++ {
