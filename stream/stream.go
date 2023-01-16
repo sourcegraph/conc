@@ -56,7 +56,9 @@ type Callback func()
 // will be executed concurrently in worker goroutines. Then, the callbacks
 // returned by the tasks will be executed in the order that the tasks were
 // submitted. All callbacks will be executed by the same goroutine, so no
-// synchronization is necessary between callbacks.
+// synchronization is necessary between callbacks. If all goroutines in the
+// stream's pool are busy, a call to Go() will block until the task can be
+// started.
 func (s *Stream) Go(f Task) {
 	s.init()
 

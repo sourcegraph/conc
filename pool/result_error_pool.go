@@ -17,7 +17,8 @@ type ResultErrorPool[T any] struct {
 	collectErrored bool
 }
 
-// Go submits a task to the pool.
+// Go submits a task to the pool. If all goroutines in the pool
+// are busy, a call to Go() will block until the task can be started.
 func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 	p.errorPool.Go(func() error {
 		res, err := f()
