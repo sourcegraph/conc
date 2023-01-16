@@ -2,11 +2,57 @@ package iter
 
 import (
 	"strconv"
+	"sync/atomic"
 	"testing"
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func TestIterator(t *testing.T) {
+	t.Parallel()
+
+	t.Run("safe for reuse", func(t *testing.T) {
+		t.Parallel()
+
+		iterator := Iterator[int]{MaxGoroutines: 999}
+
+		// iter.Concurrency > numInput case that updates iter.Concurrency
+		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
+
+		assert.Equal(t, iterator.MaxGoroutines, 999)
+	})
+
+	t.Run("allows more than defaultMaxGoroutines() concurrent tasks", func(t *testing.T) {
+		t.Parallel()
+
+		wantConcurrency := 2 * defaultMaxGoroutines()
+
+		maxConcurrencyHit := make(chan struct{})
+
+		tasks := make([]int, wantConcurrency)
+		iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
+
+		var concurrentTasks atomic.Int64
+		iterator.ForEach(tasks, func(t *int) {
+			n := concurrentTasks.Add(1)
+			defer concurrentTasks.Add(-1)
+
+			if int(n) == wantConcurrency {
+				// All our tasks are running concurrently.
+				// Signal to the rest of the tasks to stop.
+				close(maxConcurrencyHit)
+			} else {
+				// Wait until we hit max concurrency before exiting.
+				// This ensures that all tasks have been started
+				// in parallel, despite being a larger input set than
+				// defaultMaxGoroutines().
+				<-maxConcurrencyHit
+			}
+		})
+	})
+}
 
 func TestForEachIdx(t *testing.T) {
 	t.Parallel()
