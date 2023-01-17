@@ -6,7 +6,6 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -38,7 +37,7 @@ func TestIterator(t *testing.T) {
 		// iter.Concurrency > numInput case that updates iter.Concurrency
 		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
 
-		assert.Equal(t, iterator.MaxGoroutines, 999)
+		require.Equal(t, iterator.MaxGoroutines, 999)
 	})
 
 	t.Run("allows more than defaultMaxGoroutines() concurrent tasks", func(t *testing.T) {
