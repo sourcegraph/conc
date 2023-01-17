@@ -2,10 +2,23 @@ package iter
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
+
+func ExampleMapper() {
+	input := []int{1, 2, 3, 4}
+	mapper := Mapper[int, bool]{
+		MaxGoroutines: len(input) / 2,
+	}
+
+	results := mapper.Map(input, func(v *int) bool { return *v%2 == 0 })
+	fmt.Println(results)
+	// Output:
+	// [false true false true]
+}
 
 func TestMap(t *testing.T) {
 	t.Parallel()
