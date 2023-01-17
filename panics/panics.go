@@ -10,7 +10,7 @@ import (
 // Catcher is used to catch panics. You can execute a function with Try,
 // which will catch any spawned panic. Try can be called any number of times,
 // from any number of goroutines. Once all calls to Try have completed, you can
-// get the value of the first panic (if any) with Value(), or you can just
+// get the value of the first panic (if any) with Recovered(), or you can just
 // propagate the panic (re-panic) with Repanic().
 type Catcher struct {
 	recovered atomic.Pointer[RecoveredPanic]
