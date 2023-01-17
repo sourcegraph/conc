@@ -1,6 +1,7 @@
 package iter
 
 import (
+	"fmt"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -8,6 +9,22 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func ExampleIterator() {
+	input := []int{1, 2, 3, 4}
+	iterator := Iterator[int]{
+		MaxGoroutines: len(input) / 2,
+	}
+
+	iterator.ForEach(input, func(v *int) {
+		if *v%2 == 0 {
+			fmt.Println(*v)
+		}
+	})
+	// Output:
+	// 2
+	// 4
+}
 
 func TestIterator(t *testing.T) {
 	t.Parallel()
