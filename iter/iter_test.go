@@ -17,13 +17,14 @@ func ExampleIterator() {
 	}
 
 	iterator.ForEach(input, func(v *int) {
-		if *v%2 == 0 {
-			fmt.Println(*v)
+		if *v%2 != 0 {
+			*v = -1
 		}
 	})
+
+	fmt.Println(input)
 	// Output:
-	// 2
-	// 4
+	// [-1 2 -1 4]
 }
 
 func TestIterator(t *testing.T) {
