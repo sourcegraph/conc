@@ -52,8 +52,10 @@ func (p *ResultPool[T]) WithErrors() *ResultErrorPool[T] {
 	}
 }
 
-// WithContext converts the pool to a ContextPool for tasks that should be
-// canceled on first error.
+// WithContext converts the pool to a ResultContextPool for tasks that should
+// run under the same context, such that they each respect shared cancellation.
+// For example, WithCancelOnError can be configured on the returned pool to
+// signal that all goroutines should be cancelled upon the first error.
 func (p *ResultPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
 	return &ResultContextPool[T]{
 		contextPool: *p.pool.WithContext(ctx),
