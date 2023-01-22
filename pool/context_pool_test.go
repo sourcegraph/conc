@@ -2,6 +2,7 @@ package pool
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"sync/atomic"
@@ -9,8 +10,6 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-
-	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
 func ExampleContextPool_WithCancelOnError() {
@@ -202,7 +201,7 @@ func TestContextPool(t *testing.T) {
 					p.Go(func(context.Context) error {
 						cur := currentConcurrent.Add(1)
 						if cur > int64(maxConcurrent) {
-							return errors.Newf("expected no more than %d concurrent goroutine", maxConcurrent)
+							return fmt.Errorf("expected no more than %d concurrent goroutine", maxConcurrent)
 						}
 						time.Sleep(time.Millisecond)
 						currentConcurrent.Add(-1)

@@ -1,6 +1,7 @@
 package pool
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"sync/atomic"
@@ -8,8 +9,6 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-
-	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
 func ExampleErrorPool() {
@@ -104,7 +103,7 @@ func TestErrorPool(t *testing.T) {
 					g.Go(func() error {
 						cur := currentConcurrent.Add(1)
 						if cur > int64(maxGoroutines) {
-							return errors.Newf("expected no more than %d concurrent goroutine", maxGoroutines)
+							return fmt.Errorf("expected no more than %d concurrent goroutine", maxGoroutines)
 						}
 						time.Sleep(time.Millisecond)
 						currentConcurrent.Add(-1)
