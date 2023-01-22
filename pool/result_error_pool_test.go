@@ -1,14 +1,14 @@
 package pool
 
 import (
+	"errors"
+	"fmt"
 	"strconv"
 	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/require"
-
-	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
 func TestResultErrorGroup(t *testing.T) {
@@ -114,7 +114,7 @@ func TestResultErrorGroup(t *testing.T) {
 					g.Go(func() (int, error) {
 						cur := currentConcurrent.Add(1)
 						if cur > int64(maxConcurrency) {
-							return 0, errors.Newf("expected no more than %d concurrent goroutine", maxConcurrency)
+							return 0, fmt.Errorf("expected no more than %d concurrent goroutine", maxConcurrency)
 						}
 						time.Sleep(time.Millisecond)
 						currentConcurrent.Add(-1)
