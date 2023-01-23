@@ -87,15 +87,6 @@ func (p *RecoveredPanic) AsError() error {
 	return &ErrRecoveredPanic{*p}
 }
 
-func (p *RecoveredPanic) Error() string { return p.String() }
-
-func (p *RecoveredPanic) Unwrap() error {
-	if err, ok := p.Value.(error); ok {
-		return err
-	}
-	return nil
-}
-
 // ErrRecoveredPanic wraps a RecoveredPanic in an error implementation.
 type ErrRecoveredPanic struct{ RecoveredPanic }
 
