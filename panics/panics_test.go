@@ -62,7 +62,7 @@ func ExampleCatcher_callers() {
 }
 
 func ExampleCatcher_error() {
-	var helper = func() error {
+	helper := func() error {
 		var pc Catcher
 		pc.Try(func() { panic(errors.New("error")) })
 		return pc.Recovered().AsError()
@@ -96,8 +96,8 @@ func TestCatcher(t *testing.T) {
 		// The exact contents aren't tested because the stacktrace contains local file paths
 		// and even the structure of the stacktrace is bound to be unstable over time. Just
 		// test a couple of basics.
-		require.Contains(t, recovered.String(), "SOS", "error should contain the panic message")
-		require.Contains(t, recovered.String(), "panics.(*Catcher).Try", recovered.String(), "error should contain the stack trace")
+		require.Contains(t, recovered.String(), "SOS", "formatted panic should contain the panic message")
+		require.Contains(t, recovered.String(), "panics.(*Catcher).Try", recovered.String(), "formatted panic should contain the stack trace")
 	})
 
 	t.Run("not error", func(t *testing.T) {
@@ -147,7 +147,7 @@ func TestRecoveredPanicAsError(t *testing.T) {
 	t.Parallel()
 	t.Run("as error is nil", func(t *testing.T) {
 		t.Parallel()
-		var fn = func() error {
+		fn := func() error {
 			var c Catcher
 			c.Try(func() {})
 			return c.Recovered().AsError()
@@ -158,7 +158,7 @@ func TestRecoveredPanicAsError(t *testing.T) {
 
 	t.Run("as error is not nil nil", func(t *testing.T) {
 		t.Parallel()
-		var fn = func() error {
+		fn := func() error {
 			var c Catcher
 			c.Try(func() { panic("oh dear!") })
 			return c.Recovered().AsError()
