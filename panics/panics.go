@@ -73,12 +73,29 @@ type RecoveredPanic struct {
 	Stack []byte
 }
 
-func (c *RecoveredPanic) Error() string {
-	return fmt.Sprintf("panic: %v\nstacktrace:\n%s\n", c.Value, c.Stack)
+// String renders a human-readable formatting of the panic.
+func (p *RecoveredPanic) String() string {
+	return fmt.Sprintf("panic: %v\nstacktrace:\n%s\n", p.Value, p.Stack)
 }
 
-func (c *RecoveredPanic) Unwrap() error {
-	if err, ok := c.Value.(error); ok {
+// AsError casts the panic into an error implementation. The implementation
+// is unwrappable with the cause of the panic, if the panic was provided one.
+func (p *RecoveredPanic) AsError() error {
+	if p == nil {
+		return nil
+	}
+	return &ErrRecoveredPanic{*p}
+}
+
+// ErrRecoveredPanic wraps a RecoveredPanic in an error implementation.
+type ErrRecoveredPanic struct{ RecoveredPanic }
+
+var _ error = (*ErrRecoveredPanic)(nil)
+
+func (p *ErrRecoveredPanic) Error() string { return p.String() }
+
+func (p *ErrRecoveredPanic) Unwrap() error {
+	if err, ok := p.Value.(error); ok {
 		return err
 	}
 	return nil
