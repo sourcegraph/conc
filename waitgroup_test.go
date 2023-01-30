@@ -24,6 +24,19 @@ func ExampleWaitGroup() {
 	// 10
 }
 
+func ExampleWaitGroup_WaitAndRecover() {
+	var wg WaitGroup
+
+	wg.Go(func() {
+		panic("super bad thing")
+	})
+
+	recoveredPanic := wg.WaitAndRecover()
+	fmt.Println(recoveredPanic.Value)
+	// Output:
+	// super bad thing
+}
+
 func TestWaitGroup(t *testing.T) {
 	t.Parallel()
 
@@ -70,7 +83,7 @@ func TestWaitGroup(t *testing.T) {
 			require.Panics(t, wg.Wait)
 		})
 
-		t.Run("nonpanics do not overwrite panic", func(t *testing.T) {
+		t.Run("non-panics do not overwrite panic", func(t *testing.T) {
 			t.Parallel()
 			var wg WaitGroup
 			wg.Go(func() {
@@ -82,7 +95,7 @@ func TestWaitGroup(t *testing.T) {
 			require.Panics(t, wg.Wait)
 		})
 
-		t.Run("nonpanics run successfully", func(t *testing.T) {
+		t.Run("non-panics run successfully", func(t *testing.T) {
 			t.Parallel()
 			var wg WaitGroup
 			var i atomic.Int64
