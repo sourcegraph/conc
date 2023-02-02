@@ -362,7 +362,7 @@ func concMap(
 ```go
 func concMap(
     input []int,
-    f func(int) int,
+    f func(*int) int,
 ) []int {
     return iter.Map(input, f)
 }
