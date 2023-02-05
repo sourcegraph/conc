@@ -17,6 +17,23 @@ func TestResultErrorGroup(t *testing.T) {
 	err1 := errors.New("err1")
 	err2 := errors.New("err2")
 
+	t.Run("panics on configuration after init", func(t *testing.T) {
+		t.Run("before wait", func(t *testing.T) {
+			t.Parallel()
+			g := NewWithResults[int]().WithErrors()
+			g.Go(func() (int, error) { return 0, nil })
+			require.Panics(t, func() { g.WithMaxGoroutines(10) })
+		})
+
+		t.Run("after wait", func(t *testing.T) {
+			t.Parallel()
+			g := NewWithResults[int]().WithErrors()
+			g.Go(func() (int, error) { return 0, nil })
+			g.Wait()
+			require.Panics(t, func() { g.WithMaxGoroutines(10) })
+		})
+	})
+
 	t.Run("wait returns no error if no errors", func(t *testing.T) {
 		t.Parallel()
 		g := NewWithResults[int]().WithErrors()

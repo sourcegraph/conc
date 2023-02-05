@@ -21,6 +21,9 @@ func New() *Pool {
 // Goroutines are started lazily, so creating a new pool is cheap. There will
 // never be more goroutines spawned than there are tasks submitted.
 //
+// The configuration methods (With*) will panic if they are used after calling
+// Go() for the first time.
+//
 // Pool is efficient, but not zero cost. It should not be used for very short
 // tasks. Startup and teardown come with an overhead of around 1µs, and each
 // task has an overhead of around 300ns.
@@ -72,6 +75,7 @@ func (p *Pool) Wait() {
 	p.init()
 
 	close(p.tasks)
+
 	p.handle.Wait()
 }
 
@@ -83,6 +87,7 @@ func (p *Pool) MaxGoroutines() int {
 // WithMaxGoroutines limits the number of goroutines in a pool.
 // Defaults to unlimited. Panics if n < 1.
 func (p *Pool) WithMaxGoroutines(n int) *Pool {
+	p.panicIfInitialized()
 	if n < 1 {
 		panic("max goroutines in a pool must be greater than zero")
 	}
@@ -98,9 +103,19 @@ func (p *Pool) init() {
 	})
 }
 
+// panicIfInitialized will trigger a panic if a configuration method is called
+// after the pool has started any goroutines for the first time. In the case that
+// new settings are needed, a new pool should be created.
+func (p *Pool) panicIfInitialized() {
+	if p.tasks != nil {
+		panic("pool can not be reconfigured after calling Go() for the first time")
+	}
+}
+
 // WithErrors converts the pool to an ErrorPool so the submitted tasks can
 // return errors.
 func (p *Pool) WithErrors() *ErrorPool {
+	p.panicIfInitialized()
 	return &ErrorPool{
 		pool: p.deref(),
 	}
@@ -110,6 +125,7 @@ func (p *Pool) WithErrors() *ErrorPool {
 // settings. We don't want to just dereference the pointer because that makes
 // the copylock lint angry.
 func (p *Pool) deref() Pool {
+	p.panicIfInitialized()
 	return Pool{
 		limiter: p.limiter,
 	}
@@ -120,6 +136,7 @@ func (p *Pool) deref() Pool {
 // For example, WithCancelOnError can be configured on the returned pool to
 // signal that all goroutines should be cancelled upon the first error.
 func (p *Pool) WithContext(ctx context.Context) *ContextPool {
+	p.panicIfInitialized()
 	ctx, cancel := context.WithCancel(ctx)
 	return &ContextPool{
 		errorPool: p.WithErrors().deref(),

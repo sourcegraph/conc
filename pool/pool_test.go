@@ -44,6 +44,23 @@ func TestPool(t *testing.T) {
 		require.Equal(t, completed.Load(), int64(100))
 	})
 
+	t.Run("panics on configuration after init", func(t *testing.T) {
+		t.Run("before wait", func(t *testing.T) {
+			t.Parallel()
+			g := New()
+			g.Go(func() {})
+			require.Panics(t, func() { g.WithMaxGoroutines(10) })
+		})
+
+		t.Run("after wait", func(t *testing.T) {
+			t.Parallel()
+			g := New()
+			g.Go(func() {})
+			g.Wait()
+			require.Panics(t, func() { g.WithMaxGoroutines(10) })
+		})
+	})
+
 	t.Run("limit", func(t *testing.T) {
 		t.Parallel()
 		for _, maxConcurrent := range []int{1, 10, 100} {
