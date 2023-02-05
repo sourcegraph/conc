@@ -2,9 +2,8 @@ package pool
 
 import (
 	"context"
+	"errors"
 	"sync"
-
-	"github.com/sourcegraph/sourcegraph/lib/errors"
 )
 
 // ErrorPool is a pool that runs tasks that may return an error.
@@ -80,7 +79,7 @@ func (p *ErrorPool) addErr(err error) {
 				p.errs = err
 			}
 		} else {
-			p.errs = errors.Append(p.errs, err)
+			p.errs = errors.Join(p.errs, err)
 		}
 		p.mu.Unlock()
 	}
