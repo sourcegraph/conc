@@ -29,7 +29,7 @@ func TestResultErrorGroup(t *testing.T) {
 			t.Parallel()
 			g := NewWithResults[int]().WithErrors()
 			g.Go(func() (int, error) { return 0, nil })
-			g.Wait()
+			_, _ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 	})

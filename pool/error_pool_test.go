@@ -47,7 +47,7 @@ func TestErrorPool(t *testing.T) {
 			t.Parallel()
 			g := New().WithErrors()
 			g.Go(func() error { return nil })
-			g.Wait()
+			_ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 	})

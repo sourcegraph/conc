@@ -31,7 +31,7 @@ func TestResultContextPool(t *testing.T) {
 			t.Parallel()
 			g := NewWithResults[int]().WithContext(context.Background())
 			g.Go(func(context.Context) (int, error) { return 0, nil })
-			g.Wait()
+			_, _ = g.Wait()
 			require.NotPanics(t, func() { g.WithMaxGoroutines(10) })
 		})
 	})

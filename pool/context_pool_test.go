@@ -53,7 +53,7 @@ func TestContextPool(t *testing.T) {
 			t.Parallel()
 			g := New().WithContext(context.Background())
 			g.Go(func(context.Context) error { return nil })
-			g.Wait()
+			_ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 	})
