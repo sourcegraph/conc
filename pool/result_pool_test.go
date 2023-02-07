@@ -31,6 +31,22 @@ func ExampleResultPool() {
 func TestResultGroup(t *testing.T) {
 	t.Parallel()
 
+	t.Run("panics on configuration after init", func(t *testing.T) {
+		t.Run("before wait", func(t *testing.T) {
+			t.Parallel()
+			g := NewWithResults[int]()
+			g.Go(func() int { return 0 })
+			require.Panics(t, func() { g.WithMaxGoroutines(10) })
+		})
+
+		t.Run("after wait", func(t *testing.T) {
+			t.Parallel()
+			g := NewWithResults[int]()
+			g.Go(func() int { return 0 })
+			require.Panics(t, func() { g.WithMaxGoroutines(10) })
+		})
+	})
+
 	t.Run("basic", func(t *testing.T) {
 		t.Parallel()
 		g := NewWithResults[int]()

@@ -6,6 +6,9 @@ import (
 
 // ContextPool is a pool that runs tasks that take a context.
 // A new ContextPool should be created with `New().WithContext(ctx)`.
+//
+// The configuration methods (With*) will panic if they are used after calling
+// Go() for the first time.
 type ContextPool struct {
 	errorPool ErrorPool
 
@@ -45,6 +48,7 @@ func (p *ContextPool) Wait() error {
 // This is particularly useful for (*ContextPool).WithCancelOnError(),
 // where all errors after the first are likely to be context.Canceled.
 func (p *ContextPool) WithFirstError() *ContextPool {
+	p.panicIfInitialized()
 	p.errorPool.WithFirstError()
 	return p
 }
@@ -58,6 +62,7 @@ func (p *ContextPool) WithFirstError() *ContextPool {
 // (*ContextPool).WithFirstError() to configure the pool to only return
 // the first error.
 func (p *ContextPool) WithCancelOnError() *ContextPool {
+	p.panicIfInitialized()
 	p.cancelOnError = true
 	return p
 }
@@ -65,6 +70,11 @@ func (p *ContextPool) WithCancelOnError() *ContextPool {
 // WithMaxGoroutines limits the number of goroutines in a pool.
 // Defaults to unlimited. Panics if n < 1.
 func (p *ContextPool) WithMaxGoroutines(n int) *ContextPool {
+	p.panicIfInitialized()
 	p.errorPool.WithMaxGoroutines(n)
 	return p
+}
+
+func (p *ContextPool) panicIfInitialized() {
+	p.errorPool.panicIfInitialized()
 }

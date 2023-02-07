@@ -6,6 +6,9 @@ import (
 )
 
 // NewWithResults creates a new ResultPool for tasks with a result of type T.
+//
+// The configuration methods (With*) will panic if they are used after calling
+// Go() for the first time.
 func NewWithResults[T any]() *ResultPool[T] {
 	return &ResultPool[T]{
 		pool: *New(),
@@ -47,6 +50,7 @@ func (p *ResultPool[T]) MaxGoroutines() int {
 // WithErrors converts the pool to an ResultErrorPool so the submitted tasks
 // can return errors.
 func (p *ResultPool[T]) WithErrors() *ResultErrorPool[T] {
+	p.panicIfInitialized()
 	return &ResultErrorPool[T]{
 		errorPool: *p.pool.WithErrors(),
 	}
@@ -57,6 +61,7 @@ func (p *ResultPool[T]) WithErrors() *ResultErrorPool[T] {
 // For example, WithCancelOnError can be configured on the returned pool to
 // signal that all goroutines should be cancelled upon the first error.
 func (p *ResultPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
+	p.panicIfInitialized()
 	return &ResultContextPool[T]{
 		contextPool: *p.pool.WithContext(ctx),
 	}
@@ -65,8 +70,13 @@ func (p *ResultPool[T]) WithContext(ctx context.Context) *ResultContextPool[T] {
 // WithMaxGoroutines limits the number of goroutines in a pool.
 // Defaults to unlimited. Panics if n < 1.
 func (p *ResultPool[T]) WithMaxGoroutines(n int) *ResultPool[T] {
+	p.panicIfInitialized()
 	p.pool.WithMaxGoroutines(n)
 	return p
+}
+
+func (p *ResultPool[T]) panicIfInitialized() {
+	p.pool.panicIfInitialized()
 }
 
 // resultAggregator is a utility type that lets us safely append from multiple

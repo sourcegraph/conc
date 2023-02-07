@@ -10,6 +10,9 @@ import (
 // ErrorPool is a pool that runs tasks that may return an error.
 // Errors are collected and returned by Wait().
 //
+// The configuration methods (With*) will panic if they are used after calling
+// Go() for the first time.
+//
 // A new ErrorPool should be created using `New().WithErrors()`.
 type ErrorPool struct {
 	pool Pool
@@ -40,6 +43,7 @@ func (p *ErrorPool) Wait() error {
 // For example, WithCancelOnError can be configured on the returned pool to
 // signal that all goroutines should be cancelled upon the first error.
 func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
+	p.panicIfInitialized()
 	ctx, cancel := context.WithCancel(ctx)
 	return &ContextPool{
 		errorPool: p.deref(),
@@ -51,6 +55,7 @@ func (p *ErrorPool) WithContext(ctx context.Context) *ContextPool {
 // WithFirstError configures the pool to only return the first error
 // returned by a task. By default, Wait() will return a combined error.
 func (p *ErrorPool) WithFirstError() *ErrorPool {
+	p.panicIfInitialized()
 	p.onlyFirstError = true
 	return p
 }
@@ -58,6 +63,7 @@ func (p *ErrorPool) WithFirstError() *ErrorPool {
 // WithMaxGoroutines limits the number of goroutines in a pool.
 // Defaults to unlimited. Panics if n < 1.
 func (p *ErrorPool) WithMaxGoroutines(n int) *ErrorPool {
+	p.panicIfInitialized()
 	p.pool.WithMaxGoroutines(n)
 	return p
 }
@@ -70,6 +76,10 @@ func (p *ErrorPool) deref() ErrorPool {
 		pool:           p.pool.deref(),
 		onlyFirstError: p.onlyFirstError,
 	}
+}
+
+func (p *ErrorPool) panicIfInitialized() {
+	p.pool.panicIfInitialized()
 }
 
 func (p *ErrorPool) addErr(err error) {
