@@ -16,6 +16,8 @@ type ContextPool struct {
 	cancel context.CancelFunc
 
 	cancelOnError bool
+
+	errorCallBack func(ctx context.Context, err error)
 }
 
 // Go submits a task. If it returns an error, the error will be
@@ -72,6 +74,12 @@ func (p *ContextPool) WithCancelOnError() *ContextPool {
 func (p *ContextPool) WithMaxGoroutines(n int) *ContextPool {
 	p.panicIfInitialized()
 	p.errorPool.WithMaxGoroutines(n)
+	return p
+}
+
+func (p *ContextPool) WithErrorCallback(f func(err error)) *ContextPool {
+	p.panicIfInitialized()
+	p.errorPool.WithErrorCallback(f)
 	return p
 }
 

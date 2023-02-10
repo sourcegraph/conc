@@ -21,6 +21,8 @@ type ErrorPool struct {
 
 	mu   sync.Mutex
 	errs error
+
+	errorCallBack func(err error)
 }
 
 // Go submits a task to the pool. If all goroutines in the pool
@@ -68,6 +70,13 @@ func (p *ErrorPool) WithMaxGoroutines(n int) *ErrorPool {
 	return p
 }
 
+// WithErrorCallback configures the pool to call f everytime a task returns error.
+func (p *ErrorPool) WithErrorCallback(f func(err error)) *ErrorPool {
+	p.panicIfInitialized()
+	p.errorCallBack = f
+	return p
+}
+
 // deref is a helper that creates a shallow copy of the pool with the same
 // settings. We don't want to just dereference the pointer because that makes
 // the copylock lint angry.
@@ -93,5 +102,9 @@ func (p *ErrorPool) addErr(err error) {
 			p.errs = errors.Append(p.errs, err)
 		}
 		p.mu.Unlock()
+
+		if p.errorCallBack != nil {
+			p.errorCallBack(err)
+		}
 	}
 }

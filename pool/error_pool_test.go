@@ -116,4 +116,40 @@ func TestErrorPool(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("on-error callback", func(t *testing.T) {
+		t.Parallel()
+
+		err1 := errors.New("err1")
+		err2 := errors.New("err2")
+
+		calledForErr1 := false
+		calledForErr2 := false
+
+		g := New().WithErrors().WithErrorCallback(func(err error) {
+			if errors.Is(err, err1) {
+				calledForErr1 = true
+			} else if errors.Is(err, err2) {
+				calledForErr2 = true
+			} else {
+				t.Fatal("callback called with invalid error")
+			}
+		})
+		g.Go(func() error {
+			return err1
+		})
+		g.Go(func() error {
+			return err2
+		})
+
+		_ = g.Wait()
+
+		if !calledForErr1 {
+			t.Fatal("call back is not called for err1")
+		}
+
+		if !calledForErr2 {
+			t.Fatal("call back is not called for err2")
+		}
+	})
 }
