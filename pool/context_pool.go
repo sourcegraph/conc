@@ -16,8 +16,6 @@ type ContextPool struct {
 	cancel context.CancelFunc
 
 	cancelOnError bool
-
-	errorCallBack func(ctx context.Context, err error)
 }
 
 // Go submits a task. If it returns an error, the error will be
