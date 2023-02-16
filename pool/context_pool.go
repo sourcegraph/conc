@@ -40,6 +40,8 @@ func (p *ContextPool) Go(f func(ctx context.Context) error) {
 // Wait cleans up all spawned goroutines, propagates any panics, and
 // returns an error if any of the tasks errored.
 func (p *ContextPool) Wait() error {
+	// Make sure we call cancel after pool is done to avoid memory leakage.
+	defer p.cancel()
 	return p.errorPool.Wait()
 }
 
