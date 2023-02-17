@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/sourcegraph/sourcegraph/lib/errors"
@@ -186,6 +187,27 @@ func TestContextPool(t *testing.T) {
 		err := p.Wait()
 		require.ErrorIs(t, err, err1)
 		require.NotErrorIs(t, err, context.Canceled)
+	})
+
+	t.Run("WithCancelOnError and panic", func(t *testing.T) {
+		t.Parallel()
+		p := New().WithContext(bgctx).WithCancelOnError()
+		var cancelledTasks atomic.Int64
+		p.Go(func(ctx context.Context) error {
+			<-ctx.Done()
+			cancelledTasks.Add(1)
+			return ctx.Err()
+		})
+		p.Go(func(ctx context.Context) error {
+			<-ctx.Done()
+			cancelledTasks.Add(1)
+			return ctx.Err()
+		})
+		p.Go(func(ctx context.Context) error {
+			panic("abort!")
+		})
+		assert.Panics(t, func() { _ = p.Wait() })
+		assert.EqualValues(t, 2, cancelledTasks.Load())
 	})
 
 	t.Run("limit", func(t *testing.T) {
