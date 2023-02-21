@@ -2,8 +2,6 @@ package pool
 
 import (
 	"context"
-
-	"github.com/sourcegraph/conc/panics"
 )
 
 // ContextPool is a pool that runs tasks that take a context.
@@ -25,31 +23,26 @@ type ContextPool struct {
 // are busy, a call to Go() will block until the task can be started.
 func (p *ContextPool) Go(f func(ctx context.Context) error) {
 	p.errorPool.Go(func() error {
-		// If we aren't cancelling on error, just return the result of f.
-		if !p.cancelOnError {
-			return f(p.ctx)
+		if p.cancelOnError {
+			// If we are cancelling on error, then we also want to cancel if a
+			// panic is raised. To do this, we need to recover, cancel, and then
+			// re-throw the caught panic.
+			defer func() {
+				if r := recover(); r != nil {
+					p.cancel()
+					panic(r)
+				}
+			}()
 		}
 
-		// If we are cancelling on error, then we also want to cancel on panic.
-		// To do this, we need to recover from any panic f raises.
-		var err error
-		recovered := panics.Try(func() { err = f(p.ctx) })
-		if err != nil || recovered != nil {
+		err := f(p.ctx)
+		if err != nil && p.cancelOnError {
 			// Leaky abstraction warning: We add the error directly because
 			// otherwise, canceling could cause another goroutine to exit and
 			// return an error before this error was added, which breaks the
 			// expectations of WithFirstError().
-			if err != nil {
-				p.errorPool.addErr(err)
-			}
-
+			p.errorPool.addErr(err)
 			p.cancel()
-
-			// Now that context is cancelled, if we caught a panic we can
-			// propagate it.
-			if recovered != nil {
-				panic(recovered)
-			}
 			return nil
 		}
 		return err
