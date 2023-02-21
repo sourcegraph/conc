@@ -133,12 +133,8 @@ func TestContextPool(t *testing.T) {
 		t.Parallel()
 		p := New().WithContext(bgctx)
 		p.Go(func(ctx context.Context) error {
-			select {
-			case <-ctx.Done():
-				return ctx.Err()
-			case <-time.After(10 * time.Millisecond):
-				return nil
-			}
+			<-ctx.Done()
+			return ctx.Err()
 		})
 		p.Go(func(ctx context.Context) error {
 			return err1
