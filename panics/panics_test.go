@@ -156,7 +156,7 @@ func TestRecoveredAsError(t *testing.T) {
 		assert.Nil(t, err)
 	})
 
-	t.Run("as error is not nil nil", func(t *testing.T) {
+	t.Run("as error is not nil", func(t *testing.T) {
 		t.Parallel()
 		fn := func() error {
 			var c Catcher
