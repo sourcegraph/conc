@@ -113,6 +113,22 @@ func TestContextPool(t *testing.T) {
 			})
 			require.ErrorIs(t, p.Wait(), context.DeadlineExceeded)
 		})
+
+		t.Run("return before timed out", func(t *testing.T) {
+			t.Parallel()
+			ctx, cancel := context.WithTimeout(bgctx, 2*time.Millisecond)
+			defer cancel()
+			p := New().WithContext(ctx)
+			p.Go(func(ctx context.Context) error {
+				select {
+				case <-ctx.Done():
+					return ctx.Err()
+				case <-time.After(1 * time.Millisecond):
+					return nil
+				}
+			})
+			require.NoError(t, p.Wait())
+		})
 	})
 
 	t.Run("WithCancelOnError", func(t *testing.T) {
