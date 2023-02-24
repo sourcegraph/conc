@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -98,6 +99,29 @@ func TestResultContextPool(t *testing.T) {
 		require.Len(t, res, 0)
 		require.ErrorIs(t, err, context.Canceled)
 		require.ErrorIs(t, err, err1)
+	})
+
+	t.Run("WithCancelOnError and panic", func(t *testing.T) {
+		t.Parallel()
+		p := NewWithResults[int]().
+			WithContext(context.Background()).
+			WithCancelOnError()
+		var cancelledTasks atomic.Int64
+		p.Go(func(ctx context.Context) (int, error) {
+			<-ctx.Done()
+			cancelledTasks.Add(1)
+			return 0, ctx.Err()
+		})
+		p.Go(func(ctx context.Context) (int, error) {
+			<-ctx.Done()
+			cancelledTasks.Add(1)
+			return 0, ctx.Err()
+		})
+		p.Go(func(ctx context.Context) (int, error) {
+			panic("abort!")
+		})
+		assert.Panics(t, func() { _, _ = p.Wait() })
+		assert.EqualValues(t, 2, cancelledTasks.Load())
 	})
 
 	t.Run("no WithCancelOnError", func(t *testing.T) {

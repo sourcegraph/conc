@@ -23,6 +23,18 @@ type ContextPool struct {
 // are busy, a call to Go() will block until the task can be started.
 func (p *ContextPool) Go(f func(ctx context.Context) error) {
 	p.errorPool.Go(func() error {
+		if p.cancelOnError {
+			// If we are cancelling on error, then we also want to cancel if a
+			// panic is raised. To do this, we need to recover, cancel, and then
+			// re-throw the caught panic.
+			defer func() {
+				if r := recover(); r != nil {
+					p.cancel()
+					panic(r)
+				}
+			}()
+		}
+
 		err := f(p.ctx)
 		if err != nil && p.cancelOnError {
 			// Leaky abstraction warning: We add the error directly because
@@ -56,7 +68,7 @@ func (p *ContextPool) WithFirstError() *ContextPool {
 }
 
 // WithCancelOnError configures the pool to cancel its context as soon as
-// any task returns an error. By default, the pool's context is not
+// any task returns an error or panics. By default, the pool's context is not
 // canceled until the parent context is canceled.
 //
 // In this case, all errors returned from the pool after the first will
