@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/sourcegraph/conc/multierror"
+	"github.com/sourcegraph/conc/internal/multierror"
 )
 
 // ErrorPool is a pool that runs tasks that may return an error.

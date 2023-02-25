@@ -3,7 +3,7 @@ package iter
 import (
 	"sync"
 
-	"github.com/sourcegraph/conc/multierror"
+	"github.com/sourcegraph/conc/internal/multierror"
 )
 
 // Mapper is an Iterator with a result type R. It can be used to configure
