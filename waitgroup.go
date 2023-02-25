@@ -43,8 +43,8 @@ func (h *WaitGroup) Wait() {
 }
 
 // WaitAndRecover will block until all goroutines spawned with Go exit and
-// will return a *panics.RecoveredPanic if one of the child goroutines panics.
-func (h *WaitGroup) WaitAndRecover() *panics.RecoveredPanic {
+// will return a *panics.Recovered if one of the child goroutines panics.
+func (h *WaitGroup) WaitAndRecover() *panics.Recovered {
 	h.wg.Wait()
 
 	// Return a recovered panic if we caught one from a child goroutine.

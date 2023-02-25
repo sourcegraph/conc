@@ -143,7 +143,7 @@ func TestCatcher(t *testing.T) {
 	})
 }
 
-func TestRecoveredPanicAsError(t *testing.T) {
+func TestRecoveredAsError(t *testing.T) {
 	t.Parallel()
 	t.Run("as error is nil", func(t *testing.T) {
 		t.Parallel()
