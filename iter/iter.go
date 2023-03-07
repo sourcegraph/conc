@@ -11,7 +11,7 @@ import (
 // goroutines to use within this package.
 func defaultMaxGoroutines() int { return runtime.GOMAXPROCS(0) }
 
-// Iterator can be used to configure the behaviour of ForEach
+// Iterator can be used to configure the behavior of ForEach
 // and ForEachIdx. The zero value is safe to use with reasonable
 // defaults.
 //

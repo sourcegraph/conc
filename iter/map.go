@@ -7,7 +7,7 @@ import (
 )
 
 // Mapper is an Iterator with a result type R. It can be used to configure
-// the behaviour of Map and MapErr. The zero value is safe to use with
+// the behavior of Map and MapErr. The zero value is safe to use with
 // reasonable defaults.
 //
 // Mapper is also safe for reuse and concurrent use.
