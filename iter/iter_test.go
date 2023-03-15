@@ -212,7 +212,7 @@ func TestForIterator_EachIdxErr(t *testing.T) {
 		iterator := Iterator[int]{MaxGoroutines: 999}
 
 		// iter.Concurrency > numInput case that updates iter.Concurrency
-		iterator.ForEachIdxErr([]int{1, 2, 3}, func(i int, t *int) error {
+		_ = iterator.ForEachIdxErr([]int{1, 2, 3}, func(i int, t *int) error {
 			return nil
 		})
 
@@ -230,7 +230,7 @@ func TestForIterator_EachIdxErr(t *testing.T) {
 		iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
 
 		var concurrentTasks atomic.Int64
-		iterator.ForEachIdxErr(tasks, func(_ int, t *int) error {
+		_ = iterator.ForEachIdxErr(tasks, func(_ int, t *int) error {
 			n := concurrentTasks.Add(1)
 			defer concurrentTasks.Add(-1)
 
@@ -270,7 +270,7 @@ func TestForIterator_EachErr(t *testing.T) {
 		iterator := Iterator[int]{MaxGoroutines: 999}
 
 		// iter.Concurrency > numInput case that updates iter.Concurrency
-		iterator.ForEachErr([]int{1, 2, 3}, func(t *int) error {
+		_ = iterator.ForEachErr([]int{1, 2, 3}, func(t *int) error {
 			return nil
 		})
 
@@ -311,7 +311,7 @@ func TestForIterator_EachErr(t *testing.T) {
 		iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
 
 		var concurrentTasks atomic.Int64
-		iterator.ForEachErr(tasks, func(t *int) error {
+		_ = iterator.ForEachErr(tasks, func(t *int) error {
 			n := concurrentTasks.Add(1)
 			defer concurrentTasks.Add(-1)
 
@@ -378,7 +378,7 @@ func testForEachErr(t *testing.T, failFast bool, forEach func([]int, func(*int) 
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			forEach(ints, func(val *int) error {
+			_ = forEach(ints, func(val *int) error {
 				panic("this should never be called")
 			})
 		}
@@ -389,7 +389,7 @@ func testForEachErr(t *testing.T, failFast bool, forEach func([]int, func(*int) 
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			forEach(ints, func(val *int) error {
+			_ = forEach(ints, func(val *int) error {
 				panic("super bad thing happened")
 			})
 		}
@@ -399,7 +399,7 @@ func testForEachErr(t *testing.T, failFast bool, forEach func([]int, func(*int) 
 	t.Run("mutating inputs is fine", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		forEach(ints, func(val *int) error {
+		_ = forEach(ints, func(val *int) error {
 			*val += 1
 			return nil
 		})
@@ -409,7 +409,7 @@ func testForEachErr(t *testing.T, failFast bool, forEach func([]int, func(*int) 
 	t.Run("mutating inputs is fine", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		forEach(ints, func(val *int) error {
+		_ = forEach(ints, func(val *int) error {
 			*val += 1
 			return nil
 		})
@@ -439,7 +439,7 @@ func testForEachErr(t *testing.T, failFast bool, forEach func([]int, func(*int) 
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		forEach(ints, func(val *int) error {
+		_ = forEach(ints, func(val *int) error {
 			*val = 1
 
 			return nil
