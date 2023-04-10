@@ -122,6 +122,26 @@ func TestPool(t *testing.T) {
 		p := New().WithMaxGoroutines(42)
 		require.Equal(t, 42, p.MaxGoroutines())
 	})
+
+	t.Run("is reusable", func(t *testing.T) {
+		t.Parallel()
+		var count atomic.Int64
+		p := New()
+		for i := 0; i < 10; i++ {
+			p.Go(func() {
+				count.Add(1)
+			})
+		}
+		p.Wait()
+		require.Equal(t, int64(10), count.Load())
+		for i := 0; i < 10; i++ {
+			p.Go(func() {
+				count.Add(1)
+			})
+		}
+		p.Wait()
+		require.Equal(t, int64(20), count.Load())
+	})
 }
 
 func BenchmarkPool(b *testing.B) {
