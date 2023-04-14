@@ -41,7 +41,12 @@ func main() {
 			}
 
 			allOwners := append(parentOwners, owners...)
-			fmt.Printf("/%s/**/* %s\n", relPath, strings.Join(allOwners, " "))
+			if relPath == "." {
+				relPath = ""
+			} else {
+				relPath = fmt.Sprintf("/%s", relPath)
+			}
+			fmt.Printf("%s/**/* %s\n", relPath, strings.Join(allOwners, " "))
 		}
 
 		return nil
