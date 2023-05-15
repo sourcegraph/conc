@@ -85,6 +85,11 @@ func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(con
 	}
 
 	numInput := len(input)
+	if iter.MaxGoroutines > numInput && numInput > 0 {
+		// No more concurrent tasks than the number of input items.
+		iter.MaxGoroutines = numInput
+	}
+
 	var idx atomic.Int64
 	// Create the task outside the loop to avoid extra closure allocations.
 	task := func(ctx context.Context) error {
