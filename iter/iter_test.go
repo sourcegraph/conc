@@ -1,6 +1,8 @@
 package iter
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"sync/atomic"
@@ -70,16 +72,18 @@ func TestIterator(t *testing.T) {
 	})
 }
 
-func TestForEachIdx(t *testing.T) {
+func TestForEachIdxCtx(t *testing.T) {
 	t.Parallel()
 
+	bgctx := context.Background()
 	t.Run("empty", func(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			ForEachIdx(ints, func(i int, val *int) {
+			err := ForEachIdxCtx(bgctx, ints, func(ctx context.Context, i int, val *int) error {
 				panic("this should never be called")
 			})
+			require.NoError(t, err)
 		}
 		require.NotPanics(t, f)
 	})
@@ -88,9 +92,10 @@ func TestForEachIdx(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			ForEachIdx(ints, func(i int, val *int) {
-				panic("super bad thing happened")
-			})
+			ForEachIdxCtx(bgctx, ints,
+				func(ctx context.Context, i int, val *int) error {
+					panic("super bad thing happened")
+				})
 		}
 		require.Panics(t, f)
 	})
@@ -98,23 +103,46 @@ func TestForEachIdx(t *testing.T) {
 	t.Run("mutating inputs is fine", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		ForEachIdx(ints, func(i int, val *int) {
+		err := ForEachIdxCtx(bgctx, ints, func(ctx context.Context, i int, val *int) error {
 			*val += 1
+			return nil
 		})
 		require.Equal(t, []int{2, 3, 4, 5, 6}, ints)
+		require.NoError(t, err)
 	})
 
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		ForEachIdx(ints, func(i int, val *int) {
+		err := ForEachIdxCtx(bgctx, ints, func(ctx context.Context, i int, val *int) error {
 			*val = i
+			return nil
 		})
 		expected := make([]int, 10000)
 		for i := 0; i < 10000; i++ {
 			expected[i] = i
 		}
 		require.Equal(t, expected, ints)
+		require.NoError(t, err)
+	})
+
+	err1 := errors.New("error1")
+	err2 := errors.New("error2")
+
+	t.Run("first error is propagated", func(t *testing.T) {
+		t.Parallel()
+		ints := []int{1, 2, 3, 4, 5}
+		err := ForEachIdxCtx(bgctx, ints, func(ctx context.Context, i int, val *int) error {
+			if *val == 3 {
+				return err1
+			}
+			if *val == 4 {
+				return err2
+			}
+			return nil
+		})
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, err2)
 	})
 }
 
@@ -163,6 +191,41 @@ func TestForEach(t *testing.T) {
 			expected[i] = 1
 		}
 		require.Equal(t, expected, ints)
+	})
+}
+
+func TestForEachCtx(t *testing.T) {
+	t.Parallel()
+
+	bgctx := context.Background()
+	t.Run("mutating inputs is fine", func(t *testing.T) {
+		t.Parallel()
+		ints := []int{1, 2, 3, 4, 5}
+		err := ForEachCtx(bgctx, ints, func(ctx context.Context, val *int) error {
+			*val += 1
+			return nil
+		})
+		require.Equal(t, []int{2, 3, 4, 5, 6}, ints)
+		require.NoError(t, err)
+	})
+
+	err1 := errors.New("error1")
+	err2 := errors.New("error2")
+
+	t.Run("first error is propagated", func(t *testing.T) {
+		t.Parallel()
+		ints := []int{1, 2, 3, 4, 5}
+		err := ForEachCtx(bgctx, ints, func(ctx context.Context, val *int) error {
+			if *val == 3 {
+				return err1
+			}
+			if *val == 4 {
+				return err2
+			}
+			return nil
+		})
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, err2)
 	})
 }
 

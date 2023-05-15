@@ -183,6 +183,7 @@ func TestMapErrCtx(t *testing.T) {
 			return *val + 1, nil
 		})
 		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, err2)
 		require.Equal(t, []int{2, 3, 0, 0, 0}, res)
 		require.Equal(t, []int{1, 2, 3, 4, 5}, ints)
 	})
@@ -200,6 +201,7 @@ func TestMapErrCtx(t *testing.T) {
 			return *val + 1, nil
 		})
 		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, err2)
 		require.Equal(t, []int{2, 3, 0, 0, 0}, res)
 		require.Equal(t, []int{1, 2, 3, 4, 5}, ints)
 	})
