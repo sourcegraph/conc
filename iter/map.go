@@ -56,9 +56,7 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	)
 	// MapErr handles its own errors by accumulating them as a multierror, ignoring the error from MapErrCtx
 	res, _ := m.MapErrCtx(context.Background(), input, func(ctx context.Context, t *T) (R, error) {
-		var err error
-		var ires R
-		ires, err = f(t)
+		ires, err := f(t)
 		if err != nil {
 			errMux.Lock()
 			// TODO: use stdlib errors once multierrors land in go 1.20
