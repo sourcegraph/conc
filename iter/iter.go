@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"sync/atomic"
 
-	"golang.org/x/sync/errgroup"
+	"github.com/sourcegraph/conc/pool"
 )
 
 // defaultMaxGoroutines returns the default maximum number of
@@ -85,26 +85,24 @@ func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(con
 	}
 
 	numInput := len(input)
-	if iter.MaxGoroutines > numInput {
-		// No more concurrent tasks than the number of input items.
-		iter.MaxGoroutines = numInput
-	}
-
-	eg, ectx := errgroup.WithContext(ctx)
 	var idx atomic.Int64
 	// Create the task outside the loop to avoid extra closure allocations.
-	task := func() error {
+	task := func(ctx context.Context) error {
 		i := int(idx.Add(1) - 1)
-		for ; i < numInput && ectx.Err() == nil; i = int(idx.Add(1) - 1) {
-			if err := f(ectx, i, &input[i]); err != nil {
+		for ; i < numInput && ctx.Err() == nil; i = int(idx.Add(1) - 1) {
+			if err := f(ctx, i, &input[i]); err != nil {
 				return err
 			}
 		}
 		return nil
 	}
 
+	runner := pool.New().WithContext(ctx).
+		WithCancelOnError().
+		WithFirstError().
+		WithMaxGoroutines(iter.MaxGoroutines)
 	for i := 0; i < iter.MaxGoroutines; i++ {
-		eg.Go(task)
+		runner.Go(task)
 	}
-	return eg.Wait()
+	return runner.Wait()
 }
