@@ -41,10 +41,6 @@ func MapErr[T, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	return Mapper[T, R]{}.MapErr(input, f)
 }
 
-func MapErrCtx[T, R any](ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
-	return Mapper[T, R]{}.MapErrCtx(ctx, input, f)
-}
-
 // MapErr applies f to each element of the input, returning the mapped result
 // and a combined error of all returned errors.
 //
@@ -66,6 +62,10 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 		return ires, nil
 	})
 	return res, errs
+}
+
+func MapErrCtx[T, R any](ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	return Mapper[T, R]{}.MapErrCtx(ctx, input, f)
 }
 
 func (m Mapper[T, R]) MapErrCtx(ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
