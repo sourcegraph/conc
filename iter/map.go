@@ -64,10 +64,16 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	return res, errs
 }
 
+// MapErrCtx is the same as MapErr except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned
 func MapErrCtx[T, R any](octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
 	return Mapper[T, R]{}.MapErrCtx(octx, input, f)
 }
 
+// MapErrCtx is the same as MapErr except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned
 func (m Mapper[T, R]) MapErrCtx(octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
 	var (
 		res = make([]R, len(input))
