@@ -102,7 +102,8 @@ func (iter Iterator[T]) ForEachIdxCtx(octx context.Context, input []T, f func(co
 		return nil
 	}
 
-	runner := pool.New().WithContext(octx).
+	runner := pool.New().
+		WithContext(octx).
 		WithCancelOnError().
 		WithFirstError().
 		WithMaxGoroutines(iter.MaxGoroutines)
