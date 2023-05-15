@@ -64,21 +64,21 @@ func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 	})
 }
 
-func ForEachIdxCtx[T any](ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
-	return Iterator[T]{}.ForEachIdxCtx(ctx, input, f)
+func ForEachIdxCtx[T any](octx context.Context, input []T, f func(context.Context, int, *T) error) error {
+	return Iterator[T]{}.ForEachIdxCtx(octx, input, f)
 }
 
-func ForEachCtx[T any](ctx context.Context, input []T, f func(context.Context, *T) error) error {
-	return Iterator[T]{}.ForEachCtx(ctx, input, f)
+func ForEachCtx[T any](octx context.Context, input []T, f func(context.Context, *T) error) error {
+	return Iterator[T]{}.ForEachCtx(octx, input, f)
 }
 
-func (iter Iterator[T]) ForEachCtx(ctx context.Context, input []T, f func(context.Context, *T) error) error {
-	return iter.ForEachIdxCtx(ctx, input, func(_ context.Context, _ int, input *T) error {
+func (iter Iterator[T]) ForEachCtx(octx context.Context, input []T, f func(context.Context, *T) error) error {
+	return iter.ForEachIdxCtx(octx, input, func(ctx context.Context, _ int, input *T) error {
 		return f(ctx, input)
 	})
 }
 
-func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
+func (iter Iterator[T]) ForEachIdxCtx(octx context.Context, input []T, f func(context.Context, int, *T) error) error {
 	if iter.MaxGoroutines == 0 {
 		// iter is a value receiver and is hence safe to mutate
 		iter.MaxGoroutines = defaultMaxGoroutines()
@@ -102,7 +102,7 @@ func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(con
 		return nil
 	}
 
-	runner := pool.New().WithContext(ctx).
+	runner := pool.New().WithContext(octx).
 		WithCancelOnError().
 		WithFirstError().
 		WithMaxGoroutines(iter.MaxGoroutines)

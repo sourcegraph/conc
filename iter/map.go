@@ -64,15 +64,15 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	return res, errs
 }
 
-func MapErrCtx[T, R any](ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
-	return Mapper[T, R]{}.MapErrCtx(ctx, input, f)
+func MapErrCtx[T, R any](octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	return Mapper[T, R]{}.MapErrCtx(octx, input, f)
 }
 
-func (m Mapper[T, R]) MapErrCtx(ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+func (m Mapper[T, R]) MapErrCtx(octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
 	var (
 		res = make([]R, len(input))
 	)
-	return res, Iterator[T](m).ForEachIdxCtx(ctx, input, func(ctx context.Context, i int, t *T) error {
+	return res, Iterator[T](m).ForEachIdxCtx(octx, input, func(ctx context.Context, i int, t *T) error {
 		var err error
 		res[i], err = f(ctx, t)
 		return err
