@@ -1,6 +1,7 @@
 package iter
 
 import (
+	"context"
 	"sync"
 
 	"github.com/sourcegraph/conc/internal/multierror"
@@ -25,9 +26,8 @@ func Map[T, R any](input []T, f func(*T) R) []R {
 //
 // Map uses up to the configured Mapper's maximum number of goroutines.
 func (m Mapper[T, R]) Map(input []T, f func(*T) R) []R {
-	res := make([]R, len(input))
-	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
-		res[i] = f(t)
+	res, _ := m.MapErr(input, func(t *T) (R, error) {
+		return f(t), nil
 	})
 	return res
 }
@@ -41,25 +41,42 @@ func MapErr[T, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 	return Mapper[T, R]{}.MapErr(input, f)
 }
 
+func MapErrCtx[T, R any](ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	return Mapper[T, R]{}.MapErrCtx(ctx, input, f)
+}
+
 // MapErr applies f to each element of the input, returning the mapped result
 // and a combined error of all returned errors.
 //
 // Map uses up to the configured Mapper's maximum number of goroutines.
 func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	var (
-		res    = make([]R, len(input))
 		errMux sync.Mutex
 		errs   error
 	)
-	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
+	// MapErr handles its own errors by accumulating them as a multierror, ignoring the error from MapErrCtx
+	res, _ := m.MapErrCtx(context.Background(), input, func(ctx context.Context, t *T) (R, error) {
 		var err error
-		res[i], err = f(t)
+		var ires R
+		ires, err = f(t)
 		if err != nil {
 			errMux.Lock()
 			// TODO: use stdlib errors once multierrors land in go 1.20
 			errs = multierror.Join(errs, err)
 			errMux.Unlock()
 		}
+		return ires, nil
 	})
 	return res, errs
+}
+
+func (m Mapper[T, R]) MapErrCtx(ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	var (
+		res = make([]R, len(input))
+	)
+	return res, Iterator[T](m).ForEachIdxCtx(ctx, input, func(ctx context.Context, i int, t *T) error {
+		var err error
+		res[i], err = f(ctx, t)
+		return err
+	})
 }
