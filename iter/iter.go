@@ -36,10 +36,6 @@ type Iterator[T any] struct {
 // a configurable goroutine limit, use a custom Iterator.
 func ForEach[T any](input []T, f func(*T)) { Iterator[T]{}.ForEach(input, f) }
 
-func ForEachCtx[T any](ctx context.Context, input []T, f func(context.Context, *T) error) error {
-	return Iterator[T]{}.ForEachCtx(ctx, input, f)
-}
-
 // ForEach executes f in parallel over each element in input,
 // using up to the Iterator's configured maximum number of
 // goroutines.
@@ -55,19 +51,9 @@ func (iter Iterator[T]) ForEach(input []T, f func(*T)) {
 	})
 }
 
-func (iter Iterator[T]) ForEachCtx(ctx context.Context, input []T, f func(context.Context, *T) error) error {
-	return iter.ForEachIdxCtx(ctx, input, func(_ context.Context, _ int, input *T) error {
-		return f(ctx, input)
-	})
-}
-
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
 func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(input, f) }
-
-func ForEachIdxCtx[T any](ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
-	return Iterator[T]{}.ForEachIdxCtx(ctx, input, f)
-}
 
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
@@ -75,6 +61,20 @@ func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 	_ = iter.ForEachIdxCtx(context.Background(), input, func(_ context.Context, idx int, input *T) error {
 		f(idx, input)
 		return nil
+	})
+}
+
+func ForEachIdxCtx[T any](ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
+	return Iterator[T]{}.ForEachIdxCtx(ctx, input, f)
+}
+
+func ForEachCtx[T any](ctx context.Context, input []T, f func(context.Context, *T) error) error {
+	return Iterator[T]{}.ForEachCtx(ctx, input, f)
+}
+
+func (iter Iterator[T]) ForEachCtx(ctx context.Context, input []T, f func(context.Context, *T) error) error {
+	return iter.ForEachIdxCtx(ctx, input, func(_ context.Context, _ int, input *T) error {
+		return f(ctx, input)
 	})
 }
 
