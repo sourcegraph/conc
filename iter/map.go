@@ -26,7 +26,7 @@ func Map[T, R any](input []T, f func(*T) R) []R {
 //
 // Map uses up to the configured Mapper's maximum number of goroutines.
 func (m Mapper[T, R]) Map(input []T, f func(*T) R) []R {
-	res, _ := m.MapErr(input, func(t *T) (R, error) {
+	res, _ := m.MapCtx(context.Background(), input, func(_ context.Context, t *T) (R, error) {
 		return f(t), nil
 	})
 	return res
