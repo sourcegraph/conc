@@ -50,7 +50,7 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 		errMux sync.Mutex
 		errs   error
 	)
-	// MapErr handles its own errors by accumulating them as a multierror, ignoring the error from MapErrCtx
+	// MapErr handles its own errors by accumulating them as a multierror, ignoring the error from MapCtx which is only the first error
 	res, _ := m.MapCtx(context.Background(), input, func(ctx context.Context, t *T) (R, error) {
 		ires, err := f(t)
 		if err != nil {
