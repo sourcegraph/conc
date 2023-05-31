@@ -119,7 +119,7 @@ func TestMapErr(t *testing.T) {
 	})
 }
 
-func TestMapErrCtx(t *testing.T) {
+func TestMapCtx(t *testing.T) {
 	t.Parallel()
 
 	bgctx := context.Background()
@@ -127,7 +127,7 @@ func TestMapErrCtx(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			res, err := MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+			res, err := MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 				panic("this should never be called")
 			})
 			require.NoError(t, err)
@@ -140,7 +140,7 @@ func TestMapErrCtx(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			_, _ = MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+			_, _ = MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 				panic("super bad thing happened")
 			})
 		}
@@ -150,7 +150,7 @@ func TestMapErrCtx(t *testing.T) {
 	t.Run("mutating inputs is fine, though not recommended", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+		res, err := MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 			*val += 1
 			return 0, nil
 		})
@@ -162,7 +162,7 @@ func TestMapErrCtx(t *testing.T) {
 	t.Run("basic increment", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+		res, err := MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 			return *val + 1, nil
 		})
 		require.NoError(t, err)
@@ -176,7 +176,7 @@ func TestMapErrCtx(t *testing.T) {
 	t.Run("error is propagated", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+		res, err := MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 			if *val == 3 {
 				return 0, err1
 			}
@@ -191,7 +191,7 @@ func TestMapErrCtx(t *testing.T) {
 	t.Run("first error is propagated", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+		res, err := MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 			if *val == 3 {
 				return 0, err1
 			}
@@ -209,7 +209,7 @@ func TestMapErrCtx(t *testing.T) {
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		res, err := MapErrCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
+		res, err := MapCtx(bgctx, ints, func(ctx context.Context, val *int) (int, error) {
 			return 1, nil
 		})
 		expected := make([]int, 10000)

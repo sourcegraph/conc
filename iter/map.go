@@ -51,7 +51,7 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 		errs   error
 	)
 	// MapErr handles its own errors by accumulating them as a multierror, ignoring the error from MapErrCtx
-	res, _ := m.MapErrCtx(context.Background(), input, func(ctx context.Context, t *T) (R, error) {
+	res, _ := m.MapCtx(context.Background(), input, func(ctx context.Context, t *T) (R, error) {
 		ires, err := f(t)
 		if err != nil {
 			errMux.Lock()
@@ -64,17 +64,17 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	return res, errs
 }
 
-// MapErrCtx is the same as MapErr except it also accepts a context
+// MapCtx is the same as Map except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned
-func MapErrCtx[T, R any](octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
-	return Mapper[T, R]{}.MapErrCtx(octx, input, f)
+func MapCtx[T, R any](octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	return Mapper[T, R]{}.MapCtx(octx, input, f)
 }
 
-// MapErrCtx is the same as MapErr except it also accepts a context
+// MapCtx is the same as Map except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned
-func (m Mapper[T, R]) MapErrCtx(octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+func (m Mapper[T, R]) MapCtx(octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
 	var (
 		res = make([]R, len(input))
 	)
