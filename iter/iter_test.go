@@ -92,7 +92,7 @@ func TestForEachIdxCtx(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			ForEachIdxCtx(bgctx, ints,
+			_ = ForEachIdxCtx(bgctx, ints,
 				func(ctx context.Context, i int, val *int) error {
 					panic("super bad thing happened")
 				})
