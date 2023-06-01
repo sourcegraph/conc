@@ -78,9 +78,9 @@ func (m Mapper[T, R]) MapCtx(ctx context.Context, input []T, f func(context.Cont
 	var (
 		res = make([]R, len(input))
 	)
-	return res, Iterator[T](m).ForEachIdxCtx(ctx, input, func(ictx context.Context, i int, t *T) error {
+	return res, Iterator[T](m).ForEachIdxCtx(ctx, input, func(innerctx context.Context, i int, t *T) error {
 		var err error
-		res[i], err = f(ictx, t)
+		res[i], err = f(innerctx, t)
 		return err
 	})
 }

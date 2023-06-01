@@ -75,8 +75,8 @@ func ForEachCtx[T any](ctx context.Context, input []T, f func(context.Context, *
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
 func (iter Iterator[T]) ForEachCtx(ctx context.Context, input []T, f func(context.Context, *T) error) error {
-	return iter.ForEachIdxCtx(ctx, input, func(ictx context.Context, _ int, input *T) error {
-		return f(ictx, input)
+	return iter.ForEachIdxCtx(ctx, input, func(innerctx context.Context, _ int, input *T) error {
+		return f(innerctx, input)
 	})
 }
 
@@ -104,14 +104,14 @@ func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(con
 
 	var idx atomic.Int64
 	// Create the task outside the loop to avoid extra closure allocations.
-	task := func(ctx context.Context) error {
+	task := func(innerctx context.Context) error {
 		i := int(idx.Add(1) - 1)
-		for ; i < numInput && ctx.Err() == nil; i = int(idx.Add(1) - 1) {
-			if err := f(ctx, i, &input[i]); err != nil {
+		for ; i < numInput && innerctx.Err() == nil; i = int(idx.Add(1) - 1) {
+			if err := f(innerctx, i, &input[i]); err != nil {
 				return err
 			}
 		}
-		return ctx.Err() // nil if the context was never cancelled
+		return innerctx.Err() // nil if the context was never cancelled
 	}
 
 	runner := pool.New().
