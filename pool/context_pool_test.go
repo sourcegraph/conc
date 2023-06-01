@@ -187,9 +187,9 @@ func TestContextPool(t *testing.T) {
 		require.NotErrorIs(t, err, err2)
 	})
 
-	t.Run("WithFirstError and WithCancelOnError", func(t *testing.T) {
+	t.Run("WithFailFast", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithContext(bgctx).WithFirstError().WithCancelOnError()
+		p := New().WithContext(bgctx).WithFailFast()
 		p.Go(func(ctx context.Context) error {
 			return err1
 		})
