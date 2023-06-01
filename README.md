@@ -455,6 +455,17 @@ func mapStream(
 </tr>
 </table>
 
+# Errors
+
+In general, `conc` handles multiple errors from tasks by joining them into
+a single "multierror". In go 1.19, we use Uber's multierror package, but
+in version 1.20, go added native support for joining errors so we use that
+instead. Note that, if you are relying on converting an error back into its
+component errors, the behavior changes between go 1.19 and go 1.20 and
+you should use the `Unwrap() []error` method instead of casting the error
+as a `*multierror.Error`. `errors.As` and `errors.Is` should continue
+to work as expected.
+
 # Status
 
 This package is currently pre-1.0. There are likely to be minor breaking
