@@ -67,30 +67,30 @@ func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 // ForEachCtx is the same as ForEach except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
-func ForEachCtx[T any](octx context.Context, input []T, f func(context.Context, *T) error) error {
-	return Iterator[T]{}.ForEachCtx(octx, input, f)
+func ForEachCtx[T any](ctx context.Context, input []T, f func(context.Context, *T) error) error {
+	return Iterator[T]{}.ForEachCtx(ctx, input, f)
 }
 
 // ForEachCtx is the same as ForEach except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
-func (iter Iterator[T]) ForEachCtx(octx context.Context, input []T, f func(context.Context, *T) error) error {
-	return iter.ForEachIdxCtx(octx, input, func(ctx context.Context, _ int, input *T) error {
-		return f(ctx, input)
+func (iter Iterator[T]) ForEachCtx(ctx context.Context, input []T, f func(context.Context, *T) error) error {
+	return iter.ForEachIdxCtx(ctx, input, func(ictx context.Context, _ int, input *T) error {
+		return f(ictx, input)
 	})
 }
 
 // ForEachIdxCtx is the same as ForEachIdx except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
-func ForEachIdxCtx[T any](octx context.Context, input []T, f func(context.Context, int, *T) error) error {
-	return Iterator[T]{}.ForEachIdxCtx(octx, input, f)
+func ForEachIdxCtx[T any](ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
+	return Iterator[T]{}.ForEachIdxCtx(ctx, input, f)
 }
 
 // ForEachIdxCtx is the same as ForEachIdx except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
-func (iter Iterator[T]) ForEachIdxCtx(octx context.Context, input []T, f func(context.Context, int, *T) error) error {
+func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
 	if iter.MaxGoroutines == 0 {
 		// iter is a value receiver and is hence safe to mutate
 		iter.MaxGoroutines = defaultMaxGoroutines()
@@ -115,7 +115,7 @@ func (iter Iterator[T]) ForEachIdxCtx(octx context.Context, input []T, f func(co
 	}
 
 	runner := pool.New().
-		WithContext(octx).
+		WithContext(ctx).
 		WithCancelOnError().
 		WithFirstError().
 		WithMaxGoroutines(iter.MaxGoroutines)

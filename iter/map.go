@@ -67,20 +67,20 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 // MapCtx is the same as Map except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
-func MapCtx[T, R any](octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
-	return Mapper[T, R]{}.MapCtx(octx, input, f)
+func MapCtx[T, R any](ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	return Mapper[T, R]{}.MapCtx(ctx, input, f)
 }
 
 // MapCtx is the same as Map except it also accepts a context
 // that it uses to manages the execution of tasks.
 // The context is cancelled on task failure and the first error is returned.
-func (m Mapper[T, R]) MapCtx(octx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+func (m Mapper[T, R]) MapCtx(ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
 	var (
 		res = make([]R, len(input))
 	)
-	return res, Iterator[T](m).ForEachIdxCtx(octx, input, func(ctx context.Context, i int, t *T) error {
+	return res, Iterator[T](m).ForEachIdxCtx(ctx, input, func(ictx context.Context, i int, t *T) error {
 		var err error
-		res[i], err = f(ctx, t)
+		res[i], err = f(ictx, t)
 		return err
 	})
 }
