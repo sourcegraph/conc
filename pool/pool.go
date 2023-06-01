@@ -47,20 +47,18 @@ func (p *Pool) Go(f func()) {
 		default:
 			// No goroutine was available to handle the task.
 			// Spawn a new one and send it the task.
-			p.handle.Go(p.worker)
-			p.tasks <- f
+			p.handle.Go(func() {
+				p.worker(f)
+			})
 		}
 	} else {
 		select {
 		case p.limiter <- struct{}{}:
 			// If we are below our limit, spawn a new worker rather
 			// than waiting for one to become available.
-			p.handle.Go(p.worker)
-
-			// We know there is at least one worker running, so wait
-			// for it to become available. This ensures we never spawn
-			// more workers than the number of tasks.
-			p.tasks <- f
+			p.handle.Go(func() {
+				p.worker(f)
+			})
 		case p.tasks <- f:
 			// A worker is available and has accepted the task.
 			return
@@ -75,6 +73,10 @@ func (p *Pool) Wait() {
 	p.init()
 
 	close(p.tasks)
+
+	// After Wait() returns, reset the struct so tasks will be reinitialized on
+	// next use. This better matches the behavior of sync.WaitGroup
+	defer func() { p.initOnce = sync.Once{} }()
 
 	p.handle.Wait()
 }
@@ -145,10 +147,14 @@ func (p *Pool) WithContext(ctx context.Context) *ContextPool {
 	}
 }
 
-func (p *Pool) worker() {
+func (p *Pool) worker(initialFunc func()) {
 	// The only time this matters is if the task panics.
 	// This makes it possible to spin up new workers in that case.
 	defer p.limiter.release()
+
+	if initialFunc != nil {
+		initialFunc()
+	}
 
 	for f := range p.tasks {
 		f()
