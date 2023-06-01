@@ -101,6 +101,22 @@ func TestResultContextPool(t *testing.T) {
 		require.ErrorIs(t, err, err1)
 	})
 
+	t.Run("WithFailFast", func(t *testing.T) {
+		t.Parallel()
+		p := NewWithResults[int]().WithContext(context.Background()).WithFailFast()
+		p.Go(func(ctx context.Context) (int, error) {
+			return 0, err1
+		})
+		p.Go(func(ctx context.Context) (int, error) {
+			<-ctx.Done()
+			return 1, ctx.Err()
+		})
+		results, err := p.Wait()
+		require.ErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, context.Canceled)
+		require.Empty(t, results)
+	})
+
 	t.Run("WithCancelOnError and panic", func(t *testing.T) {
 		t.Parallel()
 		p := NewWithResults[int]().
