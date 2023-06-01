@@ -81,6 +81,16 @@ func (p *ContextPool) WithCancelOnError() *ContextPool {
 	return p
 }
 
+// WithFailFast is an alias for the combination of WithFirstError and
+// WithCancelOnError. By default, the errors from all tasks are returned and
+// the pool's context is not canceled until the parent context is canceled.
+func (p *ContextPool) WithFailFast() *ContextPool {
+	p.panicIfInitialized()
+	p.WithFirstError()
+	p.WithCancelOnError()
+	return p
+}
+
 // WithMaxGoroutines limits the number of goroutines in a pool.
 // Defaults to unlimited. Panics if n < 1.
 func (p *ContextPool) WithMaxGoroutines(n int) *ContextPool {
