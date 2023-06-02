@@ -56,7 +56,6 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 		res[i], err = f(t)
 		if err != nil {
 			errMux.Lock()
-			// TODO: use stdlib errors once multierrors land in go 1.20
 			errs = multierror.Join(errs, err)
 			errMux.Unlock()
 		}
