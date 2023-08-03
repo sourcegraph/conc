@@ -128,7 +128,9 @@ func (s *Stream) callbacker() {
 		callback := <-callbackCh
 
 		// Execute the callback (with panic protection).
-		panicCatcher.Try(callback)
+		if callback != nil {
+			panicCatcher.Try(callback)
+		}
 
 		// Return the channel to the pool of unused channels.
 		putCh(callbackCh)
