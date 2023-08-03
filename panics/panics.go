@@ -20,7 +20,9 @@ type Catcher struct {
 // to call from multiple goroutines simultaneously.
 func (p *Catcher) Try(f func()) {
 	defer p.tryRecover()
-	f()
+	if f != nil {
+		f()
+	}
 }
 
 func (p *Catcher) tryRecover() {
