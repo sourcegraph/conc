@@ -1,10 +1,11 @@
 package iter
 
 import (
+	"context"
 	"runtime"
 	"sync/atomic"
 
-	"github.com/sourcegraph/conc"
+	"github.com/sourcegraph/conc/pool"
 )
 
 // defaultMaxGoroutines returns the default maximum number of
@@ -57,29 +58,69 @@ func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(in
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
 func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
+	_ = iter.ForEachIdxCtx(context.Background(), input, func(_ context.Context, idx int, input *T) error {
+		f(idx, input)
+		return nil
+	})
+}
+
+// ForEachCtx is the same as ForEach except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned.
+func ForEachCtx[T any](ctx context.Context, input []T, f func(context.Context, *T) error) error {
+	return Iterator[T]{}.ForEachCtx(ctx, input, f)
+}
+
+// ForEachCtx is the same as ForEach except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned.
+func (iter Iterator[T]) ForEachCtx(ctx context.Context, input []T, f func(context.Context, *T) error) error {
+	return iter.ForEachIdxCtx(ctx, input, func(innerctx context.Context, _ int, input *T) error {
+		return f(innerctx, input)
+	})
+}
+
+// ForEachIdxCtx is the same as ForEachIdx except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned.
+func ForEachIdxCtx[T any](ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
+	return Iterator[T]{}.ForEachIdxCtx(ctx, input, f)
+}
+
+// ForEachIdxCtx is the same as ForEachIdx except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned.
+func (iter Iterator[T]) ForEachIdxCtx(ctx context.Context, input []T, f func(context.Context, int, *T) error) error {
 	if iter.MaxGoroutines == 0 {
 		// iter is a value receiver and is hence safe to mutate
 		iter.MaxGoroutines = defaultMaxGoroutines()
 	}
 
 	numInput := len(input)
-	if iter.MaxGoroutines > numInput {
+	if iter.MaxGoroutines > numInput && numInput > 0 {
 		// No more concurrent tasks than the number of input items.
 		iter.MaxGoroutines = numInput
 	}
 
 	var idx atomic.Int64
 	// Create the task outside the loop to avoid extra closure allocations.
-	task := func() {
+	task := func(innerctx context.Context) error {
 		i := int(idx.Add(1) - 1)
-		for ; i < numInput; i = int(idx.Add(1) - 1) {
-			f(i, &input[i])
+		for ; i < numInput && innerctx.Err() == nil; i = int(idx.Add(1) - 1) {
+			if err := f(innerctx, i, &input[i]); err != nil {
+				return err
+			}
 		}
+		return innerctx.Err() // nil if the context was never cancelled
 	}
 
-	var wg conc.WaitGroup
+	runner := pool.New().
+		WithContext(ctx).
+		WithCancelOnError().
+		WithFirstError().
+		WithMaxGoroutines(iter.MaxGoroutines)
 	for i := 0; i < iter.MaxGoroutines; i++ {
-		wg.Go(task)
+		runner.Go(task)
 	}
-	wg.Wait()
+	return runner.Wait()
 }

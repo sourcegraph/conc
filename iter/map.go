@@ -1,6 +1,7 @@
 package iter
 
 import (
+	"context"
 	"sync"
 
 	"github.com/sourcegraph/conc/internal/multierror"
@@ -25,9 +26,8 @@ func Map[T, R any](input []T, f func(*T) R) []R {
 //
 // Map uses up to the configured Mapper's maximum number of goroutines.
 func (m Mapper[T, R]) Map(input []T, f func(*T) R) []R {
-	res := make([]R, len(input))
-	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
-		res[i] = f(t)
+	res, _ := m.MapCtx(context.Background(), input, func(_ context.Context, t *T) (R, error) {
+		return f(t), nil
 	})
 	return res
 }
@@ -47,18 +47,39 @@ func MapErr[T, R any](input []T, f func(*T) (R, error)) ([]R, error) {
 // Map uses up to the configured Mapper's maximum number of goroutines.
 func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	var (
-		res    = make([]R, len(input))
 		errMux sync.Mutex
 		errs   error
 	)
-	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
-		var err error
-		res[i], err = f(t)
+	// MapErr handles its own errors by accumulating them as a multierror, ignoring the error from MapCtx which is only the first error
+	res, _ := m.MapCtx(context.Background(), input, func(ctx context.Context, t *T) (R, error) {
+		ires, err := f(t)
 		if err != nil {
 			errMux.Lock()
 			errs = multierror.Join(errs, err)
 			errMux.Unlock()
 		}
+		return ires, nil
 	})
 	return res, errs
+}
+
+// MapCtx is the same as Map except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned.
+func MapCtx[T, R any](ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	return Mapper[T, R]{}.MapCtx(ctx, input, f)
+}
+
+// MapCtx is the same as Map except it also accepts a context
+// that it uses to manages the execution of tasks.
+// The context is cancelled on task failure and the first error is returned.
+func (m Mapper[T, R]) MapCtx(ctx context.Context, input []T, f func(context.Context, *T) (R, error)) ([]R, error) {
+	var (
+		res = make([]R, len(input))
+	)
+	return res, Iterator[T](m).ForEachIdxCtx(ctx, input, func(innerctx context.Context, i int, t *T) error {
+		var err error
+		res[i], err = f(innerctx, t)
+		return err
+	})
 }
