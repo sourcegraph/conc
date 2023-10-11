@@ -33,6 +33,15 @@ func (h *WaitGroup) Go(f func()) {
 	}()
 }
 
+// GoWithClosure spawns a new goroutine with closure in the WaitGroup.
+func (h *WaitGroup) GoWithClosure(f func(v any), v any) {
+	h.wg.Add(1)
+	go func(v any) {
+		defer h.wg.Done()
+		h.pc.TryWithClosure(f, v)
+	}(v)
+}
+
 // Wait will block until all goroutines spawned with Go exit and will
 // propagate any panics spawned in a child goroutine.
 func (h *WaitGroup) Wait() {

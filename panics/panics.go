@@ -23,6 +23,12 @@ func (p *Catcher) Try(f func()) {
 	f()
 }
 
+// TryWithClosure executes f with closure
+func (p *Catcher) TryWithClosure(f func(v any), v any) {
+	defer p.tryRecover()
+	f(v)
+}
+
 func (p *Catcher) tryRecover() {
 	if val := recover(); val != nil {
 		rp := NewRecovered(1, val)

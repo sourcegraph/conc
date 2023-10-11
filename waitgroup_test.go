@@ -2,6 +2,7 @@ package conc
 
 import (
 	"fmt"
+	"sync"
 	"sync/atomic"
 	"testing"
 
@@ -22,6 +23,30 @@ func ExampleWaitGroup() {
 	fmt.Println(count.Load())
 	// Output:
 	// 10
+}
+func ExampleWaitGroup_GoWithClosure() {
+	var count atomic.Int64
+	set := make(map[int]struct{})
+	var lock sync.Mutex
+	put := func(i int) {
+		lock.Lock()
+		set[i] = struct{}{}
+		lock.Unlock()
+
+	}
+
+	var wg WaitGroup
+	for i := 0; i < 10; i++ {
+		wg.GoWithClosure(func(v any) {
+			count.Add(1)
+			put(v.(int))
+		}, i)
+	}
+	wg.Wait()
+
+	fmt.Println(count.Load(), len(set))
+	// Output:
+	// 10 10
 }
 
 func ExampleWaitGroup_WaitAndRecover() {
