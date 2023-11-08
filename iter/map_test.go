@@ -1,16 +1,18 @@
-package iter
+package iter_test
 
 import (
 	"errors"
 	"fmt"
 	"testing"
 
+	"github.com/sourcegraph/conc/iter"
+
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleMapper() {
 	input := []int{1, 2, 3, 4}
-	mapper := Mapper[int, bool]{
+	mapper := iter.Mapper[int, bool]{
 		MaxGoroutines: len(input) / 2,
 	}
 
@@ -27,7 +29,7 @@ func TestMap(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			Map(ints, func(val *int) int {
+			iter.Map(ints, func(val *int) int {
 				panic("this should never be called")
 			})
 		}
@@ -38,7 +40,7 @@ func TestMap(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			Map(ints, func(val *int) int {
+			iter.Map(ints, func(val *int) int {
 				panic("super bad thing happened")
 			})
 		}
@@ -48,7 +50,7 @@ func TestMap(t *testing.T) {
 	t.Run("mutating inputs is fine, though not recommended", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		Map(ints, func(val *int) int {
+		iter.Map(ints, func(val *int) int {
 			*val += 1
 			return 0
 		})
@@ -58,7 +60,7 @@ func TestMap(t *testing.T) {
 	t.Run("basic increment", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res := Map(ints, func(val *int) int {
+		res := iter.Map(ints, func(val *int) int {
 			return *val + 1
 		})
 		require.Equal(t, []int{2, 3, 4, 5, 6}, res)
@@ -68,7 +70,7 @@ func TestMap(t *testing.T) {
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		res := Map(ints, func(val *int) int {
+		res := iter.Map(ints, func(val *int) int {
 			return 1
 		})
 		expected := make([]int, 10000)
@@ -86,7 +88,7 @@ func TestMapErr(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			res, err := MapErr(ints, func(val *int) (int, error) {
+			res, err := iter.MapErr(ints, func(val *int) (int, error) {
 				panic("this should never be called")
 			})
 			require.NoError(t, err)
@@ -99,7 +101,7 @@ func TestMapErr(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			_, _ = MapErr(ints, func(val *int) (int, error) {
+			_, _ = iter.MapErr(ints, func(val *int) (int, error) {
 				panic("super bad thing happened")
 			})
 		}
@@ -109,7 +111,7 @@ func TestMapErr(t *testing.T) {
 	t.Run("mutating inputs is fine, though not recommended", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErr(ints, func(val *int) (int, error) {
+		res, err := iter.MapErr(ints, func(val *int) (int, error) {
 			*val += 1
 			return 0, nil
 		})
@@ -121,7 +123,7 @@ func TestMapErr(t *testing.T) {
 	t.Run("basic increment", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErr(ints, func(val *int) (int, error) {
+		res, err := iter.MapErr(ints, func(val *int) (int, error) {
 			return *val + 1, nil
 		})
 		require.NoError(t, err)
@@ -135,7 +137,7 @@ func TestMapErr(t *testing.T) {
 	t.Run("error is propagated", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErr(ints, func(val *int) (int, error) {
+		res, err := iter.MapErr(ints, func(val *int) (int, error) {
 			if *val == 3 {
 				return 0, err1
 			}
@@ -149,7 +151,7 @@ func TestMapErr(t *testing.T) {
 	t.Run("multiple errors are propagated", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		res, err := MapErr(ints, func(val *int) (int, error) {
+		res, err := iter.MapErr(ints, func(val *int) (int, error) {
 			if *val == 3 {
 				return 0, err1
 			}
@@ -167,7 +169,7 @@ func TestMapErr(t *testing.T) {
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		res := Map(ints, func(val *int) int {
+		res := iter.Map(ints, func(val *int) int {
 			return 1
 		})
 		expected := make([]int, 10000)

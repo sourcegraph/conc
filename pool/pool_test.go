@@ -1,4 +1,4 @@
-package pool
+package pool_test
 
 import (
 	"fmt"
@@ -7,11 +7,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sourcegraph/conc/pool"
+
 	"github.com/stretchr/testify/require"
 )
 
 func ExamplePool() {
-	p := New().WithMaxGoroutines(3)
+	p := pool.New().WithMaxGoroutines(3)
 	for i := 0; i < 5; i++ {
 		p.Go(func() {
 			fmt.Println("conc")
@@ -32,7 +34,7 @@ func TestPool(t *testing.T) {
 	t.Run("basic", func(t *testing.T) {
 		t.Parallel()
 
-		g := New()
+		g := pool.New()
 		var completed atomic.Int64
 		for i := 0; i < 100; i++ {
 			g.Go(func() {
@@ -47,14 +49,14 @@ func TestPool(t *testing.T) {
 	t.Run("panics on configuration after init", func(t *testing.T) {
 		t.Run("before wait", func(t *testing.T) {
 			t.Parallel()
-			g := New()
+			g := pool.New()
 			g.Go(func() {})
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 
 		t.Run("after wait", func(t *testing.T) {
 			t.Parallel()
-			g := New()
+			g := pool.New()
 			g.Go(func() {})
 			g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
@@ -65,7 +67,7 @@ func TestPool(t *testing.T) {
 		t.Parallel()
 		for _, maxConcurrent := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxConcurrent), func(t *testing.T) {
-				g := New().WithMaxGoroutines(maxConcurrent)
+				g := pool.New().WithMaxGoroutines(maxConcurrent)
 
 				var currentConcurrent atomic.Int64
 				var errCount atomic.Int64
@@ -89,7 +91,7 @@ func TestPool(t *testing.T) {
 
 	t.Run("propagate panic", func(t *testing.T) {
 		t.Parallel()
-		g := New()
+		g := pool.New()
 		for i := 0; i < 10; i++ {
 			i := i
 			g.Go(func() {
@@ -103,7 +105,7 @@ func TestPool(t *testing.T) {
 
 	t.Run("panics do not exhaust goroutines", func(t *testing.T) {
 		t.Parallel()
-		g := New().WithMaxGoroutines(2)
+		g := pool.New().WithMaxGoroutines(2)
 		for i := 0; i < 10; i++ {
 			g.Go(func() {
 				panic(42)
@@ -114,19 +116,19 @@ func TestPool(t *testing.T) {
 
 	t.Run("panics on invalid WithMaxGoroutines", func(t *testing.T) {
 		t.Parallel()
-		require.Panics(t, func() { New().WithMaxGoroutines(0) })
+		require.Panics(t, func() { pool.New().WithMaxGoroutines(0) })
 	})
 
 	t.Run("returns correct MaxGoroutines", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithMaxGoroutines(42)
+		p := pool.New().WithMaxGoroutines(42)
 		require.Equal(t, 42, p.MaxGoroutines())
 	})
 
 	t.Run("is reusable", func(t *testing.T) {
 		t.Parallel()
 		var count atomic.Int64
-		p := New()
+		p := pool.New()
 		for i := 0; i < 10; i++ {
 			p.Go(func() {
 				count.Add(1)
@@ -147,14 +149,14 @@ func TestPool(t *testing.T) {
 func BenchmarkPool(b *testing.B) {
 	b.Run("startup and teardown", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			p := New()
+			p := pool.New()
 			p.Go(func() {})
 			p.Wait()
 		}
 	})
 
 	b.Run("per task", func(b *testing.B) {
-		p := New()
+		p := pool.New()
 		f := func() {}
 		for i := 0; i < b.N; i++ {
 			p.Go(f)

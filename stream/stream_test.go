@@ -1,4 +1,4 @@
-package stream
+package stream_test
 
 import (
 	"fmt"
@@ -6,22 +6,24 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sourcegraph/conc/stream"
+
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleStream() {
 	times := []int{20, 52, 16, 45, 4, 80}
 
-	stream := New()
+	s := stream.New()
 	for _, millis := range times {
 		dur := time.Duration(millis) * time.Millisecond
-		stream.Go(func() Callback {
+		s.Go(func() stream.Callback {
 			time.Sleep(dur)
 			// This will print in the order the tasks were submitted
 			return func() { fmt.Println(dur) }
 		})
 	}
-	stream.Wait()
+	s.Wait()
 
 	// Output:
 	// 20ms
@@ -37,11 +39,11 @@ func TestStream(t *testing.T) {
 
 	t.Run("simple", func(t *testing.T) {
 		t.Parallel()
-		s := New()
+		s := stream.New()
 		var res []int
 		for i := 0; i < 5; i++ {
 			i := i
-			s.Go(func() Callback {
+			s.Go(func() stream.Callback {
 				i *= 2
 				return func() {
 					res = append(res, i)
@@ -54,11 +56,11 @@ func TestStream(t *testing.T) {
 
 	t.Run("max goroutines", func(t *testing.T) {
 		t.Parallel()
-		s := New().WithMaxGoroutines(5)
+		s := stream.New().WithMaxGoroutines(5)
 		var currentTaskCount atomic.Int64
 		var currentCallbackCount atomic.Int64
 		for i := 0; i < 50; i++ {
-			s.Go(func() Callback {
+			s.Go(func() stream.Callback {
 				curr := currentTaskCount.Add(1)
 				if curr > 5 {
 					t.Fatal("too many concurrent tasks being executed")
@@ -84,8 +86,8 @@ func TestStream(t *testing.T) {
 
 	t.Run("panic in task is propagated", func(t *testing.T) {
 		t.Parallel()
-		s := New().WithMaxGoroutines(5)
-		s.Go(func() Callback {
+		s := stream.New().WithMaxGoroutines(5)
+		s.Go(func() stream.Callback {
 			panic("something really bad happened in the task")
 		})
 		require.Panics(t, s.Wait)
@@ -93,8 +95,8 @@ func TestStream(t *testing.T) {
 
 	t.Run("panic in callback is propagated", func(t *testing.T) {
 		t.Parallel()
-		s := New().WithMaxGoroutines(5)
-		s.Go(func() Callback {
+		s := stream.New().WithMaxGoroutines(5)
+		s.Go(func() stream.Callback {
 			return func() {
 				panic("something really bad happened in the callback")
 			}
@@ -104,14 +106,14 @@ func TestStream(t *testing.T) {
 
 	t.Run("panic in callback does not block producers", func(t *testing.T) {
 		t.Parallel()
-		s := New().WithMaxGoroutines(5)
-		s.Go(func() Callback {
+		s := stream.New().WithMaxGoroutines(5)
+		s.Go(func() stream.Callback {
 			return func() {
 				panic("something really bad happened in the callback")
 			}
 		})
 		for i := 0; i < 100; i++ {
-			s.Go(func() Callback {
+			s.Go(func() stream.Callback {
 				return func() {}
 			})
 		}
@@ -122,17 +124,17 @@ func TestStream(t *testing.T) {
 func BenchmarkStream(b *testing.B) {
 	b.Run("startup and teardown", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			s := New()
-			s.Go(func() Callback { return func() {} })
+			s := stream.New()
+			s.Go(func() stream.Callback { return func() {} })
 			s.Wait()
 		}
 	})
 
 	b.Run("per task", func(b *testing.B) {
 		n := 0
-		s := New()
+		s := stream.New()
 		for i := 0; i < b.N; i++ {
-			s.Go(func() Callback {
+			s.Go(func() stream.Callback {
 				return func() {
 					n += 1
 				}

@@ -1,9 +1,11 @@
-package conc
+package conc_test
 
 import (
 	"fmt"
 	"sync/atomic"
 	"testing"
+
+	"github.com/sourcegraph/conc"
 
 	"github.com/stretchr/testify/require"
 )
@@ -11,7 +13,7 @@ import (
 func ExampleWaitGroup() {
 	var count atomic.Int64
 
-	var wg WaitGroup
+	var wg conc.WaitGroup
 	for i := 0; i < 10; i++ {
 		wg.Go(func() {
 			count.Add(1)
@@ -25,7 +27,7 @@ func ExampleWaitGroup() {
 }
 
 func ExampleWaitGroup_WaitAndRecover() {
-	var wg WaitGroup
+	var wg conc.WaitGroup
 
 	wg.Go(func() {
 		panic("super bad thing")
@@ -42,14 +44,14 @@ func TestWaitGroup(t *testing.T) {
 
 	t.Run("ctor", func(t *testing.T) {
 		t.Parallel()
-		wg := NewWaitGroup()
-		require.IsType(t, &WaitGroup{}, wg)
+		wg := conc.NewWaitGroup()
+		require.IsType(t, &conc.WaitGroup{}, wg)
 	})
 
 	t.Run("all spawned run", func(t *testing.T) {
 		t.Parallel()
 		var count atomic.Int64
-		var wg WaitGroup
+		var wg conc.WaitGroup
 		for i := 0; i < 100; i++ {
 			wg.Go(func() {
 				count.Add(1)
@@ -64,7 +66,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("is propagated", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
 			})
@@ -73,7 +75,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("one is propagated", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
 			})
@@ -85,7 +87,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("non-panics do not overwrite panic", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
 			})
@@ -97,7 +99,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("non-panics run successfully", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			var i atomic.Int64
 			wg.Go(func() {
 				i.Add(1)
@@ -114,7 +116,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("is caught by waitandrecover", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
 			})
@@ -124,7 +126,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("one is caught by waitandrecover", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			wg.Go(func() {
 				panic("super bad thing")
 			})
@@ -137,7 +139,7 @@ func TestWaitGroup(t *testing.T) {
 
 		t.Run("nonpanics run successfully with waitandrecover", func(t *testing.T) {
 			t.Parallel()
-			var wg WaitGroup
+			var wg conc.WaitGroup
 			var i atomic.Int64
 			wg.Go(func() {
 				i.Add(1)

@@ -1,4 +1,4 @@
-package pool
+package pool_test
 
 import (
 	"context"
@@ -9,12 +9,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sourcegraph/conc/pool"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleContextPool_WithCancelOnError() {
-	p := New().
+	p := pool.New().
 		WithMaxGoroutines(4).
 		WithContext(context.Background()).
 		WithCancelOnError()
@@ -44,14 +46,14 @@ func TestContextPool(t *testing.T) {
 	t.Run("panics on configuration after init", func(t *testing.T) {
 		t.Run("before wait", func(t *testing.T) {
 			t.Parallel()
-			g := New().WithContext(context.Background())
+			g := pool.New().WithContext(context.Background())
 			g.Go(func(context.Context) error { return nil })
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 
 		t.Run("after wait", func(t *testing.T) {
 			t.Parallel()
-			g := New().WithContext(context.Background())
+			g := pool.New().WithContext(context.Background())
 			g.Go(func(context.Context) error { return nil })
 			_ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
@@ -63,21 +65,21 @@ func TestContextPool(t *testing.T) {
 
 		t.Run("wait returns no error if no errors", func(t *testing.T) {
 			t.Parallel()
-			p := New().WithContext(bgctx)
+			p := pool.New().WithContext(bgctx)
 			p.Go(func(context.Context) error { return nil })
 			require.NoError(t, p.Wait())
 		})
 
 		t.Run("wait errors if func returns error", func(t *testing.T) {
 			t.Parallel()
-			p := New().WithContext(bgctx)
+			p := pool.New().WithContext(bgctx)
 			p.Go(func(context.Context) error { return err1 })
 			require.ErrorIs(t, p.Wait(), err1)
 		})
 
 		t.Run("wait error is all returned errors", func(t *testing.T) {
 			t.Parallel()
-			p := New().WithErrors().WithContext(bgctx)
+			p := pool.New().WithErrors().WithContext(bgctx)
 			p.Go(func(context.Context) error { return err1 })
 			p.Go(func(context.Context) error { return nil })
 			p.Go(func(context.Context) error { return err2 })
@@ -93,7 +95,7 @@ func TestContextPool(t *testing.T) {
 		t.Run("canceled", func(t *testing.T) {
 			t.Parallel()
 			ctx, cancel := context.WithCancel(bgctx)
-			p := New().WithContext(ctx)
+			p := pool.New().WithContext(ctx)
 			p.Go(func(ctx context.Context) error {
 				<-ctx.Done()
 				return ctx.Err()
@@ -106,7 +108,7 @@ func TestContextPool(t *testing.T) {
 			t.Parallel()
 			ctx, cancel := context.WithTimeout(bgctx, time.Millisecond)
 			defer cancel()
-			p := New().WithContext(ctx)
+			p := pool.New().WithContext(ctx)
 			p.Go(func(ctx context.Context) error {
 				<-ctx.Done()
 				return ctx.Err()
@@ -116,7 +118,7 @@ func TestContextPool(t *testing.T) {
 
 		t.Run("return before timed out", func(t *testing.T) {
 			t.Parallel()
-			p := New().WithContext(context.Background())
+			p := pool.New().WithContext(context.Background())
 			p.Go(func(ctx context.Context) error {
 				select {
 				case <-ctx.Done():
@@ -131,7 +133,7 @@ func TestContextPool(t *testing.T) {
 
 	t.Run("WithCancelOnError", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithContext(bgctx).WithCancelOnError()
+		p := pool.New().WithContext(bgctx).WithCancelOnError()
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
 			return ctx.Err()
@@ -146,7 +148,7 @@ func TestContextPool(t *testing.T) {
 
 	t.Run("no WithCancelOnError", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithContext(bgctx)
+		p := pool.New().WithContext(bgctx)
 		p.Go(func(ctx context.Context) error {
 			select {
 			case <-ctx.Done():
@@ -165,7 +167,7 @@ func TestContextPool(t *testing.T) {
 
 	t.Run("WithFirstError", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithContext(bgctx).WithFirstError()
+		p := pool.New().WithContext(bgctx).WithFirstError()
 		sync := make(chan struct{})
 		p.Go(func(ctx context.Context) error {
 			defer close(sync)
@@ -189,7 +191,7 @@ func TestContextPool(t *testing.T) {
 
 	t.Run("WithFailFast", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithContext(bgctx).WithFailFast()
+		p := pool.New().WithContext(bgctx).WithFailFast()
 		p.Go(func(ctx context.Context) error {
 			return err1
 		})
@@ -204,7 +206,7 @@ func TestContextPool(t *testing.T) {
 
 	t.Run("WithCancelOnError and panic", func(t *testing.T) {
 		t.Parallel()
-		p := New().WithContext(bgctx).WithCancelOnError()
+		p := pool.New().WithContext(bgctx).WithCancelOnError()
 		var cancelledTasks atomic.Int64
 		p.Go(func(ctx context.Context) error {
 			<-ctx.Done()
@@ -230,7 +232,7 @@ func TestContextPool(t *testing.T) {
 				maxConcurrent := maxConcurrent // copy
 
 				t.Parallel()
-				p := New().WithContext(bgctx).WithMaxGoroutines(maxConcurrent)
+				p := pool.New().WithContext(bgctx).WithMaxGoroutines(maxConcurrent)
 
 				var currentConcurrent atomic.Int64
 				for i := 0; i < 100; i++ {

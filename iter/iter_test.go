@@ -1,4 +1,4 @@
-package iter
+package iter_test
 
 import (
 	"fmt"
@@ -6,12 +6,14 @@ import (
 	"sync/atomic"
 	"testing"
 
+	"github.com/sourcegraph/conc/iter"
+
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleIterator() {
 	input := []int{1, 2, 3, 4}
-	iterator := Iterator[int]{
+	iterator := iter.Iterator[int]{
 		MaxGoroutines: len(input) / 2,
 	}
 
@@ -32,7 +34,7 @@ func TestIterator(t *testing.T) {
 	t.Run("safe for reuse", func(t *testing.T) {
 		t.Parallel()
 
-		iterator := Iterator[int]{MaxGoroutines: 999}
+		iterator := iter.Iterator[int]{MaxGoroutines: 999}
 
 		// iter.Concurrency > numInput case that updates iter.Concurrency
 		iterator.ForEachIdx([]int{1, 2, 3}, func(i int, t *int) {})
@@ -43,12 +45,12 @@ func TestIterator(t *testing.T) {
 	t.Run("allows more than defaultMaxGoroutines() concurrent tasks", func(t *testing.T) {
 		t.Parallel()
 
-		wantConcurrency := 2 * defaultMaxGoroutines()
+		wantConcurrency := 2 * iter.DefaultMaxGoroutines()
 
 		maxConcurrencyHit := make(chan struct{})
 
 		tasks := make([]int, wantConcurrency)
-		iterator := Iterator[int]{MaxGoroutines: wantConcurrency}
+		iterator := iter.Iterator[int]{MaxGoroutines: wantConcurrency}
 
 		var concurrentTasks atomic.Int64
 		iterator.ForEach(tasks, func(t *int) {
@@ -77,7 +79,7 @@ func TestForEachIdx(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			ForEachIdx(ints, func(i int, val *int) {
+			iter.ForEachIdx(ints, func(i int, val *int) {
 				panic("this should never be called")
 			})
 		}
@@ -88,7 +90,7 @@ func TestForEachIdx(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			ForEachIdx(ints, func(i int, val *int) {
+			iter.ForEachIdx(ints, func(i int, val *int) {
 				panic("super bad thing happened")
 			})
 		}
@@ -98,7 +100,7 @@ func TestForEachIdx(t *testing.T) {
 	t.Run("mutating inputs is fine", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		ForEachIdx(ints, func(i int, val *int) {
+		iter.ForEachIdx(ints, func(i int, val *int) {
 			*val += 1
 		})
 		require.Equal(t, []int{2, 3, 4, 5, 6}, ints)
@@ -107,7 +109,7 @@ func TestForEachIdx(t *testing.T) {
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		ForEachIdx(ints, func(i int, val *int) {
+		iter.ForEachIdx(ints, func(i int, val *int) {
 			*val = i
 		})
 		expected := make([]int, 10000)
@@ -125,7 +127,7 @@ func TestForEach(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{}
-			ForEach(ints, func(val *int) {
+			iter.ForEach(ints, func(val *int) {
 				panic("this should never be called")
 			})
 		}
@@ -136,7 +138,7 @@ func TestForEach(t *testing.T) {
 		t.Parallel()
 		f := func() {
 			ints := []int{1}
-			ForEach(ints, func(val *int) {
+			iter.ForEach(ints, func(val *int) {
 				panic("super bad thing happened")
 			})
 		}
@@ -146,7 +148,7 @@ func TestForEach(t *testing.T) {
 	t.Run("mutating inputs is fine", func(t *testing.T) {
 		t.Parallel()
 		ints := []int{1, 2, 3, 4, 5}
-		ForEach(ints, func(val *int) {
+		iter.ForEach(ints, func(val *int) {
 			*val += 1
 		})
 		require.Equal(t, []int{2, 3, 4, 5, 6}, ints)
@@ -155,7 +157,7 @@ func TestForEach(t *testing.T) {
 	t.Run("huge inputs", func(t *testing.T) {
 		t.Parallel()
 		ints := make([]int, 10000)
-		ForEach(ints, func(val *int) {
+		iter.ForEach(ints, func(val *int) {
 			*val = 1
 		})
 		expected := make([]int, 10000)
@@ -171,7 +173,7 @@ func BenchmarkForEach(b *testing.B) {
 		b.Run(strconv.Itoa(count), func(b *testing.B) {
 			ints := make([]int, count)
 			for i := 0; i < b.N; i++ {
-				ForEach(ints, func(i *int) {
+				iter.ForEach(ints, func(i *int) {
 					*i = 0
 				})
 			}
