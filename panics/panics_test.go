@@ -1,4 +1,4 @@
-package panics
+package panics_test
 
 import (
 	"errors"
@@ -7,12 +7,14 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/sourcegraph/conc/panics"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleCatcher() {
-	var pc Catcher
+	var pc panics.Catcher
 	i := 0
 	pc.Try(func() { i += 1 })
 	pc.Try(func() { panic("abort!") })
@@ -28,7 +30,7 @@ func ExampleCatcher() {
 }
 
 func ExampleCatcher_callers() {
-	var pc Catcher
+	var pc panics.Catcher
 	pc.Try(func() { panic("mayday!") })
 
 	recovered := pc.Recovered()
@@ -50,9 +52,9 @@ func ExampleCatcher_callers() {
 	// Output:
 	// github.com/sourcegraph/conc/panics.(*Catcher).tryRecover
 	// runtime.gopanic
-	// github.com/sourcegraph/conc/panics.ExampleCatcher_callers.func1
+	// github.com/sourcegraph/conc/panics_test.ExampleCatcher_callers.func1
 	// github.com/sourcegraph/conc/panics.(*Catcher).Try
-	// github.com/sourcegraph/conc/panics.ExampleCatcher_callers
+	// github.com/sourcegraph/conc/panics_test.ExampleCatcher_callers
 	// testing.runExample
 	// testing.runExamples
 	// testing.(*M).Run
@@ -63,7 +65,7 @@ func ExampleCatcher_callers() {
 
 func ExampleCatcher_error() {
 	helper := func() error {
-		var pc Catcher
+		var pc panics.Catcher
 		pc.Try(func() { panic(errors.New("error")) })
 		return pc.Recovered().AsError()
 	}
@@ -88,7 +90,7 @@ func TestCatcher(t *testing.T) {
 
 	t.Run("error", func(t *testing.T) {
 		t.Parallel()
-		var pc Catcher
+		var pc panics.Catcher
 		pc.Try(func() { panic(err1) })
 		recovered := pc.Recovered()
 		require.ErrorIs(t, recovered.AsError(), err1)
@@ -101,7 +103,7 @@ func TestCatcher(t *testing.T) {
 	})
 
 	t.Run("not error", func(t *testing.T) {
-		var pc Catcher
+		var pc panics.Catcher
 		pc.Try(func() { panic("definitely not an error") })
 		recovered := pc.Recovered()
 		require.NotErrorIs(t, recovered.AsError(), err1)
@@ -109,14 +111,14 @@ func TestCatcher(t *testing.T) {
 	})
 
 	t.Run("repanic panics", func(t *testing.T) {
-		var pc Catcher
+		var pc panics.Catcher
 		pc.Try(func() { panic(err1) })
 		require.Panics(t, pc.Repanic)
 	})
 
 	t.Run("repanic does not panic without child panic", func(t *testing.T) {
 		t.Parallel()
-		var pc Catcher
+		var pc panics.Catcher
 		pc.Try(func() { _ = 1 })
 		require.NotPanics(t, pc.Repanic)
 	})
@@ -124,7 +126,7 @@ func TestCatcher(t *testing.T) {
 	t.Run("is goroutine safe", func(t *testing.T) {
 		t.Parallel()
 		var wg sync.WaitGroup
-		var pc Catcher
+		var pc panics.Catcher
 		for i := 0; i < 100; i++ {
 			i := i
 			wg.Add(1)
@@ -148,7 +150,7 @@ func TestRecoveredAsError(t *testing.T) {
 	t.Run("as error is nil", func(t *testing.T) {
 		t.Parallel()
 		fn := func() error {
-			var c Catcher
+			var c panics.Catcher
 			c.Try(func() {})
 			return c.Recovered().AsError()
 		}
@@ -159,7 +161,7 @@ func TestRecoveredAsError(t *testing.T) {
 	t.Run("as error is not nil", func(t *testing.T) {
 		t.Parallel()
 		fn := func() error {
-			var c Catcher
+			var c panics.Catcher
 			c.Try(func() { panic("oh dear!") })
 			return c.Recovered().AsError()
 		}

@@ -1,4 +1,4 @@
-package pool
+package pool_test
 
 import (
 	"errors"
@@ -8,11 +8,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sourcegraph/conc/pool"
+
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleErrorPool() {
-	p := New().WithErrors()
+	p := pool.New().WithErrors()
 	for i := 0; i < 3; i++ {
 		i := i
 		p.Go(func() error {
@@ -37,14 +39,14 @@ func TestErrorPool(t *testing.T) {
 	t.Run("panics on configuration after init", func(t *testing.T) {
 		t.Run("before wait", func(t *testing.T) {
 			t.Parallel()
-			g := New().WithErrors()
+			g := pool.New().WithErrors()
 			g.Go(func() error { return nil })
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 
 		t.Run("after wait", func(t *testing.T) {
 			t.Parallel()
-			g := New().WithErrors()
+			g := pool.New().WithErrors()
 			g.Go(func() error { return nil })
 			_ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
@@ -53,21 +55,21 @@ func TestErrorPool(t *testing.T) {
 
 	t.Run("wait returns no error if no errors", func(t *testing.T) {
 		t.Parallel()
-		g := New().WithErrors()
+		g := pool.New().WithErrors()
 		g.Go(func() error { return nil })
 		require.NoError(t, g.Wait())
 	})
 
 	t.Run("wait error if func returns error", func(t *testing.T) {
 		t.Parallel()
-		g := New().WithErrors()
+		g := pool.New().WithErrors()
 		g.Go(func() error { return err1 })
 		require.ErrorIs(t, g.Wait(), err1)
 	})
 
 	t.Run("wait error is all returned errors", func(t *testing.T) {
 		t.Parallel()
-		g := New().WithErrors()
+		g := pool.New().WithErrors()
 		g.Go(func() error { return err1 })
 		g.Go(func() error { return nil })
 		g.Go(func() error { return err2 })
@@ -78,7 +80,7 @@ func TestErrorPool(t *testing.T) {
 
 	t.Run("propagates panics", func(t *testing.T) {
 		t.Parallel()
-		g := New().WithErrors()
+		g := pool.New().WithErrors()
 		for i := 0; i < 10; i++ {
 			i := i
 			g.Go(func() error {
@@ -95,7 +97,7 @@ func TestErrorPool(t *testing.T) {
 		t.Parallel()
 		for _, maxGoroutines := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxGoroutines), func(t *testing.T) {
-				g := New().WithErrors().WithMaxGoroutines(maxGoroutines)
+				g := pool.New().WithErrors().WithMaxGoroutines(maxGoroutines)
 
 				var currentConcurrent atomic.Int64
 				taskCount := maxGoroutines * 10

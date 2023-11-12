@@ -1,4 +1,4 @@
-package pool
+package pool_test
 
 import (
 	"fmt"
@@ -8,11 +8,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sourcegraph/conc/pool"
+
 	"github.com/stretchr/testify/require"
 )
 
 func ExampleResultPool() {
-	p := NewWithResults[int]()
+	p := pool.NewWithResults[int]()
 	for i := 0; i < 10; i++ {
 		i := i
 		p.Go(func() int {
@@ -34,14 +36,14 @@ func TestResultGroup(t *testing.T) {
 	t.Run("panics on configuration after init", func(t *testing.T) {
 		t.Run("before wait", func(t *testing.T) {
 			t.Parallel()
-			g := NewWithResults[int]()
+			g := pool.NewWithResults[int]()
 			g.Go(func() int { return 0 })
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 
 		t.Run("after wait", func(t *testing.T) {
 			t.Parallel()
-			g := NewWithResults[int]()
+			g := pool.NewWithResults[int]()
 			g.Go(func() int { return 0 })
 			_ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
@@ -50,7 +52,7 @@ func TestResultGroup(t *testing.T) {
 
 	t.Run("basic", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]()
+		g := pool.NewWithResults[int]()
 		expected := []int{}
 		for i := 0; i < 100; i++ {
 			i := i
@@ -68,7 +70,7 @@ func TestResultGroup(t *testing.T) {
 		t.Parallel()
 		for _, maxGoroutines := range []int{1, 10, 100} {
 			t.Run(strconv.Itoa(maxGoroutines), func(t *testing.T) {
-				g := NewWithResults[int]().WithMaxGoroutines(maxGoroutines)
+				g := pool.NewWithResults[int]().WithMaxGoroutines(maxGoroutines)
 
 				var currentConcurrent atomic.Int64
 				var errCount atomic.Int64

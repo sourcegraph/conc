@@ -1,8 +1,10 @@
-package panics
+package panics_test
 
 import (
 	"errors"
 	"testing"
+
+	"github.com/sourcegraph/conc/panics"
 
 	"github.com/stretchr/testify/require"
 )
@@ -14,7 +16,7 @@ func TestTry(t *testing.T) {
 		t.Parallel()
 
 		err := errors.New("SOS")
-		recovered := Try(func() { panic(err) })
+		recovered := panics.Try(func() { panic(err) })
 		require.ErrorIs(t, recovered.AsError(), err)
 		require.ErrorAs(t, recovered.AsError(), &err)
 		// The exact contents aren't tested because the stacktrace contains local file paths
@@ -27,7 +29,7 @@ func TestTry(t *testing.T) {
 	t.Run("no panic", func(t *testing.T) {
 		t.Parallel()
 
-		recovered := Try(func() {})
+		recovered := panics.Try(func() {})
 		require.Nil(t, recovered)
 	})
 }

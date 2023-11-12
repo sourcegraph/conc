@@ -1,4 +1,4 @@
-package pool
+package pool_test
 
 import (
 	"errors"
@@ -7,6 +7,8 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/sourcegraph/conc/pool"
 
 	"github.com/stretchr/testify/require"
 )
@@ -20,14 +22,14 @@ func TestResultErrorGroup(t *testing.T) {
 	t.Run("panics on configuration after init", func(t *testing.T) {
 		t.Run("before wait", func(t *testing.T) {
 			t.Parallel()
-			g := NewWithResults[int]().WithErrors()
+			g := pool.NewWithResults[int]().WithErrors()
 			g.Go(func() (int, error) { return 0, nil })
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
 		})
 
 		t.Run("after wait", func(t *testing.T) {
 			t.Parallel()
-			g := NewWithResults[int]().WithErrors()
+			g := pool.NewWithResults[int]().WithErrors()
 			g.Go(func() (int, error) { return 0, nil })
 			_, _ = g.Wait()
 			require.Panics(t, func() { g.WithMaxGoroutines(10) })
@@ -36,7 +38,7 @@ func TestResultErrorGroup(t *testing.T) {
 
 	t.Run("wait returns no error if no errors", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithErrors()
+		g := pool.NewWithResults[int]().WithErrors()
 		g.Go(func() (int, error) { return 1, nil })
 		res, err := g.Wait()
 		require.NoError(t, err)
@@ -45,7 +47,7 @@ func TestResultErrorGroup(t *testing.T) {
 
 	t.Run("wait error if func returns error", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithErrors()
+		g := pool.NewWithResults[int]().WithErrors()
 		g.Go(func() (int, error) { return 0, err1 })
 		res, err := g.Wait()
 		require.Len(t, res, 0) // errored value is ignored
@@ -54,7 +56,7 @@ func TestResultErrorGroup(t *testing.T) {
 
 	t.Run("WithCollectErrored", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithErrors().WithCollectErrored()
+		g := pool.NewWithResults[int]().WithErrors().WithCollectErrored()
 		g.Go(func() (int, error) { return 0, err1 })
 		res, err := g.Wait()
 		require.Len(t, res, 1) // errored value is collected
@@ -63,7 +65,7 @@ func TestResultErrorGroup(t *testing.T) {
 
 	t.Run("WithFirstError", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithErrors().WithFirstError()
+		g := pool.NewWithResults[int]().WithErrors().WithFirstError()
 		synchronizer := make(chan struct{})
 		g.Go(func() (int, error) {
 			<-synchronizer
@@ -89,7 +91,7 @@ func TestResultErrorGroup(t *testing.T) {
 
 	t.Run("wait error is all returned errors", func(t *testing.T) {
 		t.Parallel()
-		g := NewWithResults[int]().WithErrors()
+		g := pool.NewWithResults[int]().WithErrors()
 		g.Go(func() (int, error) { return 0, err1 })
 		g.Go(func() (int, error) { return 0, nil })
 		g.Go(func() (int, error) { return 0, err2 })
@@ -106,7 +108,7 @@ func TestResultErrorGroup(t *testing.T) {
 				maxConcurrency := maxConcurrency // copy
 
 				t.Parallel()
-				g := NewWithResults[int]().WithErrors().WithMaxGoroutines(maxConcurrency)
+				g := pool.NewWithResults[int]().WithErrors().WithMaxGoroutines(maxConcurrency)
 
 				var currentConcurrent atomic.Int64
 				taskCount := maxConcurrency * 10
