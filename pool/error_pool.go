@@ -20,7 +20,7 @@ type ErrorPool struct {
 	onlyFirstError bool
 
 	mu   sync.Mutex
-	errs error
+	errs []error
 }
 
 // Go submits a task to the pool. If all goroutines in the pool
@@ -35,7 +35,13 @@ func (p *ErrorPool) Go(f func() error) {
 // returning any errors from tasks.
 func (p *ErrorPool) Wait() error {
 	p.pool.Wait()
-	return p.errs
+	if len(p.errs) == 0 {
+		return nil
+	} else if p.onlyFirstError {
+		return p.errs[0]
+	} else {
+		return multierror.Join(p.errs...)
+	}
 }
 
 // WithContext converts the pool to a ContextPool for tasks that should
@@ -85,13 +91,7 @@ func (p *ErrorPool) panicIfInitialized() {
 func (p *ErrorPool) addErr(err error) {
 	if err != nil {
 		p.mu.Lock()
-		if p.onlyFirstError {
-			if p.errs == nil {
-				p.errs = err
-			}
-		} else {
-			p.errs = multierror.Join(p.errs, err)
-		}
+		p.errs = append(p.errs, err)
 		p.mu.Unlock()
 	}
 }
