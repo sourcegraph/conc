@@ -99,6 +99,13 @@ func (p *ContextPool) WithMaxGoroutines(n int) *ContextPool {
 	return p
 }
 
+// WithErrorCallback configures the pool to call f everytime a task returns error.
+func (p *ContextPool) WithErrorCallback(f func(err error)) *ContextPool {
+	p.panicIfInitialized()
+	p.errorPool.WithErrorCallback(f)
+	return p
+}
+
 func (p *ContextPool) panicIfInitialized() {
 	p.errorPool.panicIfInitialized()
 }
