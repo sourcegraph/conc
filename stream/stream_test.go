@@ -54,6 +54,20 @@ func TestStream(t *testing.T) {
 		require.Equal(t, []int{0, 2, 4, 6, 8}, res)
 	})
 
+	t.Run("nil callback", func(t *testing.T) {
+		t.Parallel()
+		s := stream.New()
+		var totalCount atomic.Int64
+		for i := 0; i < 5; i++ {
+			s.Go(func() stream.Callback {
+				totalCount.Add(1)
+				return nil
+			})
+		}
+		s.Wait()
+		require.Equal(t, int64(5), totalCount.Load())
+	})
+
 	t.Run("max goroutines", func(t *testing.T) {
 		t.Parallel()
 		s := stream.New().WithMaxGoroutines(5)
