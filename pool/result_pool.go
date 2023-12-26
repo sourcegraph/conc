@@ -20,9 +20,8 @@ func NewWithResults[T any]() *ResultPool[T] {
 // Tasks are executed in the pool with Go(), then the results of the tasks are
 // returned by Wait().
 //
-// The order of the results is not guaranteed to be the same as the order the
-// tasks were submitted. If your use case requires consistent ordering,
-// consider using the `stream` package or `Map` from the `iter` package.
+// The order of the results is guaranteed to be the same as the order the
+// tasks were submitted.
 type ResultPool[T any] struct {
 	pool Pool
 	agg  resultAggregator[T]

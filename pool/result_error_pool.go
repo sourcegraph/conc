@@ -8,9 +8,8 @@ import (
 // type and an error. Tasks are executed in the pool with Go(), then the
 // results of the tasks are returned by Wait().
 //
-// The order of the results is not guaranteed to be the same as the order the
-// tasks were submitted. If your use case requires consistent ordering,
-// consider using the `stream` package or `Map` from the `iter` package.
+// The order of the results is guaranteed to be the same as the order the
+// tasks were submitted.
 //
 // The configuration methods (With*) will panic if they are used after calling
 // Go() for the first time.
