@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestResultErrorGroup(t *testing.T) {
+func TestResultErrorPool(t *testing.T) {
 	t.Parallel()
 
 	err1 := errors.New("err1")

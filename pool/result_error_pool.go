@@ -17,17 +17,16 @@ import (
 type ResultErrorPool[T any] struct {
 	errorPool      ErrorPool
 	agg            resultAggregator[T]
-	collectErrored bool
+	includeErrored bool
 }
 
 // Go submits a task to the pool. If all goroutines in the pool
 // are busy, a call to Go() will block until the task can be started.
 func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
+	idx := p.agg.nextIndex()
 	p.errorPool.Go(func() error {
 		res, err := f()
-		if err == nil || p.collectErrored {
-			p.agg.add(res)
-		}
+		p.agg.save(idx, res, err != nil)
 		return err
 	})
 }
@@ -36,7 +35,7 @@ func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 // returning the results and any errors from tasks.
 func (p *ResultErrorPool[T]) Wait() ([]T, error) {
 	err := p.errorPool.Wait()
-	return p.agg.results, err
+	return p.agg.collect(p.includeErrored), err
 }
 
 // WithCollectErrored configures the pool to still collect the result of a task
@@ -44,7 +43,7 @@ func (p *ResultErrorPool[T]) Wait() ([]T, error) {
 // are ignored and only the error is collected.
 func (p *ResultErrorPool[T]) WithCollectErrored() *ResultErrorPool[T] {
 	p.panicIfInitialized()
-	p.collectErrored = true
+	p.includeErrored = true
 	return p
 }
 
