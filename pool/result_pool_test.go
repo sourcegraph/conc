@@ -3,7 +3,6 @@ package pool_test
 import (
 	"fmt"
 	"math/rand"
-	"sort"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -61,7 +60,6 @@ func TestResultGroup(t *testing.T) {
 			})
 		}
 		res := g.Wait()
-		sort.Ints(res)
 		require.Equal(t, expected, res)
 	})
 
@@ -75,6 +73,8 @@ func TestResultGroup(t *testing.T) {
 		for _, result := range results {
 			result := result
 			p.Go(func() int {
+				// Add a random sleep to make it exceedingly unlikely that the
+				// results are returned in the order they are submitted.
 				time.Sleep(time.Duration(rand.Int()%100) * time.Millisecond)
 				return result
 			})
@@ -108,7 +108,6 @@ func TestResultGroup(t *testing.T) {
 					})
 				}
 				res := g.Wait()
-				sort.Ints(res)
 				require.Equal(t, expected, res)
 				require.Equal(t, int64(0), errCount.Load())
 				require.Equal(t, int64(0), currentConcurrent.Load())
