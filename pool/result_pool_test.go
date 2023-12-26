@@ -81,7 +81,6 @@ func TestResultGroup(t *testing.T) {
 		}
 		got := p.Wait()
 		require.Equal(t, results, got)
-
 	})
 
 	t.Run("limit", func(t *testing.T) {
