@@ -2,7 +2,7 @@ package pool
 
 import (
 	"context"
-	"slices"
+	"sort"
 	"sync"
 )
 
@@ -121,7 +121,7 @@ func (r *resultAggregator[T]) collect(includeErrored bool) []T {
 	}
 
 	filtered := r.results[:0]
-	slices.Sort(r.errored)
+	sort.Ints(r.errored)
 	for i, e := range r.errored {
 		if i == 0 {
 			filtered = append(filtered, r.results[:e]...)
