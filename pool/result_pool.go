@@ -89,6 +89,8 @@ type resultAggregator[T any] struct {
 	errored []int
 }
 
+// nextIndex reserves a slot for a result. The returned value should be passed
+// to save() when adding a result to the aggregator.
 func (r *resultAggregator[T]) nextIndex() int {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -115,7 +117,12 @@ func (r *resultAggregator[T]) save(i int, res T, errored bool) {
 	}
 }
 
+// collect returns the set of aggregated results
 func (r *resultAggregator[T]) collect(includeErrored bool) []T {
+	if !r.mu.TryLock() {
+		panic("collect should not be called until all goroutines have exited")
+	}
+
 	if includeErrored || len(r.errored) == 0 {
 		return r.results
 	}
