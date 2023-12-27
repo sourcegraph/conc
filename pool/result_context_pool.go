@@ -14,7 +14,7 @@ import (
 type ResultContextPool[T any] struct {
 	contextPool    ContextPool
 	agg            resultAggregator[T]
-	includeErrored bool
+	collectErrored bool
 }
 
 // Go submits a task to the pool. If all goroutines in the pool
@@ -32,7 +32,7 @@ func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
 // returns an error if any of the tasks errored.
 func (p *ResultContextPool[T]) Wait() ([]T, error) {
 	err := p.contextPool.Wait()
-	return p.agg.collect(p.includeErrored), err
+	return p.agg.collect(p.collectErrored), err
 }
 
 // WithCollectErrored configures the pool to still collect the result of a task
@@ -40,7 +40,7 @@ func (p *ResultContextPool[T]) Wait() ([]T, error) {
 // are ignored and only the error is collected.
 func (p *ResultContextPool[T]) WithCollectErrored() *ResultContextPool[T] {
 	p.panicIfInitialized()
-	p.includeErrored = true
+	p.collectErrored = true
 	return p
 }
 

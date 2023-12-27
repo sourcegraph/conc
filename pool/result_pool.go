@@ -118,12 +118,12 @@ func (r *resultAggregator[T]) save(i int, res T, errored bool) {
 }
 
 // collect returns the set of aggregated results.
-func (r *resultAggregator[T]) collect(includeErrored bool) []T {
+func (r *resultAggregator[T]) collect(collectErrored bool) []T {
 	if !r.mu.TryLock() {
 		panic("collect should not be called until all goroutines have exited")
 	}
 
-	if includeErrored || len(r.errored) == 0 {
+	if collectErrored || len(r.errored) == 0 {
 		return r.results
 	}
 
