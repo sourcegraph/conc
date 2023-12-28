@@ -1,9 +1,8 @@
 package iter
 
 import (
+	"errors"
 	"sync"
-
-	"github.com/sourcegraph/conc/internal/multierror"
 )
 
 // Mapper is an Iterator with a result type R. It can be used to configure
@@ -60,5 +59,5 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 			errMux.Unlock()
 		}
 	})
-	return res, multierror.Join(errs...)
+	return res, errors.Join(errs...)
 }
