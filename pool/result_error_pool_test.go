@@ -130,4 +130,20 @@ func TestResultErrorPool(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("reuse", func(t *testing.T) {
+		// Test for https://github.com/sourcegraph/conc/issues/128
+		p := pool.NewWithResults[int]().WithErrors()
+
+		p.Go(func() (int, error) { return 1, err1 })
+		results1, errs1 := p.Wait()
+		require.Empty(t, results1)
+		require.ErrorIs(t, errs1, err1)
+
+		p.Go(func() (int, error) { return 2, err2 })
+		results2, errs2 := p.Wait()
+		require.Empty(t, results2)
+		require.ErrorIs(t, errs2, err2)
+		require.NotErrorIs(t, errs2, err1)
+	})
 }

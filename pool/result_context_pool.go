@@ -32,7 +32,9 @@ func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
 // returns an error if any of the tasks errored.
 func (p *ResultContextPool[T]) Wait() ([]T, error) {
 	err := p.contextPool.Wait()
-	return p.agg.collect(p.collectErrored), err
+	results := p.agg.collect(p.collectErrored)
+	p.agg = resultAggregator[T]{}
+	return results, err
 }
 
 // WithCollectErrored configures the pool to still collect the result of a task

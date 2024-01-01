@@ -34,7 +34,9 @@ func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 // returning the results and any errors from tasks.
 func (p *ResultErrorPool[T]) Wait() ([]T, error) {
 	err := p.errorPool.Wait()
-	return p.agg.collect(p.collectErrored), err
+	results := p.agg.collect(p.collectErrored)
+	p.agg = resultAggregator[T]{} // reset for reuse
+	return results, err
 }
 
 // WithCollectErrored configures the pool to still collect the result of a task

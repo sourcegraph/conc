@@ -40,7 +40,9 @@ func (p *ResultPool[T]) Go(f func() T) {
 // a slice of results from tasks that did not panic.
 func (p *ResultPool[T]) Wait() []T {
 	p.pool.Wait()
-	return p.agg.collect(true)
+	results := p.agg.collect(true)
+	p.agg = resultAggregator[T]{} // reset for reuse
+	return results
 }
 
 // MaxGoroutines returns the maximum size of the pool.

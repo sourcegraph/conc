@@ -117,4 +117,19 @@ func TestErrorPool(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("reuse", func(t *testing.T) {
+		// Test for https://github.com/sourcegraph/conc/issues/128
+		p := pool.New().WithErrors()
+
+		p.Go(func() error { return err1 })
+		wait1 := p.Wait()
+		require.ErrorIs(t, wait1, err1)
+
+		p.Go(func() error { return err2 })
+		wait2 := p.Wait()
+		// On reuse, only the new error should be returned
+		require.ErrorIs(t, wait2, err2)
+		require.NotErrorIs(t, wait1, err2)
+	})
 }

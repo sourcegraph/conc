@@ -35,12 +35,16 @@ func (p *ErrorPool) Go(f func() error) {
 // returning any errors from tasks.
 func (p *ErrorPool) Wait() error {
 	p.pool.Wait()
-	if len(p.errs) == 0 {
+
+	errs := p.errs
+	p.errs = nil // reset errs
+
+	if len(errs) == 0 {
 		return nil
 	} else if p.onlyFirstError {
-		return p.errs[0]
+		return errs[0]
 	} else {
-		return multierror.Join(p.errs...)
+		return multierror.Join(errs...)
 	}
 }
 
