@@ -40,7 +40,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get CPU information
-        uses: kenchan0130/actions-system-info@v1
+        uses: kenchan0130/actions-system-info@v1.2.1
         id: system-info
 
       - name: Save benchmark JSON to cache
