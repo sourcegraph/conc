@@ -49,16 +49,16 @@ func (m Mapper[T, R]) MapErr(input []T, f func(*T) (R, error)) ([]R, error) {
 	var (
 		res    = make([]R, len(input))
 		errMux sync.Mutex
-		errs   error
+		errs   []error
 	)
 	Iterator[T](m).ForEachIdx(input, func(i int, t *T) {
 		var err error
 		res[i], err = f(t)
 		if err != nil {
 			errMux.Lock()
-			errs = multierror.Join(errs, err)
+			errs = append(errs, err)
 			errMux.Unlock()
 		}
 	})
-	return res, errs
+	return res, multierror.Join(errs...)
 }
