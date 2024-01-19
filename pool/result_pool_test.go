@@ -113,4 +113,17 @@ func TestResultGroup(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("reuse", func(t *testing.T) {
+		// Test for https://github.com/sourcegraph/conc/issues/128
+		p := pool.NewWithResults[int]()
+
+		p.Go(func() int { return 1 })
+		results1 := p.Wait()
+		require.Equal(t, []int{1}, results1)
+
+		p.Go(func() int { return 2 })
+		results2 := p.Wait()
+		require.Equal(t, []int{2}, results2)
+	})
 }
