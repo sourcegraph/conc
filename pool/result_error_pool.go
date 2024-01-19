@@ -8,9 +8,8 @@ import (
 // type and an error. Tasks are executed in the pool with Go(), then the
 // results of the tasks are returned by Wait().
 //
-// The order of the results is not guaranteed to be the same as the order the
-// tasks were submitted. If your use case requires consistent ordering,
-// consider using the `stream` package or `Map` from the `iter` package.
+// The order of the results is guaranteed to be the same as the order the
+// tasks were submitted.
 //
 // The configuration methods (With*) will panic if they are used after calling
 // Go() for the first time.
@@ -23,11 +22,10 @@ type ResultErrorPool[T any] struct {
 // Go submits a task to the pool. If all goroutines in the pool
 // are busy, a call to Go() will block until the task can be started.
 func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
+	idx := p.agg.nextIndex()
 	p.errorPool.Go(func() error {
 		res, err := f()
-		if err == nil || p.collectErrored {
-			p.agg.add(res)
-		}
+		p.agg.save(idx, res, err != nil)
 		return err
 	})
 }
@@ -36,7 +34,7 @@ func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 // returning the results and any errors from tasks.
 func (p *ResultErrorPool[T]) Wait() ([]T, error) {
 	err := p.errorPool.Wait()
-	return p.agg.results, err
+	return p.agg.collect(p.collectErrored), err
 }
 
 // WithCollectErrored configures the pool to still collect the result of a task

@@ -20,11 +20,10 @@ type ResultContextPool[T any] struct {
 // Go submits a task to the pool. If all goroutines in the pool
 // are busy, a call to Go() will block until the task can be started.
 func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
+	idx := p.agg.nextIndex()
 	p.contextPool.Go(func(ctx context.Context) error {
 		res, err := f(ctx)
-		if err == nil || p.collectErrored {
-			p.agg.add(res)
-		}
+		p.agg.save(idx, res, err != nil)
 		return err
 	})
 }
@@ -33,7 +32,7 @@ func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
 // returns an error if any of the tasks errored.
 func (p *ResultContextPool[T]) Wait() ([]T, error) {
 	err := p.contextPool.Wait()
-	return p.agg.results, err
+	return p.agg.collect(p.collectErrored), err
 }
 
 // WithCollectErrored configures the pool to still collect the result of a task

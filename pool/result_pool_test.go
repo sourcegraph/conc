@@ -2,7 +2,7 @@ package pool_test
 
 import (
 	"fmt"
-	"sort"
+	"math/rand"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -22,8 +22,6 @@ func ExampleResultPool() {
 		})
 	}
 	res := p.Wait()
-	// Result order is nondeterministic, so sort them first
-	sort.Ints(res)
 	fmt.Println(res)
 
 	// Output:
@@ -62,8 +60,27 @@ func TestResultGroup(t *testing.T) {
 			})
 		}
 		res := g.Wait()
-		sort.Ints(res)
 		require.Equal(t, expected, res)
+	})
+
+	t.Run("deterministic order", func(t *testing.T) {
+		t.Parallel()
+		p := pool.NewWithResults[int]()
+		results := make([]int, 100)
+		for i := 0; i < 100; i++ {
+			results[i] = i
+		}
+		for _, result := range results {
+			result := result
+			p.Go(func() int {
+				// Add a random sleep to make it exceedingly unlikely that the
+				// results are returned in the order they are submitted.
+				time.Sleep(time.Duration(rand.Int()%100) * time.Millisecond)
+				return result
+			})
+		}
+		got := p.Wait()
+		require.Equal(t, results, got)
 	})
 
 	t.Run("limit", func(t *testing.T) {
@@ -90,7 +107,6 @@ func TestResultGroup(t *testing.T) {
 					})
 				}
 				res := g.Wait()
-				sort.Ints(res)
 				require.Equal(t, expected, res)
 				require.Equal(t, int64(0), errCount.Load())
 				require.Equal(t, int64(0), currentConcurrent.Load())

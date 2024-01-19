@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"sort"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -223,7 +222,6 @@ func TestResultContextPool(t *testing.T) {
 					})
 				}
 				res, err := g.Wait()
-				sort.Ints(res)
 				require.Equal(t, expected, res)
 				require.NoError(t, err)
 				require.Equal(t, int64(0), currentConcurrent.Load())
