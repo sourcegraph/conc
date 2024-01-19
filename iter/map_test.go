@@ -162,6 +162,7 @@ func TestMapErr(t *testing.T) {
 		})
 		require.ErrorIs(t, err, err1)
 		require.ErrorIs(t, err, err2)
+		require.ElementsMatch(t, err.(interface{ Unwrap() []error }).Unwrap(), []error{err1, err2})
 		require.Equal(t, []int{2, 3, 0, 0, 6}, res)
 		require.Equal(t, []int{1, 2, 3, 4, 5}, ints)
 	})

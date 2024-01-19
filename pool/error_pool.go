@@ -2,9 +2,8 @@ package pool
 
 import (
 	"context"
+	"errors"
 	"sync"
-
-	"github.com/sourcegraph/conc/internal/multierror"
 )
 
 // ErrorPool is a pool that runs tasks that may return an error.
@@ -44,7 +43,7 @@ func (p *ErrorPool) Wait() error {
 	} else if p.onlyFirstError {
 		return errs[0]
 	} else {
-		return multierror.Join(errs...)
+		return errors.Join(errs...)
 	}
 }
 
