@@ -43,7 +43,7 @@ func (p *ErrorPool) Wait() error {
 	} else if p.onlyFirstError {
 		return errs[0]
 	} else {
-		return errors.Join(p.errs...)
+		return errors.Join(errs...)
 	}
 }
 
