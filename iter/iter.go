@@ -2,9 +2,11 @@ package iter
 
 import (
 	"runtime"
+	"sync"
 	"sync/atomic"
 
 	"github.com/sourcegraph/conc"
+	"github.com/sourcegraph/conc/internal/multierror"
 )
 
 // defaultMaxGoroutines returns the default maximum number of
@@ -22,6 +24,10 @@ type Iterator[T any] struct {
 	//
 	// If unset, MaxGoroutines defaults to runtime.GOMAXPROCS(0).
 	MaxGoroutines int
+
+	// FailFast controls whether the ForEach*Err methods should
+	// stop iterating over the input if an error is returned by callback.
+	FailFast bool
 }
 
 // ForEach executes f in parallel over each element in input.
@@ -54,6 +60,19 @@ func (iter Iterator[T]) ForEach(input []T, f func(*T)) {
 // index of the element to the callback.
 func ForEachIdx[T any](input []T, f func(int, *T)) { Iterator[T]{}.ForEachIdx(input, f) }
 
+// ForEachIdxErr is the same as ForEachIdx except it returns an error.
+// This function will not stop iterating over the input if an error is returned by callback.
+// All returned errors will be returned as a multierror.
+func ForEachIdxErr[T any](input []T, f func(int, *T) error) error {
+	return Iterator[T]{}.ForEachIdxErr(input, f)
+}
+
+// ForEachErr is the same as ForEach except it returns an error.
+// This function will not stop iterating over the input if an error is returned by callback.
+func ForEachErr[T any](input []T, f func(*T) error) error {
+	return Iterator[T]{}.ForEachErr(input, f)
+}
+
 // ForEachIdx is the same as ForEach except it also provides the
 // index of the element to the callback.
 func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
@@ -82,4 +101,56 @@ func (iter Iterator[T]) ForEachIdx(input []T, f func(int, *T)) {
 		wg.Go(task)
 	}
 	wg.Wait()
+}
+
+// ForEachErr is the same as ForEach except it returns an error.
+// If Iterator.FailFast is true, ForEachErr will stop iterating on the first error.
+// If Iterator.FailFast is false, ForEachErr will return all errors and iterate over the all the input.
+func (iter Iterator[T]) ForEachErr(input []T, f func(*T) error) error {
+	return iter.ForEachIdxErr(input, func(_ int, t *T) error {
+		return f(t)
+	})
+}
+
+// ForEachIdxErr is the same as ForEachIdx except it returns an error.
+// If Iterator.FailFast is true, ForEachIdxErr will stop iterating on the first error.
+// If Iterator.FailFast is false, ForEachIdxErr will return all errors and iterate over the all the input.
+func (iter Iterator[T]) ForEachIdxErr(input []T, f func(int, *T) error) error {
+	if iter.MaxGoroutines == 0 {
+		// iter is a value receiver and is hence safe to mutate
+		iter.MaxGoroutines = defaultMaxGoroutines()
+	}
+
+	numInput := len(input)
+	if iter.MaxGoroutines > numInput {
+		// No more concurrent tasks than the number of input items.
+		iter.MaxGoroutines = numInput
+	}
+
+	var errs error
+	var errsMu sync.Mutex
+	var idx atomic.Int64
+	var failed atomic.Bool
+
+	// Create the task outside the loop to avoid extra closure allocations.
+	task := func() {
+		i := int(idx.Add(1) - 1)
+		for ; i < numInput && !failed.Load(); i = int(idx.Add(1) - 1) {
+			if err := f(i, &input[i]); err != nil {
+				errsMu.Lock()
+				errs = multierror.Join(errs, err)
+				errsMu.Unlock()
+
+				failed.Store(iter.FailFast)
+			}
+		}
+	}
+
+	var wg conc.WaitGroup
+	for i := 0; i < iter.MaxGoroutines && !failed.Load(); i++ {
+		wg.Go(task)
+	}
+	wg.Wait()
+
+	return errs
 }
