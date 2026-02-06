@@ -1,6 +1,7 @@
 package pool_test
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -81,6 +82,25 @@ func TestResultGroup(t *testing.T) {
 		}
 		got := p.Wait()
 		require.Equal(t, results, got)
+	})
+
+	t.Run("all results collected", func(t *testing.T) {
+		t.Parallel()
+		p := pool.NewWithResults[int]().WithErrors()
+		want := []int{1, 3}
+
+		p.Go(func() (int, error) {
+			return 1, nil
+		})
+		p.Go(func() (int, error) {
+			return 2, errors.New("an error")
+		})
+		p.Go(func() (int, error) {
+			return 3, nil
+		})
+
+		got, _ := p.Wait()
+		require.Equal(t, want, got)
 	})
 
 	t.Run("limit", func(t *testing.T) {
