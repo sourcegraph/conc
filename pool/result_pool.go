@@ -129,14 +129,11 @@ func (r *resultAggregator[T]) collect(collectErrored bool) []T {
 		return r.results
 	}
 
-	filtered := r.results[:0]
+	filtered := r.results
 	sort.Ints(r.errored)
-	for i, e := range r.errored {
-		if i == 0 {
-			filtered = append(filtered, r.results[:e]...)
-		} else {
-			filtered = append(filtered, r.results[r.errored[i-1]+1:e]...)
-		}
+	for i := range r.errored {
+		e := r.errored[len(r.errored)-1-i]
+		filtered = append(filtered[:e], filtered[e+1:]...)
 	}
 	return filtered
 }
