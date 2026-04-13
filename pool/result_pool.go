@@ -138,5 +138,10 @@ func (r *resultAggregator[T]) collect(collectErrored bool) []T {
 			filtered = append(filtered, r.results[r.errored[i-1]+1:e]...)
 		}
 	}
+	// Append remaining results after the last errored index
+	lastErr := r.errored[len(r.errored)-1]
+	if lastErr+1 < len(r.results) {
+		filtered = append(filtered, r.results[lastErr+1:]...)
+	}
 	return filtered
 }
