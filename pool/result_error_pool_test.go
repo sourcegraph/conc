@@ -147,3 +147,15 @@ func TestResultErrorPool(t *testing.T) {
 		require.NotErrorIs(t, errs2, err1)
 	})
 }
+
+func TestResultErrorPoolResultsAfterError(t *testing.T) {
+	t.Parallel()
+	p := pool.NewWithResults[int]().WithErrors().WithMaxGoroutines(1)
+	p.Go(func() (int, error) { return 1, nil })
+	p.Go(func() (int, error) { return 2, errors.New("an error") })
+	p.Go(func() (int, error) { return 3, nil })
+
+	got, err := p.Wait()
+	require.Error(t, err)
+	require.Equal(t, []int{1, 3}, got)
+}
