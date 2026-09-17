@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: ${{ matrix.go-version }}
 
@@ -40,11 +40,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get CPU information
-        uses: kenchan0130/actions-system-info@v1.2.1
+        uses: kenchan0130/actions-system-info@v1.4.0
         id: system-info
 
       - name: Save benchmark JSON to cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v6
         with:
           path: ./cache/benchmark-data.json
           # Save with commit hash to avoid "cache already exists"
