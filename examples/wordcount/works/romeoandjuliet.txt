@@ -1,0 +1,4331 @@
+﻿***The Project Gutenberg's Etext of Shakespeare's First Folio***
+****************The Tragedie of Romeo and Juliet****************
+
+This is our 3rd edition of most of these plays.  See the index.
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+The Tragedie of Romeo and Juliet
+
+by William Shakespeare
+
+July, 2000  [Etext #2261]
+
+
+***The Project Gutenberg's Etext of Shakespeare's First Folio***
+****************The Tragedie of Romeo and Juliet****************
+
+*****This file should be named 2261.txt or 2261.zip******
+
+
+Project Gutenberg Etexts are usually created from multiple editions,
+all of which are in the Public Domain in the United States, unless a
+copyright notice is included.  Therefore, we usually do NOT keep any
+of these books in compliance with any particular paper edition.
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, leaving time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+time it takes us, a rather conservative estimate, is fifty hours
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-six text
+files per month, or 432 more Etexts in 1999 for a total of 2000+
+If these reach just 10% of the computerized population, then the
+total should reach over 200 billion Etexts given away this year.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by December 31, 2001.  [10,000 x 100,000,000 = 1 Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only ~5% of the present number of computer users.
+
+At our revised rates of production, we will reach only one-third
+of that goal by the end of 2001, or about 3,333 Etexts unless we
+manage to get some real funding; currently our funding is mostly
+from Michael Hart's salary at Carnegie-Mellon University, and an
+assortment of sporadic gifts; this salary is only good for a few
+more years, so we are looking for something to replace it, as we
+don't want Project Gutenberg to be so dependent on one person.
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/CMU": and are
+tax deductible to the extent allowable by law.  (CMU = Carnegie-
+Mellon University).
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails. . .try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+hart@pobox.com forwards to hart@prairienet.org and archive.org
+if your mail bounces from archive.org, I will still see it, if
+it bounces from prairienet.org, better resend later on. . . .
+
+We would prefer to send you this information by email.
+
+******
+
+To access Project Gutenberg etexts, use any Web browser
+to view http://promo.net/pg.  This site lists Etexts by
+author and by title, and includes information about how
+to get involved with Project Gutenberg.  You could also
+download our past Newsletters, or subscribe here.  This
+is one of our major sites, please email hart@pobox.com,
+for a more complete list of our various sites.
+
+To go directly to the etext collections, use FTP or any
+Web browser to visit a Project Gutenberg mirror (mirror
+sites are available on 7 continents; mirrors are listed
+at http://promo.net/pg).
+
+Mac users, do NOT point and click, typing works better.
+
+Example FTP session:
+
+ftp sunsite.unc.edu
+login: anonymous
+password: your@login
+cd pub/docs/books/gutenberg
+cd etext90 through etext99
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET GUTINDEX.??  [to get a year's listing of books, e.g., GUTINDEX.99]
+GET GUTINDEX.ALL [to get a listing of ALL books]
+
+***
+
+**Information prepared by the Project Gutenberg legal advisor**
+
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Carnegie-Mellon University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association/Carnegie-Mellon
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Carnegie-Mellon University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+Project Gutenberg's Etext of Shakespeare's The Tragedie of
+Romeo and Juliet
+
+
+
+
+Executive Director's Notes:
+
+In addition to the notes below, and so you will *NOT* think all
+the spelling errors introduced by the printers of the time have
+been corrected, here are the first few lines of Hamlet, as they
+are presented herein:
+
+  Barnardo. Who's there?
+  Fran. Nay answer me: Stand & vnfold
+your selfe
+
+   Bar. Long liue the King
+
+***
+
+As I understand it, the printers often ran out of certain words
+or letters they had often packed into a "cliche". . .this is the
+original meaning of the term cliche. . .and thus, being unwilling
+to unpack the cliches, and thus you will see some substitutions
+that look very odd. . .such as the exchanges of u for v, v for u,
+above. . .and you may wonder why they did it this way, presuming
+Shakespeare did not actually write the play in this manner. . . .
+
+The answer is that they MAY have packed "liue" into a cliche at a
+time when they were out of "v"'s. . .possibly having used "vv" in
+place of some "w"'s, etc.  This was a common practice of the day,
+as print was still quite expensive, and they didn't want to spend
+more on a wider selection of characters than they had to.
+
+You will find a lot of these kinds of "errors" in this text, as I
+have mentioned in other times and places, many "scholars" have an
+extreme attachment to these errors, and many have accorded them a
+very high place in the "canon" of Shakespeare.  My father read an
+assortment of these made available to him by Cambridge University
+in England for several months in a glass room constructed for the
+purpose.  To the best of my knowledge he read ALL those available
+. . .in great detail. . .and determined from the various changes,
+that Shakespeare most likely did not write in nearly as many of a
+variety of errors we credit him for, even though he was in/famous
+for signing his name with several different spellings.
+
+So, please take this into account when reading the comments below
+made by our volunteer who prepared this file:  you may see errors
+that are "not" errors. . . .
+
+So. . .with this caveat. . .we have NOT changed the canon errors,
+here is the Project Gutenberg Etext of Shakespeare's The Tragedie
+of Romeo and Juliet.
+
+Michael S. Hart
+Project Gutenberg
+Executive Director
+
+
+***
+
+
+Scanner's Notes: What this is and isn't.  This was taken from
+a copy of Shakespeare's first folio and it is as close as I can
+come in ASCII to the printed text.
+
+The elongated S's have been changed to small s's and the
+conjoined ae have been changed to ae.  I have left the spelling,
+punctuation, capitalization as close as possible to the
+printed text.  I have corrected some spelling mistakes (I have put
+together a spelling dictionary devised from the spellings of the
+Geneva Bible and Shakespeare's First Folio and have unified
+spellings according to this template), typo's and expanded
+abbreviations as I have come across them.  Everything within
+brackets [] is what I have added.  So if you don't like that
+you can delete everything within the brackets if you want a
+purer Shakespeare.
+
+Another thing that you should be aware of is that there are textual
+differences between various copies of the first folio.  So there may
+be differences (other than what I have mentioned above) between
+this and other first folio editions.  This is due to the printer's
+habit of setting the type and running off a number of copies and
+then proofing the printed copy and correcting the type and then
+continuing the printing run.  The proof run wasn't thrown away but
+incorporated into the printed copies.  This is just the way it is.
+The text I have used was a composite of more than 30 different
+First Folio editions' best pages.
+
+If you find any scanning errors, out and out typos, punctuation
+errors, or if you disagree with my spelling choices please feel
+free to email me those errors.  I wish to make this the best
+etext possible.  My email address for right now are haradda@aol.com
+and davidr@inconnect.com.  I hope that you enjoy this.
+
+David Reed
+
+The Tragedie of Romeo and Juliet
+
+Actus Primus. Scoena Prima.
+
+Enter Sampson and Gregory, with Swords and Bucklers, of the
+House of
+Capulet.
+
+  Sampson. Gregory: A my word wee'l not carry coales
+
+   Greg. No, for then we should be Colliars
+
+   Samp. I mean, if we be in choller, wee'l draw
+
+   Greg. I, While you liue, draw your necke out
+o'th Collar
+
+   Samp. I strike quickly, being mou'd
+
+   Greg. But thou art not quickly mou'd to strike
+
+   Samp. A dog of the house of Mountague, moues me
+
+   Greg. To moue, is to stir: and to be valiant, is to stand:
+Therefore, if thou art mou'd, thou runst away
+
+   Samp. A dogge of that house shall moue me to stand.
+I will take the wall of any Man or Maid of Mountagues
+
+   Greg. That shewes thee a weake slaue, for the weakest
+goes to the wall
+
+   Samp. True, and therefore women being the weaker
+Vessels, are euer thrust to the wall: therefore I will push
+Mountagues men from the wall, and thrust his Maides to
+the wall
+
+   Greg. The Quarrell is betweene our Masters, and vs their men
+
+   Samp. 'Tis all one, I will shew my selfe a tyrant: when
+I haue fought with the men, I will bee ciuill with the
+Maids, and cut off their heads
+
+   Greg. The heads of the Maids?
+  Sam. I, the heads of the Maids, or their Maiden-heads,
+Take it in what sence thou wilt
+
+   Greg. They must take it sence, that feele it
+
+   Samp. Me they shall feele while I am able to stand:
+And 'tis knowne I am a pretty peece of flesh
+
+   Greg. 'Tis well thou art not Fish: If thou had'st, thou
+had'st beene poore Iohn. Draw thy Toole, here comes of
+the House of the Mountagues.
+Enter two other Seruingmen.
+
+  Sam. My naked weapon is out: quarrel, I wil back thee
+  Gre. How? Turne thy backe, and run
+
+   Sam. Feare me not
+
+   Gre. No marry: I feare thee
+
+   Sam. Let vs take the Law of our sides: let them begin
+
+   Gr. I wil frown as I passe by, & let the[m] take it as they list
+  Sam. Nay, as they dare. I wil bite my Thumb at them,
+which is a disgrace to them, if they beare it
+
+   Abra. Do you bite your Thumbe at vs sir?
+  Samp. I do bite my Thumbe, sir
+
+   Abra. Do you bite your Thumb at vs, sir?
+  Sam. Is the Law of our side, if I say I?
+  Gre. No
+
+   Sam. No sir, I do not bite my Thumbe at you sir: but
+I bite my Thumbe sir
+
+   Greg. Do you quarrell sir?
+  Abra. Quarrell sir? no sir
+
+   Sam. If you do sir, I am for you, I serue as good a man as you
+  Abra. No better?
+  Samp. Well sir.
+Enter Benuolio.
+
+  Gr. Say better: here comes one of my masters kinsmen
+
+   Samp. Yes, better
+
+   Abra. You Lye
+
+   Samp. Draw if you be men. Gregory, remember thy
+washing blow.
+
+They Fight.
+
+  Ben. Part Fooles, put vp your Swords, you know not
+what you do.
+Enter Tibalt.
+
+  Tyb. What art thou drawne, among these heartlesse
+Hindes? Turne thee Benuolio, looke vpon thy death
+
+   Ben. I do but keepe the peace, put vp thy Sword,
+Or manage it to part these men with me
+
+   Tyb. What draw, and talke of peace? I hate the word
+As I hate hell, all Mountagues, and thee:
+Haue at thee Coward.
+
+Fight.
+
+Enter three or foure Citizens with Clubs.
+
+  Offi. Clubs, Bils, and Partisons, strike, beat them down
+Downe with the Capulets, downe with the Mountagues.
+Enter old Capulet in his Gowne, and his wife.
+
+  Cap. What noise is this? Giue me my long Sword ho
+
+   Wife. A crutch, a crutch: why call you for a Sword?
+  Cap. My Sword I say: Old Mountague is come,
+And flourishes his Blade in spight of me.
+Enter old Mountague, & his wife.
+
+  Moun. Thou villaine Capulet. Hold me not, let me go
+  2.Wife. Thou shalt not stir a foote to seeke a Foe.
+Enter Prince Eskales, with his Traine.
+
+  Prince. Rebellious Subiects, Enemies to peace,
+Prophaners of this Neighbor-stained Steele,
+Will they not heare? What hoe, you Men, you Beasts,
+That quench the fire of your pernitious Rage,
+With purple Fountaines issuing from your Veines:
+On paine of Torture, from those bloody hands
+Throw your mistemper'd Weapons to the ground,
+And heare the Sentence of your mooued Prince.
+Three ciuill Broyles, bred of an Ayery word,
+By thee old Capulet and Mountague,
+Haue thrice disturb'd the quiet of our streets,
+And made Verona's ancient Citizens
+Cast by their Graue beseeming Ornaments,
+To wield old Partizans, in hands as old,
+Cankred with peace, to part your Cankred hate,
+If euer you disturbe our streets againe,
+Your liues shall pay the forfeit of the peace.
+For this time all the rest depart away:
+You Capulet shall goe along with me,
+And Mountague come you this afternoone,
+To know our Fathers pleasure in this case:
+To old Free-towne, our common iudgement place:
+Once more on paine of death, all men depart.
+
+Exeunt.
+
+  Moun. Who set this auncient quarrell new abroach?
+Speake Nephew, were you by, when it began:
+  Ben. Heere were the seruants of your aduersarie,
+And yours close fighting ere I did approach,
+I drew to part them, in the instant came
+The fiery Tibalt, with his sword prepar'd,
+Which as he breath'd defiance to my eares,
+He swong about his head, and cut the windes,
+Who nothing hurt withall, hist him in scorne.
+While we were enterchanging thrusts and blowes,
+Came more and more, and fought on part and part,
+Till the Prince came, who parted either part
+
+   Wife. O where is Romeo, saw you him to day?
+Right glad am I, he was not at this fray
+
+   Ben. Madam, an houre before the worshipt Sun
+Peer'd forth the golden window of the East,
+A troubled mind draue me to walke abroad,
+Where vnderneath the groue of Sycamour,
+That West-ward rooteth from this City side:
+So earely walking did I see your Sonne:
+Towards him I made, but he was ware of me,
+And stole into the couert of the wood,
+I measuring his affections by my owne,
+Which then most sought, wher most might not be found:
+Being one too many by my weary selfe,
+Pursued my Honour, not pursuing his
+And gladly shunn'd, who gladly fled from me
+
+   Mount. Many a morning hath he there beene seene,
+With teares augmenting the fresh mornings deaw,
+Adding to cloudes, more cloudes with his deepe sighes,
+But all so soone as the all-cheering Sunne,
+Should in the farthest East begin to draw
+The shadie Curtaines from Auroras bed,
+Away from light steales home my heauy Sonne,
+And priuate in his Chamber pennes himselfe,
+Shuts vp his windowes, lockes faire day-light out,
+And makes himselfe an artificiall night:
+Blacke and portendous must this humour proue,
+Vnlesse good counsell may the cause remoue
+
+   Ben. My Noble Vncle doe you know the cause?
+  Moun. I neither know it, nor can learne of him
+
+   Ben. Haue you importun'd him by any meanes?
+  Moun. Both by my selfe and many other Friends,
+But he his owne affections counseller,
+Is to himselfe (I will not say how true)
+But to himselfe so secret and so close,
+So farre from sounding and discouery,
+As is the bud bit with an enuious worme,
+Ere he can spread his sweete leaues to the ayre,
+Or dedicate his beauty to the same.
+Could we but learne from whence his sorrowes grow,
+We would as willingly giue cure, as know.
+Enter Romeo.
+
+  Ben. See where he comes, so please you step aside,
+Ile know his greeuance, or be much denide
+
+   Moun. I would thou wert so happy by thy stay,
+To heare true shrift. Come Madam let's away.
+
+Exeunt.
+
+  Ben. Good morrow Cousin
+
+   Rom. Is the day so young?
+  Ben. But new strooke nine
+
+   Rom. Aye me, sad houres seeme long:
+Was that my Father that went hence so fast?
+  Ben. It was: what sadnes lengthens Romeo's houres?
+  Ro. Not hauing that, which hauing, makes them short
+  Ben. In loue
+
+   Romeo. Out
+
+   Ben. Of loue
+
+   Rom. Out of her fauour where I am in loue
+
+   Ben. Alas that loue so gentle in his view,
+Should be so tyrannous and rough in proofe
+
+   Rom. Alas that loue, whose view is muffled still,
+Should without eyes, see path-wayes to his will:
+Where shall we dine? O me: what fray was heere?
+Yet tell me not, for I haue heard it all:
+Heere's much to do with hate, but more with loue:
+Why then, O brawling loue, O louing hate,
+O any thing, of nothing first created:
+O heauie lightnesse, serious vanity,
+Mishapen Chaos of welseeming formes,
+Feather of lead, bright smoake, cold fire, sicke health,
+Still waking sleepe, that is not what it is:
+This loue feele I, that feele no loue in this.
+Doest thou not laugh?
+  Ben. No Coze, I rather weepe
+
+   Rom. Good heart, at what?
+  Ben. At thy good hearts oppression
+
+   Rom. Why such is loues transgression.
+Griefes of mine owne lie heauie in my breast,
+Which thou wilt propagate to haue it preast
+With more of thine, this loue that thou hast showne,
+Doth adde more griefe, to too much of mine owne.
+Loue, is a smoake made with the fume of sighes,
+Being purg'd, a fire sparkling in Louers eyes,
+Being vext, a Sea nourisht with louing teares,
+What is it else? a madnesse, most discreet,
+A choking gall, and a preseruing sweet:
+Farewell my Coze
+
+   Ben. Soft I will goe along.
+And if you leaue me so, you do me wrong
+
+   Rom. Tut I haue lost my selfe, I am not here,
+This is not Romeo, hee's some other where
+
+   Ben. Tell me in sadnesse, who is that you loue?
+  Rom. What shall I grone and tell thee?
+  Ben. Grone, why no: but sadly tell me who
+
+   Rom. A sicke man in sadnesse makes his will:
+A word ill vrg'd to one that is so ill:
+In sadnesse Cozin, I do loue a woman
+
+   Ben. I aym'd so neare, when I suppos'd you lou'd
+
+   Rom. A right good marke man, and shee's faire I loue
+  Ben. A right faire marke, faire Coze, is soonest hit
+
+   Rom. Well in that hit you misse, sheel not be hit
+With Cupids arrow, she hath Dians wit:
+And in strong proofe of chastity well arm'd:
+From loues weake childish Bow, she liues vncharm'd.
+Shee will not stay the siege of louing tearmes,
+Nor bid th' encounter of assailing eyes.
+Nor open her lap to Sainct-seducing Gold:
+O she is rich in beautie, onely poore,
+That when she dies, with beautie dies her store
+
+   Ben. Then she hath sworne, that she will still liue chast?
+  Rom. She hath, and in that sparing make huge wast?
+For beauty steru'd with her seuerity,
+Cuts beauty off from all posteritie.
+She is too faire, too wise: wisely too faire,
+To merit blisse by making me dispaire:
+She hath forsworne to loue, and in that vow
+Do I liue dead, that liue to tell it now
+
+   Ben. Be rul'd by me, forget to thinke of her
+
+   Rom. O teach me how I should forget to thinke
+
+   Ben. By giuing liberty vnto thine eyes,
+Examine other beauties,
+  Ro. 'Tis the way to cal hers (exquisit) in question more,
+These happy maskes that kisse faire Ladies browes,
+Being blacke, puts vs in mind they hide the faire:
+He that is strooken blind, cannot forget
+The precious treasure of his eye-sight lost:
+Shew me a Mistresse that is passing faire,
+What doth her beauty serue but as a note,
+Where I may read who past that passing faire.
+Farewell thou can'st not teach me to forget,
+  Ben. Ile pay that doctrine, or else die in debt.
+
+Exeunt.
+
+Enter Capulet, Countie Paris, and the Clowne.
+
+  Capu. Mountague is bound as well as I,
+In penalty alike, and 'tis not hard I thinke,
+For men so old as wee, to keepe the peace
+
+   Par. Of Honourable reckoning are you both,
+And pittie 'tis you liu'd at ods so long:
+But now my Lord, what say you to my sute?
+  Capu. But saying ore what I haue said before,
+My Child is yet a stranger in the world,
+Shee hath not seene the change of fourteene yeares,
+Let two more Summers wither in their pride,
+Ere we may thinke her ripe to be a Bride
+
+   Pari. Younger then she, are happy mothers made
+
+   Capu. And too soone mar'd are those so early made:
+Earth hath swallowed all my hopes but she,
+Shee's the hopefull Lady of my earth:
+But wooe her gentle Paris, get her heart,
+My will to her consent, is but a part,
+And shee agree, within her scope of choise,
+Lyes my consent, and faire according voice:
+This night I hold an old accustom'd Feast,
+Whereto I haue inuited many a Guest,
+Such as I loue, and you among the store,
+One more, most welcome makes my number more:
+At my poore house, looke to behold this night,
+Earth-treading starres, that make darke heauen light,
+Such comfort as do lusty young men feele,
+When well apparrel'd Aprill on the heele
+Of limping Winter treads, euen such delight
+Among fresh Fennell buds shall you this night
+Inherit at my house: heare all, all see:
+And like her most, whose merit most shall be:
+Which one more veiw, of many, mine being one,
+May stand in number, though in reckning none.
+Come, goe with me: goe sirrah trudge about,
+Through faire Verona, find those persons out,
+Whose names are written there, and to them say,
+My house and welcome, on their pleasure stay.
+Enter.
+
+  Ser. Find them out whose names are written. Heere it
+is written, that the Shoo-maker should meddle with his
+Yard, and the Tayler with his Last, the Fisher with his
+Pensill, and the Painter with his Nets. But I am sent to
+find those persons whose names are writ, & can neuer find
+what names the writing person hath here writ (I must to
+the learned) in good time.
+Enter Benuolio, and Romeo.
+
+  Ben. Tut man, one fire burnes out anothers burning,
+One paine is lesned by anothers anguish:
+Turne giddie, and be holpe by backward turning:
+One desparate greefe, cures with anothers languish:
+Take thou some new infection to the eye,
+And the rank poyson of the old wil die
+
+   Rom. Your Plantan leafe is excellent for that
+
+   Ben. For what I pray thee?
+  Rom. For your broken shin
+
+   Ben. Why Romeo art thou mad?
+  Rom. Not mad, but bound more then a mad man is:
+Shut vp in prison, kept without my foode,
+Whipt and tormented: and Godden good fellow,
+  Ser. Godgigoden, I pray sir can you read?
+  Rom. I mine owne fortune in my miserie
+
+   Ser. Perhaps you haue learn'd it without booke:
+But I pray can you read any thing you see?
+  Rom. I, if I know the Letters and the Language
+
+   Ser. Ye say honestly, rest you merry
+
+   Rom. Stay fellow, I can read.
+
+He reades the Letter.
+
+Seigneur Martino, and his wife and daughter: County Anselme
+and his beautious sisters: the Lady widdow of Vtruuio,
+Seigneur Placentio, and his louely Neeces: Mercutio and
+his brother Valentine: mine vncle Capulet his wife and daughters:
+my faire Neece Rosaline, Liuia, Seigneur Valentio, & his
+Cosen Tybalt: Lucio and the liuely Helena.
+A faire assembly, whither should they come?
+  Ser. Vp
+
+   Rom. Whither? to supper?
+  Ser. To our house
+
+   Rom. Whose house?
+  Ser. My Maisters
+
+   Rom. Indeed I should haue askt you that before
+
+   Ser. Now Ile tell you without asking. My maister is
+the great rich Capulet, and if you be not of the house of
+Mountagues I pray come and crush a cup of wine. Rest
+you merry.
+Enter.
+
+  Ben. At this same auncient Feast of Capulets
+Sups the faire Rosaline, whom thou so loues:
+With all the admired Beauties of Verona,
+Go thither and with vnattainted eye,
+Compare her face with some that I shall show,
+And I will make thee thinke thy Swan a Crow
+
+   Rom. When the deuout religion of mine eye
+Maintaines such falshood, then turne teares to fire:
+And these who often drown'd could neuer die,
+Transparent Heretiques be burnt for liers.
+One fairer then my loue: the all-seeing Sun
+Nere saw her match, since first the world begun
+
+   Ben. Tut, you saw her faire, none else being by,
+Herselfe poys'd with herselfe in either eye:
+But in that Christall scales, let there be waid,
+Your Ladies loue against some other Maid
+That I will show you, shining at this Feast,
+And she shew scant shell, well, that now shewes best
+
+   Rom. Ile goe along, no such sight to be showne,
+But to reioyce in splendor of mine owne.
+Enter Capulets Wife and Nurse.
+
+  Wife. Nurse wher's my daughter? call her forth to me
+
+   Nurse. Now by my Maidenhead, at twelue yeare old
+I bad her come, what Lamb: what Ladi-bird, God forbid,
+Where's this Girle? what Iuliet?
+Enter Iuliet
+
+   Iuliet. How now, who calls?
+  Nur. Your Mother
+
+   Iuliet. Madam I am heere, what is your will?
+  Wife. This is the matter: Nurse giue me leaue awhile, we
+must talke in secret. Nurse come backe againe, I haue remembred
+me, thou'se heare our counsell. Thou knowest
+my daughter's of a prety age
+
+   Nurse. Faith I can tell her age vnto an houre
+
+   Wife. Shee's not fourteene
+
+   Nurse. Ile lay fourteene of my teeth,
+And yet to my teene be it spoken,
+I haue but foure, shee's not fourteene.
+How long is it now to Lammas tide?
+  Wife. A fortnight and odde dayes
+
+   Nurse. Euen or odde, of all daies in the yeare come
+Lammas Eue at night shall she be fourteene. Susan & she,
+God rest all Christian soules, were of an age. Well Susan
+is with God, she was too good for me. But as I said, on Lamas
+Eue at night shall she be fourteene, that shall she marie,
+I remember it well. 'Tis since the Earth-quake now
+eleuen yeares, and she was wean'd I neuer shall forget it,
+of all the daies of the yeare, vpon that day: for I had then
+laid Worme-wood to my Dug sitting in the Sunne vnder
+the Douehouse wall, my Lord and you were then at
+Mantua, nay I doe beare a braine. But as I said, when it
+did tast the Worme-wood on the nipple of my Dugge,
+and felt it bitter, pretty foole, to see it teachie, and fall out
+with the Dugge, Shake quoth the Doue-house, 'twas no
+neede I trow to bid mee trudge, and since that time it is
+a eleuen yeares, for then she could stand alone, nay bi'th'
+roode she could haue runne, & wadled all about: for euen
+the day before she broke her brow, & then my Husband
+God be with his soule, a was a merrie man, tooke vp the
+Child, yea quoth hee, doest thou fall vpon thy face? thou
+wilt fall backeward when thou hast more wit, wilt thou
+not Iule? And by my holy-dam, the pretty wretch lefte
+crying, & said I: to see now how a Iest shall come about.
+I warrant, & I shall liue a thousand yeares, I neuer should
+forget it: wilt thou not Iule quoth he? and pretty foole it
+stinted, and said I
+
+   Old La. Inough of this, I pray thee hold thy peace
+
+   Nurse. Yes Madam, yet I cannot chuse but laugh, to
+thinke it should leaue crying, & say I: and yet I warrant
+it had vpon it brow, a bumpe as big as a young Cockrels
+stone? A perilous knock, and it cryed bitterly. Yea quoth
+my husband, fall'st vpon thy face, thou wilt fall backward
+when thou commest to age: wilt thou not Iule? It
+stinted: and said I
+
+   Iule. And stint thou too, I pray thee Nurse, say I
+
+   Nur. Peace I haue done: God marke thee too his grace
+thou wast the prettiest Babe that ere I nurst, and I might
+liue to see thee married once, I haue my wish
+
+   Old La. Marry that marry is the very theame
+I came to talke of, tell me daughter Iuliet,
+How stands your disposition to be Married?
+  Iuli. It is an houre that I dreame not of
+
+   Nur. An houre, were I not thine onely Nurse, I would
+say thou had'st suckt wisedome from thy teat
+
+   Old La. Well thinke of marriage now, yonger then you
+Heere in Verona, Ladies of esteeme,
+Are made already Mothers. By my count
+I was your Mother, much vpon these yeares
+That you are now a Maide, thus then in briefe:
+The valiant Paris seekes you for his loue
+
+   Nurse. A man young Lady, Lady, such a man as all
+the world. Why hee's a man of waxe
+
+   Old La. Veronas Summer hath not such a flower
+
+   Nurse. Nay hee's a flower, infaith a very flower
+
+   Old La. What say you, can you loue the Gentleman?
+This night you shall behold him at our Feast,
+Read ore the volume of young Paris face,
+And find delight, writ there with Beauties pen:
+Examine euery seuerall liniament,
+And see how one another lends content:
+And what obscur'd in this faire volume lies,
+Find written in the Margent of his eyes.
+This precious Booke of Loue, this vnbound Louer,
+To Beautifie him, onely lacks a Couer.
+The fish liues in the Sea, and 'tis much pride
+For faire without, the faire within to hide:
+That Booke in manies eyes doth share the glorie,
+That in Gold claspes, Lockes in the Golden storie:
+So shall you share all that he doth possesse,
+By hauing him, making your selfe no lesse
+
+   Nurse. No lesse, nay bigger: women grow by men
+
+   Old La. Speake briefly, can you like of Paris loue?
+  Iuli. Ile looke to like, if looking liking moue.
+But no more deepe will I endart mine eye,
+Then your consent giues strength to make flye.
+Enter a Seruing man.
+
+  Ser. Madam, the guests are come, supper seru'd vp, you
+cal'd, my young Lady askt for, the Nurse cur'st in the Pantery,
+and euery thing in extremitie: I must hence to wait, I
+beseech you follow straight.
+Enter.
+
+  Mo. We follow thee, Iuliet, the Countie staies
+
+   Nurse. Goe Gyrle, seeke happie nights to happy daies.
+
+Exeunt.
+
+Enter Romeo, Mercutio, Benuolio, with fiue or sixe other Maskers,
+Torch-bearers.
+
+  Rom. What shall this spech be spoke for our excuse?
+Or shall we on without Apologie?
+  Ben. The date is out of such prolixitie,
+Weele haue no Cupid, hood winkt with a skarfe,
+Bearing a Tartars painted Bow of lath,
+Skaring the Ladies like a Crow-keeper.
+But let them measure vs by what they will,
+Weele measure them with a Measure, and be gone
+
+   Rom. Giue me a Torch, I am not for this ambling.
+Being but heauy I will beare the light
+
+   Mer. Nay gentle Romeo, we must haue you dance
+
+   Rom. Not I beleeue me, you haue dancing shooes
+With nimble soles, I haue a soale of Lead
+So stakes me to the ground, I cannot moue
+
+   Mer. You are a Louer, borrow Cupids wings,
+And soare with them aboue a common bound
+
+   Rom. I am too sore enpearced with his shaft,
+To soare with his light feathers, and to bound:
+I cannot bound a pitch aboue dull woe,
+Vnder loues heauy burthen doe I sinke
+
+   Hora. And to sinke in it should you burthen loue,
+Too great oppression for a tender thing
+
+   Rom. Is loue a tender thing? it is too rough,
+Too rude, too boysterous, and it pricks like thorne
+
+   Mer. If loue be rough with you, be rough with loue,
+Pricke loue for pricking, and you beat loue downe,
+Giue me a Case to put my visage in,
+A Visor for a Visor, what care I
+What curious eye doth quote deformities:
+Here are the Beetle-browes shall blush for me
+
+   Ben. Come knocke and enter, and no sooner in,
+But euery man betake him to his legs
+
+   Rom. A Torch for me, let wantons light of heart
+Tickle the sencelesse rushes with their heeles:
+For I am prouerb'd with a Grandsier Phrase,
+Ile be a Candle-holder and looke on,
+The game was nere so faire, and I am done
+
+   Mer. Tut, duns the Mouse, the Constables owne word,
+If thou art dun, weele draw thee from the mire.
+Or saue your reuerence loue, wherein thou stickest
+Vp to the eares, come we burne day-light ho
+
+   Rom. Nay that's not so
+
+   Mer. I meane sir I delay,
+We wast our lights in vaine, lights, lights, by day;
+Take our good meaning, for our Iudgement sits
+Fiue times in that, ere once in our fiue wits
+
+   Rom. And we meane well in going to this Maske,
+But 'tis no wit to go
+
+   Mer. Why may one aske?
+  Rom. I dreampt a dreame to night
+
+   Mer. And so did I
+
+   Rom. Well what was yours?
+  Mer. That dreamers often lye
+
+   Ro. In bed a sleepe while they do dreame things true
+
+   Mer. O then I see Queene Mab hath beene with you:
+She is the Fairies Midwife, & she comes in shape no bigger
+then Agat-stone, on the fore-finger of an Alderman,
+drawne with a teeme of little Atomies, ouer mens noses as
+they lie asleepe: her Waggon Spokes made of long Spinners
+legs: the Couer of the wings of Grashoppers, her
+Traces of the smallest Spiders web, her coullers of the
+Moonshines watry Beames, her Whip of Crickets bone,
+the Lash of Philome, her Waggoner, a small gray-coated
+Gnat, not halfe so bigge as a round little Worme, prickt
+from the Lazie-finger of a man. Her Chariot is an emptie
+Haselnut, made by the Ioyner Squirrel or old Grub, time
+out a mind, the Faries Coach-makers: & in this state she
+gallops night by night, through Louers braines: and then
+they dreame of Loue. On Courtiers knees, that dreame on
+Cursies strait: ore Lawyers fingers, who strait dreampt on
+Fees, ore Ladies lips, who strait on kisses dreame, which
+oft the angry Mab with blisters plagues, because their
+breath with Sweet meats tainted are. Sometime she gallops
+ore a Courtiers nose, & then dreames he of smelling
+out a sute: & somtime comes she with Tith pigs tale, tickling
+a Parsons nose as a lies asleepe, then he dreames of
+another Benefice. Sometime she driueth ore a Souldiers
+necke, & then dreames he of cutting Forraine throats, of
+Breaches, Ambuscados, Spanish Blades: Of Healths fiue
+Fadome deepe, and then anon drums in his eares, at which
+he startes and wakes; and being thus frighted, sweares a
+prayer or two & sleepes againe: this is that very Mab that
+plats the manes of Horses in the night: & bakes the Elklocks
+in foule sluttish haires, which once vntangled, much
+misfortune bodes,
+This is the hag, when Maides lie on their backs,
+That presses them, and learnes them first to beare,
+Making them women of good carriage:
+This is she
+
+   Rom. Peace, peace, Mercutio peace,
+Thou talk'st of nothing
+
+   Mer. True, I talke of dreames:
+Which are the children of an idle braine,
+Begot of nothing, but vaine phantasie,
+Which is as thin of substance as the ayre,
+And more inconstant then the wind, who wooes
+Euen now the frozen bosome of the North:
+And being anger'd, puffes away from thence,
+Turning his side to the dew dropping South
+
+   Ben. This wind you talke of blowes vs from our selues,
+Supper is done, and we shall come too late
+
+   Rom. I feare too early, for my mind misgiues,
+Some consequence yet hanging in the starres,
+Shall bitterly begin his fearefull date
+With this nights reuels, and expire the tearme
+Of a despised life clos'd in my brest:
+By some vile forfeit of vntimely death.
+But he that hath the stirrage of my course,
+Direct my sute: on lustie Gentlemen
+
+   Ben. Strike Drum.
+
+They march about the Stage, and Seruingmen come forth with
+their napkins.
+
+Enter Seruant.
+
+  Ser. Where's Potpan, that he helpes not to take away?
+He shift a Trencher? he scrape a Trencher?
+  1. When good manners, shall lie in one or two mens
+hands, and they vnwasht too, 'tis a foule thing
+
+   Ser. Away with the Ioynstooles, remoue the Courtcubbord,
+looke to the Plate: good thou, saue mee a piece
+of Marchpane, and as thou louest me, let the Porter let in
+Susan Grindstone, and Nell, Anthonie and Potpan
+
+   2. I Boy readie
+
+   Ser. You are lookt for, and cal'd for, askt for, & sought
+for, in the great Chamber
+
+   1. We cannot be here and there too, chearly Boyes,
+Be brisk awhile, and the longer liuer take all.
+
+Exeunt.
+
+Enter all the Guests and Gentlewomen to the Maskers.
+
+  1. Capu. Welcome Gentlemen,
+Ladies that haue their toes
+Vnplagu'd with Cornes, will walke about with you:
+Ah my Mistresses, which of you all
+Will now deny to dance? She that makes dainty,
+She Ile sweare hath Cornes: am I come neare ye now?
+Welcome Gentlemen, I haue seene the day
+That I haue worne a Visor, and could tell
+A whispering tale in a faire Ladies eare:
+Such as would please: 'tis gone, 'tis gone, 'tis gone,
+You are welcome Gentlemen, come Musitians play:
+
+Musicke plaies: and they dance.
+
+A Hall, Hall, giue roome, and foote it Girles,
+More light you knaues, and turne the Tables vp:
+And quench the fire, the Roome is growne too hot.
+Ah sirrah, this vnlookt for sport comes well:
+Nay sit, nay sit, good Cozin Capulet,
+For you and I are past our dauncing daies:
+How long 'ist now since last your selfe and I
+Were in a Maske?
+  2. Capu. Berlady thirty yeares
+
+   1. Capu. What man: 'tis not so much, 'tis not so much,
+'Tis since the Nuptiall of Lucentio,
+Come Pentycost as quickely as it will,
+Some fiue and twenty yeares, and then we Maskt
+
+   2. Cap. 'Tis more, 'tis more, his Sonne is elder sir:
+His Sonne is thirty
+
+   3. Cap. Will you tell me that?
+His Sonne was but a Ward two yeares agoe
+
+   Rom. What Ladie is that which doth inrich the hand
+Of yonder Knight?
+  Ser. I know not sir
+
+   Rom. O she doth teach the Torches to burne bright:
+It seemes she hangs vpon the cheeke of night,
+As a rich Iewel in an aethiops eare:
+Beauty too rich for vse, for earth too deare:
+So shewes a Snowy Doue trooping with Crowes,
+As yonder Lady ore her fellowes showes;
+The measure done, Ile watch her place of stand,
+And touching hers, make blessed my rude hand.
+Did my heart loue till now, forsweare it sight,
+For I neuer saw true Beauty till this night
+
+   Tib. This by his voice, should be a Mountague.
+Fetch me my Rapier Boy, what dares the slaue
+Come hither couer'd with an antique face,
+To fleere and scorne at our Solemnitie?
+Now by the stocke and Honour of my kin,
+To strike him dead I hold it not a sin
+
+   Cap. Why how now kinsman,
+Wherefore storme you so?
+  Tib. Vncle this is a Mountague, our foe:
+A Villaine that is hither come in spight,
+To scorne at our Solemnitie this night
+
+   Cap. Young Romeo is it?
+  Tib. 'Tis he, that Villaine Romeo
+
+   Cap. Content thee gentle Coz, let him alone,
+A beares him like a portly Gentleman:
+And to say truth, Verona brags of him,
+To be a vertuous and well gouern'd youth:
+I would not for the wealth of all the towne,
+Here in my house do him disparagement:
+Therfore be patient, take no note of him,
+It is my will, the which if thou respect,
+Shew a faire presence, and put off these frownes,
+An ill beseeming semblance for a Feast
+  Tib. It fits when such a Villaine is a guest,
+Ile not endure him
+
+   Cap. He shall be endur'd.
+What goodman boy, I say he shall, go too,
+Am I the Maister here or you? go too,
+Youle not endure him, God shall mend my soule,
+Youle make a Mutinie among the Guests:
+You will set cocke a hoope, youle be the man
+
+   Tib. Why Vncle, 'tis a shame
+
+   Cap. Go too, go too,
+You are a sawcy Boy, 'ist so indeed?
+This tricke may chance to scath you, I know what,
+You must contrary me, marry 'tis time.
+Well said my hearts, you are a Princox, goe,
+Be quiet, or more light, more light for shame,
+Ile make you quiet. What, chearely my hearts
+
+   Tib. Patience perforce, with wilfull choler meeting,
+Makes my flesh tremble in their different greeting:
+I will withdraw, but this intrusion shall
+Now seeming sweet, conuert to bitter gall.
+Enter.
+
+  Rom. If I prophane with my vnworthiest hand,
+This holy shrine, the gentle sin is this,
+My lips to blushing Pilgrims did ready stand,
+To smooth that rough touch, with a tender kisse
+
+   Iul. Good Pilgrime,
+You do wrong your hand too much.
+Which mannerly deuotion shewes in this,
+For Saints haue hands, that Pilgrims hands do tuch,
+And palme to palme, is holy Palmers kisse
+
+   Rom. Haue not Saints lips, and holy Palmers too?
+  Iul. I Pilgrim, lips that they must vse in prayer
+
+   Rom. O then deare Saint, let lips do what hands do,
+They pray (grant thou) least faith turne to dispaire
+
+   Iul. Saints do not moue,
+Though grant for prayers sake
+
+   Rom. Then moue not while my prayers effect I take:
+Thus from my lips, by thine my sin is purg'd
+
+   Iul. Then haue my lips the sin that they haue tooke
+
+   Rom. Sin from my lips? O trespasse sweetly vrg'd:
+Giue me my sin againe
+
+   Iul. You kisse by'th' booke
+
+   Nur. Madam your Mother craues a word with you
+
+   Rom. What is her Mother?
+  Nurs. Marrie Batcheler,
+Her Mother is the Lady of the house,
+And a good Lady, and a wise, and Vertuous,
+I Nur'st her Daughter that you talkt withall:
+I tell you, he that can lay hold of her,
+Shall haue the chincks
+
+   Rom. Is she a Capulet?
+O deare account! My life is my foes debt
+
+   Ben. Away, be gone, the sport is at the best
+
+   Rom. I so I feare, the more is my vnrest
+
+   Cap. Nay Gentlemen prepare not to be gone,
+We haue a trifling foolish Banquet towards:
+Is it e'ne so? why then I thanke you all.
+I thanke you honest Gentlemen, good night:
+More Torches here: come on, then let's to bed.
+Ah sirrah, by my faie it waxes late,
+Ile to my rest
+
+   Iuli. Come hither Nurse,
+What is yond Gentleman:
+  Nur. The Sonne and Heire of old Tyberio
+
+   Iuli. What's he that now is going out of doore?
+  Nur. Marrie that I thinke be young Petruchio
+
+   Iul. What's he that follows here that would not dance?
+  Nur. I know not
+
+   Iul. Go aske his name: if he be married,
+My graue is like to be my wedded bed
+
+   Nur. His name is Romeo, and a Mountague,
+The onely Sonne of your great Enemie
+
+   Iul. My onely Loue sprung from my onely hate,
+Too early seene, vnknowne, and knowne too late,
+Prodigious birth of Loue it is to me,
+That I must loue a loathed Enemie
+
+   Nur. What's this? whats this?
+  Iul. A rime, I learne euen now
+Of one I dan'st withall.
+
+One cals within, Iuliet.
+
+  Nur. Anon, anon:
+Come let's away, the strangers all are gone.
+
+Exeunt.
+
+  Chorus. Now old desire doth in his death bed lie,
+And yong affection gapes to be his Heire,
+That faire, for which Loue gron'd for and would die,
+With tender Iuliet matcht, is now not faire.
+Now Romeo is beloued, and Loues againe,
+A like bewitched by the charme of lookes:
+But to his foe suppos'd he must complaine,
+And she steale Loues sweet bait from fearefull hookes:
+Being held a foe, he may not haue accesse
+To breath such vowes as Louers vse to sweare,
+And she as much in Loue, her meanes much lesse,
+To meete her new Beloued any where:
+But passion lends them Power, time, meanes to meete,
+Temp'ring extremities with extreame sweete.
+Enter Romeo alone.
+
+  Rom. Can I goe forward when my heart is here?
+Turne backe dull earth, and find thy Center out.
+Enter Benuolio, with Mercutio.
+
+  Ben. Romeo, my Cozen Romeo, Romeo
+
+   Merc. He is wise,
+And on my life hath stolne him home to bed
+
+   Ben. He ran this way and leapt this Orchard wall.
+Call good Mercutio:
+Nay, Ile coniure too
+
+   Mer. Romeo, Humours, Madman, Passion, Louer,
+Appeare thou in the likenesse of a sigh,
+Speake but one time, and I am satisfied:
+Cry me but ay me, Prouant, but Loue and day,
+Speake to my goship Venus one faire word,
+One Nickname for her purblind Sonne and her,
+Young Abraham Cupid he that shot so true,
+When King Cophetua lou'd the begger Maid,
+He heareth not, he stirreth not, he moueth not,
+The Ape is dead, I must coniure him,
+I coniure thee by Rosalines bright eyes,
+By her High forehead, and her Scarlet lip,
+By her Fine foote, Straight leg, and Quiuering thigh,
+And the Demeanes, that there Adiacent lie,
+That in thy likenesse thou appeare to vs
+
+   Ben. And if he heare thee thou wilt anger him
+
+   Mer. This cannot anger him, t'would anger him
+To raise a spirit in his Mistresse circle,
+Of some strange nature, letting it stand
+Till she had laid it, and coniured it downe,
+That were some spight.
+My inuocation is faire and honest, & in his Mistris name,
+I coniure onely but to raise vp him
+
+   Ben. Come, he hath hid himselfe among these Trees
+To be consorted with the Humerous night:
+Blind is his Loue, and best befits the darke
+
+   Mer. If Loue be blind, Loue cannot hit the marke,
+Now will he sit vnder a Medler tree,
+And wish his Mistresse were that kind of Fruite,
+As Maides cal Medlers when they laugh alone,
+O Romeo that she were, O that she were
+An open, or thou a Poprin Peare,
+Romeo goodnight, Ile to my Truckle bed,
+This Field-bed is to cold for me to sleepe,
+Come shall we go?
+  Ben. Go then, for 'tis in vaine to seeke him here
+That meanes not to be found.
+
+Exeunt.
+
+  Rom. He ieasts at Scarres that neuer felt a wound,
+But soft, what light through yonder window breaks?
+It is the East, and Iuliet is the Sunne,
+Arise faire Sun and kill the enuious Moone,
+Who is already sicke and pale with griefe,
+That thou her Maid art far more faire then she:
+Be not her Maid since she is enuious,
+Her Vestal liuery is but sicke and greene,
+And none but fooles do weare it, cast it off:
+It is my Lady, O it is my Loue, O that she knew she were,
+She speakes, yet she sayes nothing, what of that?
+Her eye discourses, I will answere it:
+I am too bold 'tis not to me she speakes:
+Two of the fairest starres in all the Heauen,
+Hauing some businesse do entreat her eyes,
+To twinckle in their Spheres till they returne.
+What if her eyes were there, they in her head,
+The brightnesse of her cheeke would shame those starres,
+As day-light doth a Lampe, her eye in heauen,
+Would through the ayrie Region streame so bright,
+That Birds would sing, and thinke it were not night:
+See how she leanes her cheeke vpon her hand.
+O that I were a Gloue vpon that hand,
+That I might touch that cheeke
+
+   Iul. Ay me
+
+   Rom. She speakes.
+Oh speake againe bright Angell, for thou art
+As glorious to this night being ore my head,
+As is a winged messenger of heauen
+Vnto the white vpturned wondring eyes
+Of mortalls that fall backe to gaze on him,
+When he bestrides the lazie puffing Cloudes,
+And sailes vpon the bosome of the ayre
+
+   Iul. O Romeo, Romeo, wherefore art thou Romeo?
+Denie thy Father and refuse thy name:
+Or if thou wilt not, be but sworne to my Loue,
+And Ile no longer be a Capulet
+
+   Rom. Shall I heare more, or shall I speake at this?
+  Iu. 'Tis but thy name that is my Enemy:
+Thou art thy selfe, though not a Mountague,
+What's Mountague? it is nor hand nor foote,
+Nor arme, nor face, O be some other name
+Belonging to a man.
+What? in a names that which we call a Rose,
+By any other word would smell as sweete,
+So Romeo would, were he not Romeo cal'd,
+Retaine that deare perfection which he owes,
+Without that title Romeo, doffe thy name,
+And for thy name which is no part of thee,
+Take all my selfe
+
+   Rom. I take thee at thy word:
+Call me but Loue, and Ile be new baptiz'd,
+Hence foorth I neuer will be Romeo
+
+   Iuli. What man art thou, that thus bescreen'd in night
+So stumblest on my counsell?
+  Rom. By a name,
+I know not how to tell thee who I am:
+My name deare Saint, is hatefull to my selfe,
+Because it is an Enemy to thee,
+Had I it written, I would teare the word
+
+   Iuli. My eares haue yet not drunke a hundred words
+Of thy tongues vttering, yet I know the sound.
+Art thou not Romeo, and a Montague?
+  Rom. Neither faire Maid, if either thee dislike
+
+   Iul. How cam'st thou hither.
+Tell me, and wherefore?
+The Orchard walls are high, and hard to climbe,
+And the place death, considering who thou art,
+If any of my kinsmen find thee here,
+  Rom. With Loues light wings
+Did I ore-perch these Walls,
+For stony limits cannot hold Loue out,
+And what Loue can do, that dares Loue attempt:
+Therefore thy kinsmen are no stop to me
+
+   Iul. If they do see thee, they will murther thee
+
+   Rom. Alacke there lies more perill in thine eye,
+Then twenty of their Swords, looke thou but sweete,
+And I am proofe against their enmity
+
+   Iul. I would not for the world they saw thee here
+
+   Rom. I haue nights cloake to hide me from their eyes
+And but thou loue me, let them finde me here,
+My life were better ended by their hate,
+Then death proroged wanting of thy Loue
+
+   Iul. By whose direction found'st thou out this place?
+  Rom. By Loue that first did prompt me to enquire,
+He lent me counsell, and I lent him eyes,
+I am no Pylot, yet wert thou as far
+As that vast-shore-washet with the farthest Sea,
+I should aduenture for such Marchandise
+
+   Iul. Thou knowest the maske of night is on my face,
+Else would a Maiden blush bepaint my cheeke,
+For that which thou hast heard me speake to night,
+Faine would I dwell on forme, faine, faine, denie
+What I haue spoke, but farewell Complement,
+Doest thou Loue? I know thou wilt say I,
+And I will take thy word, yet if thou swear'st,
+Thou maiest proue false: at Louers periuries
+They say Ioue laught, oh gentle Romeo,
+If thou dost Loue, pronounce it faithfully:
+Or if thou thinkest I am too quickly wonne,
+Ile frowne and be peruerse, and say thee nay,
+So thou wilt wooe: But else not for the world.
+In truth faire Mountague I am too fond:
+And therefore thou maiest thinke my behauiour light,
+But trust me Gentleman, Ile proue more true,
+Then those that haue coying to be strange,
+I should haue beene more strange, I must confesse,
+But that thou ouer heard'st ere I was ware
+My true Loues passion, therefore pardon me,
+And not impute this yeelding to light Loue,
+Which the darke night hath so discouered
+
+   Rom. Lady, by yonder Moone I vow,
+That tips with siluer all these Fruite tree tops
+
+   Iul. O sweare not by the Moone, th' inconstant Moone,
+That monethly changes in her circled Orbe,
+Least that thy Loue proue likewise variable
+
+   Rom. What shall I sweare by?
+  Iul. Do not sweare at all:
+Or if thou wilt sweare by thy gratious selfe,
+Which is the God of my Idolatry,
+And Ile beleeue thee
+
+   Rom. If my hearts deare loue
+
+   Iuli. Well do not sweare, although I ioy in thee:
+I haue no ioy of this contract to night,
+It is too rash, too vnaduis'd, too sudden,
+Too like the lightning which doth cease to be
+Ere, one can say, it lightens, Sweete good night:
+This bud of Loue by Summers ripening breath,
+May proue a beautious Flower when next we meete:
+Goodnight, goodnight, as sweete repose and rest,
+Come to thy heart, as that within my brest
+
+   Rom. O wilt thou leaue me so vnsatisfied?
+  Iuli. What satisfaction can'st thou haue to night?
+  Ro. Th' exchange of thy Loues faithfull vow for mine
+
+   Iul. I gaue thee mine before thou did'st request it:
+And yet I would it were to giue againe
+
+   Rom. Would'st thou withdraw it,
+For what purpose Loue?
+  Iul. But to be franke and giue it thee againe,
+And yet I wish but for the thing I haue,
+My bounty is as boundlesse as the Sea,
+My Loue as deepe, the more I giue to thee
+The more I haue, for both are Infinite:
+I heare some noyse within deare Loue adue:
+
+Cals within.
+
+Anon good Nurse, sweet Mountague be true:
+Stay but a little, I will come againe
+
+   Rom. O blessed blessed night, I am afear'd
+Being in night, all this is but a dreame,
+Too flattering sweet to be substantiall
+
+   Iul. Three words deare Romeo,
+And goodnight indeed,
+If that thy bent of Loue be Honourable,
+Thy purpose marriage, send me word to morrow,
+By one that Ile procure to come to thee,
+Where and what time thou wilt performe the right,
+And all my Fortunes at thy foote Ile lay,
+And follow thee my Lord throughout the world
+
+   Within: Madam.
+I come, anon: but if thou meanest not well,
+I do beseech thee
+  Within: Madam.
+(By and by I come)
+To cease thy strife, and leaue me to my griefe,
+To morrow will I send
+
+   Rom. So thriue my soule
+
+   Iu. A thousand times goodnight.
+Enter.
+
+  Rome. A thousand times the worse to want thy light,
+Loue goes toward Loue as school-boyes fro[m] their books
+But Loue fro[m] Loue, towards schoole with heauie lookes.
+Enter Iuliet againe.
+
+  Iul. Hist Romeo hist: O for a Falkners voice,
+To lure this Tassell gentle backe againe,
+Bondage is hoarse, and may not speake aloud,
+Else would I teare the Caue where Eccho lies,
+And make her ayrie tongue more hoarse, then
+With repetition of my Romeo
+
+   Rom. It is my soule that calls vpon my name.
+How siluer sweet, sound Louers tongues by night,
+Like softest Musicke to attending eares
+
+   Iul. Romeo
+
+   Rom. My Neece
+
+   Iul. What a clock to morrow
+Shall I send to thee?
+  Rom. By the houre of nine
+
+   Iul. I will not faile, 'tis twenty yeares till then,
+I haue forgot why I did call thee backe
+
+   Rom. Let me stand here till thou remember it
+
+   Iul. I shall forget, to haue thee still stand there,
+Remembring how I Loue thy company
+
+   Rom. And Ile still stay, to haue thee still forget,
+Forgetting any other home but this
+
+   Iul. 'Tis almost morning, I would haue thee gone,
+And yet no further then a wantons Bird,
+That let's it hop a little from his hand,
+Like a poore prisoner in his twisted Gyues,
+And with a silken thred plucks it backe againe,
+So louing Iealous of his liberty
+
+   Rom. I would I were thy Bird
+
+   Iul. Sweet so would I,
+Yet I should kill thee with much cherishing:
+Good night, good night
+
+   Rom. Parting is such sweete sorrow,
+That I shall say goodnight, till it be morrow
+
+   Iul. Sleepe dwell vpon thine eyes, peace in thy brest
+
+   Rom. Would I were sleepe and peace so sweet to rest,
+The gray ey'd morne smiles on the frowning night,
+Checkring the Easterne Clouds with streakes of light,
+And darkenesse fleckel'd like a drunkard reeles,
+From forth dayes pathway, made by Titans wheeles.
+Hence will I to my ghostly Friers close Cell,
+His helpe to craue, and my deare hap to tell.
+Enter.
+
+Enter Frier alone with a basket.
+
+  Fri. The gray ey'd morne smiles on the frowning night,
+Checkring the Easterne Cloudes with streaks of light:
+And fleckled darknesse like a drunkard reeles,
+From forth daies path, and Titans burning wheeles:
+Now ere the Sun aduance his burning eye,
+The day to cheere, and nights danke dew to dry,
+I must vpfill this Osier Cage of ours,
+With balefull weedes, and precious Iuiced flowers,
+The earth that's Natures mother, is her Tombe,
+What is her burying graue that is her wombe:
+And from her wombe children of diuers kind
+We sucking on her naturall bosome find:
+Many for many vertues excellent:
+None but for some, and yet all different.
+O mickle is the powerfull grace that lies
+In Plants, Hearbs, stones, and their true qualities:
+For nought so vile, that on earth doth liue,
+But to the earth some speciall good doth giue.
+Nor ought so good, but strain'd from that faire vse,
+Reuolts from true birth, stumbling on abuse.
+Vertue it selfe turnes vice being misapplied,
+And vice sometime by action dignified.
+Enter Romeo.
+
+Within the infant rind of this weake flower,
+Poyson hath residence, and medicine power:
+For this being smelt, with that part cheares each part,
+Being tasted stayes all sences with the heart.
+Two such opposed Kings encampe them still,
+In man as well as Hearbes, grace and rude will:
+And where the worser is predominant,
+Full soone the Canker death eates vp that Plant
+
+   Rom. Good morrow Father
+
+   Fri. Benedecite.
+What early tongue so sweet saluteth me?
+Young Sonne, it argues a distempered head,
+So soone to bid goodmorrow to thy bed;
+Care keepes his watch in euery old mans eye,
+And where Care lodges, sleepe will neuer lye:
+But where vnbrused youth with vnstuft braine
+Doth couch his lims, there, golden sleepe doth raigne;
+Therefore thy earlinesse doth me assure,
+Thou art vprous'd with some distemprature;
+Or if not so, then here I hit it right.
+Our Romeo hath not beene in bed to night
+
+   Rom. That last is true, the sweeter rest was mine
+
+   Fri. God pardon sin: wast thou with Rosaline?
+  Rom. With Rosaline, my ghostly Father? No,
+I haue forgot that name, and that names woe
+
+   Fri. That's my good Son, but wher hast thou bin then?
+  Rom. Ile tell thee ere thou aske it me agen:
+I haue beene feasting with mine enemie,
+Where on a sudden one hath wounded me,
+That's by me wounded: both our remedies
+Within thy helpe and holy phisicke lies:
+I beare no hatred, blessed man: for loe
+My intercession likewise steads my foe
+
+   Fri. Be plaine good Son, rest homely in thy drift,
+Ridling confession, findes but ridling shrift
+
+   Rom. Then plainly know my hearts deare Loue is set,
+On the faire daughter of rich Capulet:
+As mine on hers, so hers is set on mine;
+And all combin'd, saue what thou must combine
+By holy marriage: when and where, and how,
+We met, we wooed, and made exchange of vow:
+Ile tell thee as we passe, but this I pray,
+That thou consent to marrie vs to day
+
+   Fri. Holy S[aint]. Francis, what a change is heere?
+Is Rosaline that thou didst Loue so deare
+So soone forsaken? young mens Loue then lies
+Not truely in their hearts, but in their eyes.
+Iesu Maria, what a deale of brine
+Hath washt thy sallow cheekes for Rosaline?
+How much salt water throwne away in wast,
+To season Loue that of it doth not tast.
+The Sun not yet thy sighes, from heauen cleares,
+Thy old grones yet ringing in my auncient eares:
+Lo here vpon thy cheeke the staine doth sit,
+Of an old teare that is not washt off yet.
+If ere thou wast thy selfe, and these woes thine,
+Thou and these woes, were all for Rosaline.
+And art thou chang'd? pronounce this sentence then,
+Women may fall, when there's no strength in men
+
+   Rom. Thou chid'st me oft for louing Rosaline
+
+   Fri. For doting, not for louing pupill mine
+
+   Rom. And bad'st me bury Loue
+
+   Fri. Not in a graue,
+To lay one in, another out to haue
+
+   Rom. I pray thee chide me not, her I Loue now
+Doth grace for grace, and Loue for Loue allow:
+The other did not so
+
+   Fri. O she knew well,
+Thy Loue did read by rote, that could not spell:
+But come young wauerer, come goe with me,
+In one respect, Ile thy assistant be:
+For this alliance may so happy proue,
+To turne your houshould rancor to pure Loue
+
+   Rom. O let vs hence, I stand on sudden hast
+
+   Fri. Wisely and slow, they stumble that run fast.
+
+Exeunt.
+
+Enter Benuolio and Mercutio.
+
+  Mer. Where the deule should this Romeo be? came he
+not home to night?
+  Ben. Not to his Fathers, I spoke with his man
+
+   Mer. Why that same pale hard-harted wench, that Rosaline
+torments him so, that he will sure run mad
+
+   Ben. Tibalt, the kinsman to old Capulet, hath sent a Letter
+to his Fathers house
+
+   Mer. A challenge on my life
+
+   Ben. Romeo will answere it
+
+   Mer. Any man that can write, may answere a Letter
+
+   Ben. Nay, he will answere the Letters Maister how he
+dares, being dared
+
+   Mer. Alas poore Romeo, he is already dead stab'd with
+a white wenches blacke eye, runne through the eare with
+a Loue song, the very pinne of his heart, cleft with the
+blind Bowe-boyes but-shaft, and is he a man to encounter
+Tybalt?
+  Ben. Why what is Tibalt?
+  Mer. More then Prince of Cats. Oh hee's the Couragious
+Captaine of Complements: he fights as you sing
+pricksong, keeps time, distance, and proportion, he rests
+his minum, one, two, and the third in your bosom: the very
+butcher of a silk button, a Dualist, a Dualist: a Gentleman
+of the very first house of the first and second cause: ah the
+immortall Passado, the Punto reuerso, the Hay
+
+   Ben. The what?
+  Mer. The Pox of such antique lisping affecting phantacies,
+these new tuners of accent: Iesu a very good blade,
+a very tall man, a very good whore. Why is not this a lamentable
+thing Grandsire, that we should be thus afflicted
+with these strange flies: these fashion Mongers, these
+pardon-mee's,
+who stand so much on the new form, that they
+cannot sit at ease on the old bench. O their bones, their
+bones.
+Enter Romeo.
+
+  Ben. Here comes Romeo, here comes Romeo
+
+   Mer. Without his Roe, like a dryed Hering. O flesh,
+flesh, how art thou fishified? Now is he for the numbers
+that Petrarch flowed in: Laura to his Lady, was a kitchen
+wench, marrie she had a better Loue to berime her: Dido
+a dowdie, Cleopatra a Gipsie, Hellen and Hero, hildings
+and Harlots: Thisbie a gray eie or so, but not to the purpose.
+Signior Romeo, Bon iour, there's a French salutation to your
+French slop: you gaue vs the counterfait fairely last
+night
+
+   Romeo. Good morrow to you both, what counterfeit
+did I giue you?
+  Mer. The slip sir, the slip, can you not conceiue?
+  Rom. Pardon Mercutio, my businesse was great, and in
+such a case as mine, a man may straine curtesie
+
+   Mer. That's as much as to say, such a case as yours constrains
+a man to bow in the hams
+
+   Rom. Meaning to cursie
+
+   Mer. Thou hast most kindly hit it
+
+   Rom. A most curteous exposition
+
+   Mer. Nay, I am the very pinck of curtesie
+
+   Rom. Pinke for flower
+
+   Mer. Right
+
+   Rom. Why then is my Pump well flowr'd
+
+   Mer. Sure wit, follow me this ieast, now till thou hast
+worne out thy Pump, that when the single sole of it is
+worne, the ieast may remaine after the wearing, sole-singular
+
+   Rom. O single sol'd ieast,
+Soly singular for the singlenesse
+
+   Mer. Come betweene vs good Benuolio, my wits faints
+
+   Rom. Swits and spurs,
+Swits and spurs, or Ile crie a match
+
+   Mer. Nay, if our wits run the Wild-Goose chase, I am
+done: For thou hast more of the Wild-Goose in one of
+thy wits, then I am sure I haue in my whole fiue. Was I
+with you there for the Goose?
+  Rom. Thou wast neuer with mee for any thing, when
+thou wast not there for the Goose
+
+   Mer. I will bite thee by the eare for that iest
+
+   Rom. Nay, good Goose bite not
+
+   Mer. Thy wit is a very Bitter-sweeting,
+It is a most sharpe sawce
+
+   Rom. And is it not well seru'd into a Sweet-Goose?
+  Mer. Oh here's a wit of Cheuerell, that stretches from
+an ynch narrow, to an ell broad
+
+   Rom. I stretch it out for that word, broad, which added
+to the Goose, proues thee farre and wide, abroad Goose
+
+   Mer. Why is not this better now, then groning for
+Loue, now art thou sociable, now art thou Romeo: now art
+thou what thou art, by Art as well as by Nature, for this
+driueling Loue is like a great Naturall, that runs lolling
+vp and downe to hid his bable in a hole
+
+   Ben. Stop there, stop there
+
+   Mer. Thou desir'st me to stop in my tale against the haire
+
+   Ben. Thou would'st else haue made thy tale large
+
+   Mer. O thou art deceiu'd, I would haue made it short,
+or I was come to the whole depth of my tale, and meant
+indeed to occupie the argument no longer.
+Enter Nurse and her man.
+
+  Rom. Here's a goodly geare.
+A sayle, a sayle
+
+   Mer. Two, two: a Shirt and a Smocke
+
+   Nur. Peter?
+  Peter. Anon
+
+   Nur. My Fan Peter?
+  Mer. Good Peter to hide her face?
+For her Fans the fairer face?
+  Nur. God ye good morrow Gentlemen
+
+   Mer. God ye gooden faire Gentlewoman
+
+   Nur. Is it gooden?
+  Mer. 'Tis no lesse I tell you: for the bawdy hand of the
+Dyall is now vpon the pricke of Noone
+
+   Nur. Out vpon you: what a man are you?
+  Rom. One Gentlewoman,
+That God hath made, himselfe to mar
+
+   Nur. By my troth it is said, for himselfe to, mar quatha:
+Gentlemen, can any of you tel me where I may find
+the young Romeo?
+  Romeo. I can tell you: but young Romeo will be older
+when you haue found him, then he was when you sought
+him: I am the youngest of that name, for fault of a worse
+
+   Nur. You say well
+
+   Mer. Yea is the worst well,
+Very well tooke: Ifaith, wisely, wisely
+
+   Nur. If you be he sir,
+I desire some confidence with you?
+  Ben. She will endite him to some Supper
+
+   Mer. A baud, a baud, a baud. So ho
+
+   Rom. What hast thou found?
+  Mer. No Hare sir, vnlesse a Hare sir in a Lenten pie,
+that is something stale and hoare ere it be spent.
+An old Hare hoare, and an old Hare hoare is very good
+meat in Lent.
+But a Hare that is hoare is too much for a score, when it
+hoares ere it be spent,
+Romeo will you come to your Fathers? Weele to dinner
+thither
+
+   Rom. I will follow you
+
+   Mer. Farewell auncient Lady:
+Farewell Lady, Lady, Lady.
+
+Exit. Mercutio, Benuolio.
+
+  Nur. I pray you sir, what sawcie Merchant was this
+that was so full of his roperie?
+  Rom. A Gentleman Nurse, that loues to heare himselfe
+talke, and will speake more in a minute, then he will stand
+to in a Moneth
+
+   Nur. And a speake any thing against me, Ile take him
+downe, z a were lustier then he is, and twentie such Iacks:
+and if I cannot, Ile finde those that shall: scuruie knaue, I
+am none of his flurt-gils, I am none of his skaines mates,
+and thou must stand by too and suffer euery knaue to vse
+me at his pleasure
+
+   Pet. I saw no man vse you at his pleasure: if I had, my
+weapon should quickly haue beene out, I warrant you, I
+dare draw assoone as another man, if I see occasion in a
+good quarrell, and the law on my side
+
+   Nur. Now afore God, I am so vext, that euery part about
+me quiuers, skuruy knaue: pray you sir a word: and as I
+told you, my young Lady bid me enquire you out, what
+she bid me say, I will keepe to my selfe: but first let me
+tell ye, if ye should leade her in a fooles paradise, as they
+say, it were a very grosse kind of behauiour, as they say:
+for the Gentlewoman is yong: & therefore, if you should
+deale double with her, truely it were an ill thing to be offered
+to any Gentlewoman, and very weake dealing
+
+   Nur. Nurse commend me to thy Lady and Mistresse, I
+protest vnto thee
+
+   Nur. Good heart, and yfaith I will tell her as much:
+Lord, Lord she will be a ioyfull woman
+
+   Rom. What wilt thou tell her Nurse? thou doest not
+marke me?
+  Nur. I will tell her sir, that you do protest, which as I
+take it, is a Gentleman-like offer
+
+   Rom. Bid her deuise some meanes to come to shrift this
+afternoone,
+And there she shall at Frier Lawrence Cell
+Be shriu'd and married: here is for thy paines
+
+   Nur. No truly sir not a penny
+
+   Rom. Go too, I say you shall
+
+   Nur. This afternoone sir? well she shall be there
+
+   Ro. And stay thou good Nurse behind the Abbey wall,
+Within this houre my man shall be with thee,
+And bring thee Cords made like a tackled staire,
+Which to the high top gallant of my ioy,
+Must be my conuoy in the secret night.
+Farewell, be trustie and Ile quite thy paines:
+Farewell, commend me to thy Mistresse
+
+   Nur. Now God in heauen blesse thee: harke you sir,
+  Rom. What saist thou my deare Nurse?
+  Nurse. Is your man secret, did you nere heare say two
+may keepe counsell putting one away
+
+   Ro. Warrant thee my man is true as steele
+
+   Nur. Well sir, my Mistresse is the sweetest Lady, Lord,
+Lord, when 'twas a little prating thing. O there is a Noble
+man in Towne one Paris, that would faine lay knife aboard:
+but she good soule had as leeue see a Toade, a very
+Toade as see him: I anger her sometimes, and tell her that
+Paris is the properer man, but Ile warrant you, when I say
+so, shee lookes as pale as any clout in the versall world.
+Doth not Rosemarie and Romeo begin both with a letter?
+  Rom. I Nurse, what of that? Both with an R
+  Nur. A mocker that's the dogs name. R. is for the no,
+I know it begins with some other letter, and she hath the
+prettiest sententious of it, of you and Rosemary, that it
+would do you good to heare it
+
+   Rom. Commend me to thy Lady
+
+   Nur. I a thousand times. Peter?
+  Pet. Anon
+
+   Nur. Before and apace.
+
+Exit Nurse and Peter.
+
+Enter Iuliet.
+
+  Iul. The clocke strook nine, when I did send the Nurse,
+In halfe an houre she promised to returne,
+Perchance she cannot meete him: that's not so:
+Oh she is lame, Loues Herauld should be thoughts,
+Which ten times faster glides then the Sunnes beames,
+Driuing backe shadowes ouer lowring hils.
+Therefore do nimble Pinion'd Doues draw Loue,
+And therefore hath the wind-swift Cupid wings:
+Now is the Sun vpon the highmost hill
+Of this daies iourney, and from nine till twelue,
+Is three long houres, yet she is not come.
+Had she affections and warme youthfull blood,
+She would be as swift in motion as a ball,
+My words would bandy her to my sweete Loue,
+And his to me, but old folkes,
+Many faine as they were dead,
+Vnwieldie, slow, heauy, and pale as lead.
+Enter Nurse.
+
+O God she comes, O hony Nurse what newes?
+Hast thou met with him? send thy man away
+
+   Nur. Peter stay at the gate
+
+   Iul. Now good sweet Nurse:
+O Lord, why lookest thou sad?
+Though newes, be sad, yet tell them merrily.
+If good thou sham'st the musicke of sweet newes,
+By playing it to me, with so sower a face
+
+   Nur. I am a weary, giue me leaue awhile,
+Fie how my bones ake, what a iaunt haue I had?
+  Iul. I would thou had'st my bones, and I thy newes:
+Nay come I pray thee speake, good good Nurse speake
+
+   Nur. Iesu what hast? can you not stay a while?
+Do you not see that I am out of breath?
+  Iul. How art thou out of breath, when thou hast breth
+To say to me, that thou art out of breath?
+The excuse that thou dost make in this delay,
+Is longer then the tale thou dost excuse.
+Is thy newes good or bad? answere to that,
+Say either, and Ile stay the circumstance:
+Let me be satisfied, ist good or bad?
+  Nur. Well, you haue made a simple choice, you know
+not how to chuse a man: Romeo, no not he though his face
+be better then any mans, yet his legs excels all mens, and
+for a hand, and a foote, and a body, though they be not to
+be talkt on, yet they are past compare: he is not the flower
+of curtesie, but Ile warrant him as gentle a Lambe: go thy
+waies wench, serue God. What haue you din'd at home?
+  Iul. No no: but all this did I know before
+What saies he of our marriage? what of that?
+  Nur. Lord how my head akes, what a head haue I?
+It beates as it would fall in twenty peeces.
+My backe a tother side: o my backe, my backe:
+Beshrew your heart for sending me about
+To catch my death with iaunting vp and downe
+
+   Iul. Ifaith: I am sorrie that thou art so well.
+Sweet sweet, sweet Nurse, tell me what saies my Loue?
+  Nur. Your Loue saies like an honest Gentleman,
+And a courteous, and a kind, and a handsome,
+And I warrant a vertuous: where is your Mother?
+  Iul. Where is my Mother?
+Why she is within, where should she be?
+How odly thou repli'st:
+Your Loue saies like an honest Gentleman:
+Where is your Mother?
+  Nur. O Gods Lady deare,
+Are you so hot? marrie come vp I trow,
+Is this the Poultis for my aking bones?
+Henceforward do your messages your selfe
+
+   Iul. Heere's such a coile, come what saies Romeo?
+  Nur. Haue you got leaue to go to shift to day?
+  Iul. I haue
+
+   Nur. Then high you hence to Frier Lawrence Cell,
+There staies a Husband to make you a wife:
+Now comes the wanton bloud vp in your cheekes,
+Thei'le be in Scarlet straight at any newes:
+Hie you to Church, I must an other way,
+To fetch a Ladder by the which your Loue
+Must climde a birds nest Soone when it is darke:
+I am the drudge, and toile in your delight:
+But you shall beare the burthen soone at night.
+Go Ile to dinner, hie you to the Cell
+
+   Iul. Hie to high Fortune, honest Nurse, farewell.
+
+Exeunt.
+
+Enter Frier and Romeo.
+
+  Fri. So smile the heauens vpon this holy act,
+That after houres, with sorrow chide vs not
+
+   Rom. Amen, amen, but come what sorrow can,
+It cannot counteruaile the exchange of ioy
+That one short minute giues me in her sight:
+Do thou but close our hands with holy words.
+Then Loue-deuouring death do what he dare,
+It is inough. I may call her mine
+
+   Fri. These violent delights haue violent endes,
+And in their triumph: die like fire and powder;
+Which as they kisse consume. The sweetest honey
+Is loathsome in his owne deliciousnesse,
+And in the taste confoundes the appetite.
+Therefore Loue moderately, long Loue doth so,
+Too swift arriues as tardie as too slow.
+Enter Iuliet.
+
+Here comes the Lady. Oh so light a foot
+Will nere weare out the euerlasting flint,
+A Louer may bestride the Gossamours,
+That ydles in the wanton Summer ayre,
+And yet not fall, so light is vanitie
+
+   Iul. Good euen to my ghostly Confessor
+
+   Fri. Romeo shall thanke thee Daughter for vs both
+
+   Iul. As much to him, else in his thanks too much
+
+   Fri. Ah Iuliet, if the measure of thy ioy
+Be heapt like mine, and that thy skill be more
+To blason it, then sweeten with thy breath
+This neighbour ayre, and let rich musickes tongue,
+Vnfold the imagin'd happinesse that both
+Receiue in either, by this deere encounter
+
+   Iul. Conceit more rich in matter then in words,
+Brags of his substance, not of Ornament:
+They are but beggers that can count their worth,
+But my true Loue is growne to such excesse,
+I cannot sum vp some of halfe my wealth
+
+   Fri. Come, come with me, & we will make short worke,
+For by your leaues, you shall not stay alone,
+Till holy Church incorporate two in one.
+Enter Mercutio, Benuolio, and men.
+
+  Ben. I pray thee good Mercutio lets retire,
+The day is hot, the Capulets abroad:
+And if we meet, we shal not scape a brawle, for now these
+hot dayes, is the mad blood stirring
+
+   Mer. Thou art like one of these fellowes, that when he
+enters the confines of a Tauerne, claps me his Sword vpon
+the Table, and sayes, God send me no need of thee: and by
+the operation of the second cup, drawes him on the Drawer,
+when indeed there is no need
+
+   Ben. Am I like such a Fellow?
+  Mer. Come, come, thou art as hot a Iacke in thy mood,
+as any in Italie: and assoone moued to be moodie, and assoone
+moodie to be mou'd
+
+   Ben. And what too?
+  Mer. Nay, and there were two such, we should haue
+none shortly, for one would kill the other: thou, why thou
+wilt quarrell with a man that hath a haire more, or a haire
+lesse in his beard, then thou hast: thou wilt quarrell with a
+man for cracking Nuts, hauing no other reason, but because
+thou hast hasell eyes: what eye, but such an eye,
+would spie out such a quarrell? thy head is full of quarrels,
+as an egge is full of meat, and yet thy head hath bin
+beaten as addle as an egge for quarreling: thou hast quarrel'd
+with a man for coffing in the street, because he hath
+wakened thy Dog that hath laine asleepe in the Sun. Did'st
+thou not fall out with a Tailor for wearing his new Doublet
+before Easter? with another, for tying his new shooes
+with old Riband, and yet thou wilt Tutor me from quarrelling?
+  Ben. And I were so apt to quarell as thou art, any man
+should buy the Fee-simple of my life, for an houre and a
+quarter
+
+   Mer. The Fee-simple? O simple.
+Enter Tybalt, Petruchio, and others.
+
+  Ben. By my head here comes the Capulets
+
+   Mer. By my heele I care not
+
+   Tyb. Follow me close, for I will speake to them.
+Gentlemen, Good den, a word with one of you
+
+   Mer. And but one word with one of vs? couple it with
+something, make it a word and a blow
+
+   Tib. You shall find me apt inough to that sir, and you
+will giue me occasion
+
+   Mercu. Could you not take some occasion without
+giuing?
+  Tib. Mercutio thou consort'st with Romeo
+
+   Mer. Consort? what dost thou make vs Minstrels? &
+thou make Minstrels of vs, looke to heare nothing but discords:
+heere's my fiddlesticke, heere's that shall make you
+daunce. Come consort
+
+   Ben. We talke here in the publike haunt of men,
+Either withdraw vnto some priuate place,
+Or reason coldly of your greeuances:
+Or else depart, here all eies gaze on vs
+
+   Mer. Mens eyes were made to looke, and let them gaze.
+I will not budge for no mans pleasure I.
+Enter Romeo.
+
+  Tib. Well peace be with you sir, here comes my man
+
+   Mer. But Ile be hang'd sir if he weare your Liuery.
+Marry go before to field, heele be your follower,
+Your worship in that sense, may call him man
+
+   Tib. Romeo, the loue I beare thee, can affoord
+No better terme then this: Thou art a Villaine
+
+   Rom. Tibalt, the reason that I haue to loue thee,
+Doth much excuse the appertaining rage
+To such a greeting: Villaine am I none;
+Therefore farewell, I see thou know'st me not
+
+   Tib. Boy, this shall not excuse the iniuries
+That thou hast done me, therefore turne and draw
+
+   Rom. I do protest I neuer iniur'd thee,
+But lou'd thee better then thou can'st deuise:
+Till thou shalt know the reason of my loue,
+And so good Capulet, which name I tender
+As dearely as my owne, be satisfied
+
+   Mer. O calme, dishonourable, vile submission:
+Alla stucatho carries it away.
+Tybalt, you Rat-catcher, will you walke?
+  Tib. What wouldst thou haue with me?
+  Mer. Good King of Cats, nothing but one of your nine
+liues, that I meane to make bold withall, and as you shall
+vse me hereafter dry beate the rest of the eight. Will you
+pluck your Sword out of his Pilcher by the eares? Make
+hast, least mine be about your eares ere it be out
+
+   Tib. I am for you
+
+   Rom. Gentle Mercutio, put thy Rapier vp
+
+   Mer. Come sir, your Passado
+
+   Rom. Draw Benuolio, beat downe their weapons:
+Gentlemen, for shame forbeare this outrage,
+Tibalt, Mercutio, the Prince expresly hath
+Forbidden bandying in Verona streetes.
+Hold Tybalt, good Mercutio.
+
+Exit Tybalt.
+
+  Mer. I am hurt.
+A plague a both the Houses, I am sped:
+Is he gone and hath nothing?
+  Ben. What art thou hurt?
+  Mer. I, I, a scratch, a scratch, marry 'tis inough,
+Where is my Page? go Villaine fetch a Surgeon
+
+   Rom. Courage man, the hurt cannot be much
+
+   Mer. No: 'tis not so deepe as a well, nor so wide as a
+Church doore, but 'tis inough, 'twill serue: aske for me to
+morrow, and you shall find me a graue man. I am pepper'd
+I warrant, for this world: a plague a both your houses.
+What, a Dog, a Rat, a Mouse, a Cat to scratch a man to
+death: a Braggart, a Rogue, a Villaine, that fights by the
+booke of Arithmeticke, why the deu'le came you betweene
+vs? I was hurt vnder your arme
+
+   Rom. I thought all for the best
+
+   Mer. Helpe me into some house Benuolio,
+Or I shall faint: a plague a both your houses.
+They haue made wormesmeat of me,
+I haue it, and soundly to your Houses.
+Enter.
+
+  Rom. This Gentleman the Princes neere Alie,
+My very Friend hath got his mortall hurt
+In my behalfe, my reputation stain'd
+With Tibalts slaunder, Tybalt that an houre
+Hath beene my Cozin: O Sweet Iuliet,
+Thy Beauty hath made me Effeminate,
+And in my temper softned Valours steele.
+Enter Benuolio.
+
+
+  Ben. O Romeo, Romeo, braue Mercutio's is dead,
+That Gallant spirit hath aspir'd the Cloudes,
+Which too vntimely here did scorne the earth
+
+   Rom. This daies blacke Fate, on mo daies depend,
+This but begins, the wo others must end.
+Enter Tybalt.
+
+  Ben. Here comes the Furious Tybalt backe againe
+
+   Rom. He gon in triumph, and Mercutio slaine?
+Away to heauen respectiue Lenitie,
+And fire and Fury, be my conduct now.
+Now Tybalt take the Villaine backe againe
+That late thou gau'st me, for Mercutios soule
+Is but a little way aboue our heads,
+Staying for thine to keepe him companie:
+Either thou or I, or both, must goe with him
+
+   Tib. Thou wretched Boy that didst consort him here,
+Shalt with him hence
+
+   Rom. This shall determine that.
+
+They fight. Tybalt falles.
+
+  Ben. Romeo, away be gone:
+The Citizens are vp, and Tybalt slaine,
+Stand not amaz'd, the Prince will Doome thee death
+If thou art taken: hence, be gone, away
+
+   Rom. O! I am Fortunes foole
+
+   Ben. Why dost thou stay?
+
+Exit Romeo.
+
+Enter Citizens.
+
+  Citi. Which way ran he that kild Mercutio?
+  Tibalt that Murtherer, which way ran he?
+  Ben. There lies that Tybalt
+
+   Citi. Vp sir go with me:
+I charge thee in the Princes names obey.
+Enter Prince, old Montague, Capulet, their Wiues and all.
+
+  Prin. Where are the vile beginners of this Fray?
+  Ben. O Noble Prince, I can discouer all
+The vnluckie Mannage of this fatall brall:
+There lies the man slaine by young Romeo,
+That slew thy kinsman braue Mercutio
+
+   Cap. Wi. Tybalt, my Cozin? O my Brothers Child,
+O Prince, O Cozin, Husband, O the blood is spild
+Of my deare kinsman. Prince as thou art true,
+For bloud of ours, shed bloud of Mountague.
+O Cozin, Cozin
+
+   Prin. Benuolio, who began this Fray?
+  Ben. Tybalt here slaine, whom Romeo's hand did slay,
+Romeo that spoke him faire, bid him bethinke
+How nice the Quarrell was, and vrg'd withall
+Your high displeasure: all this vttered,
+With gentle breath, calme looke, knees humbly bow'd
+Could not take truce with the vnruly spleene
+Of Tybalts deafe to peace, but that he Tilts
+With Peircing steele at bold Mercutio's breast,
+Who all as hot, turnes deadly point to point,
+And with a Martiall scorne, with one hand beates
+Cold death aside, and with the other sends
+It back to Tybalt, whose dexterity
+Retorts it: Romeo he cries aloud,
+Hold Friends, Friends part, and swifter then his tongue,
+His aged arme, beats downe their fatall points,
+And twixt them rushes, vnderneath whose arme,
+An enuious thrust from Tybalt, hit the life
+Of stout Mercutio, and then Tybalt fled.
+But by and by comes backe to Romeo,
+Who had but newly entertained Reuenge,
+And too't they goe like lightning, for ere I
+Could draw to part them, was stout Tybalt slaine:
+And as he fell, did Romeo turne and flie:
+This is the truth, or let Benuolio die
+
+   Cap. Wi. He is a kinsman to the Mountague,
+Affection makes him false, he speakes not true:
+Some twenty of them fought in this blacke strife,
+And all those twenty could but kill one life.
+I beg for Iustice, which thou Prince must giue:
+Romeo slew Tybalt, Romeo must not liue
+
+   Prin. Romeo slew him, he slew Mercutio,
+Who now the price of his deare blood doth owe
+
+   Cap. Not Romeo Prince, he was Mercutios Friend,
+His fault concludes, but what the law should end,
+The life of Tybalt
+
+   Prin. And for that offence,
+Immediately we doe exile him hence:
+I haue an interest in your hearts proceeding:
+My bloud for your rude brawles doth lie a bleeding.
+But Ile Amerce you with so strong a fine,
+That you shall all repent the losse of mine.
+It will be deafe to pleading and excuses,
+Nor teares, nor prayers shall purchase our abuses.
+Therefore vse none, let Romeo hence in hast,
+Else when he is found, that houre is his last.
+Beare hence his body, and attend our will:
+Mercy not Murders, pardoning those that kill.
+
+Exeunt.
+
+Enter Iuliet alone.
+
+  Iul. Gallop apace, you fiery footed steedes,
+Towards Phoebus lodging, such a Wagoner
+As Phaeton would whip you to the west,
+And bring in Cloudie night immediately.
+Spred thy close Curtaine Loue-performing night,
+That run-awayes eyes may wincke, and Romeo
+Leape to these armes, vntalkt of and vnseene,
+Louers can see to doe their Amorous rights,
+And by their owne Beauties: or if Loue be blind,
+It best agrees with night: come ciuill night,
+Thou sober suted Matron all in blacke,
+And learne me how to loose a winning match,
+Plaid for a paire of stainlesse Maidenhoods,
+Hood my vnman'd blood bayting in my Cheekes,
+With thy Blacke mantle, till strange Loue grow bold,
+Thinke true Loue acted simple modestie:
+Come night, come Romeo, come thou day in night,
+For thou wilt lie vpon the wings of night
+Whiter then new Snow vpon a Rauens backe:
+Come gentle night, come louing blackebrow'd night.
+Giue me my Romeo, and when I shall die,
+Take him and cut him out in little starres,
+And he will make the Face of heauen so fine,
+That all the world will be in Loue with night,
+And pay no worship to the Garish Sun.
+O I haue bought the Mansion of a Loue,
+But not possest it, and though I am sold,
+Not yet enioy'd, so tedious is this day,
+As is the night before some Festiuall,
+To an impatient child that hath new robes
+And may not weare them, O here comes my Nurse:
+Enter Nurse with cords.
+
+And she brings newes and euery tongue that speaks
+But Romeos name, speakes heauenly eloquence:
+Now Nurse, what newes? what hast thou there?
+The Cords that Romeo bid thee fetch?
+  Nur. I, I, the Cords
+
+   Iuli. Ay me, what newes?
+Why dost thou wring thy hands
+
+   Nur. A weladay, hee's dead, hee's dead,
+We are vndone Lady, we are vndone.
+Alacke the day, hee's gone, hee's kil'd, he's dead
+
+   Iul. Can heauen be so enuious?
+  Nur. Romeo can,
+Though heauen cannot. O Romeo, Romeo.
+Who euer would haue thought it Romeo
+
+   Iuli. What diuell art thou,
+That dost torment me thus?
+This torture should be roar'd in dismall hell,
+Hath Romeo slaine himselfe? say thou but I,
+And that bare vowell I shall poyson more
+Then the death-darting eye of Cockatrice,
+I am not I, if there be such an I.
+Or those eyes shot, that makes thee answere I:
+If he be slaine say I, or if not, no.
+Briefe, sounds, determine of my weale or wo
+
+   Nur. I saw the wound, I saw it with mine eyes,
+God saue the marke, here on his manly brest,
+A pitteous Coarse, a bloody piteous Coarse:
+Pale, pale as ashes, all bedawb'd in blood,
+All in gore blood I sounded at the sight
+
+   Iul. O breake my heart,
+Poore Banckrout breake at once,
+To prison eyes, nere looke on libertie.
+Vile earth to earth resigne, end motion here,
+And thou and Romeo presse on heauie beere
+
+   Nur. O Tybalt, Tybalt, the best Friend I had:
+O curteous Tybalt honest Gentleman,
+That euer I should liue to see thee dead
+
+   Iul. What storme is this that blowes so contrarie?
+Is Romeo slaughtred? and is Tybalt dead?
+My dearest Cozen, and my dearer Lord:
+Then dreadfull Trumpet sound the generall doome,
+For who is liuing, if those two are gone?
+  Nur. Tybalt is gone, and Romeo banished,
+Romeo that kil'd him, he is banished
+
+   Iul. O God!
+Did Romeo's hand shed Tybalts blood
+It did, it did, alas the day, it did
+
+   Nur. O Serpent heart hid with a flowring face
+
+   Iul. Did euer Dragon keepe so faire a Caue?
+Beautifull Tyrant, fiend Angelicall:
+Rauenous Doue-feather'd Rauen,
+Woluish-rauening Lambe,
+Dispised substance of Diuinest show:
+Iust opposite to what thou iustly seem'st,
+A dimne Saint, an Honourable Villaine:
+O Nature! what had'st thou to doe in hell,
+When thou did'st bower the spirit of a fiend
+In mortall paradise of such sweet flesh?
+Was euer booke containing such vile matter
+So fairely bound? O that deceit should dwell
+In such a gorgeous Pallace
+
+   Nur. There's no trust, no faith, no honestie in men,
+All periur'd, all forsworne, all naught, all dissemblers,
+Ah where's my man? giue me some Aqua-vitae?
+These griefes, these woes, these sorrowes make me old:
+Shame come to Romeo
+
+   Iul. Blister'd be thy tongue
+For such a wish, he was not borne to shame:
+Vpon his brow shame is asham'd to sit;
+For 'tis a throane where Honour may be Crown'd
+Sole Monarch of the vniuersall earth:
+O what a beast was I to chide him?
+  Nur. Will you speake well of him,
+That kil'd your Cozen?
+  Iul. Shall I speake ill of him that is my husband?
+Ah poore my Lord, what tongue shall smooth thy name,
+When I thy three houres wife haue mangled it.
+But wherefore Villaine did'st thou kill my Cozin?
+That Villaine Cozin would haue kil'd my husband:
+Backe foolish teares, backe to your natiue spring,
+Your tributarie drops belong to woe,
+Which you mistaking offer vp to ioy:
+My husband liues that Tibalt would haue slaine,
+And Tibalt dead that would haue slaine my husband:
+All this is comfort, wherefore weepe I then?
+Some words there was worser then Tybalts death
+That murdered me, I would forget it feine,
+But oh, it presses to my memory,
+Like damned guilty deedes to sinners minds,
+Tybalt is dead and Romeo banished:
+That banished, that one word banished,
+Hath slaine ten thousand Tibalts: Tibalts death
+Was woe inough if it had ended there:
+Or if sower woe delights in fellowship,
+And needly will be rankt with other griefes,
+Why followed not when she said Tibalts dead,
+Thy Father or thy Mother, nay or both,
+Which moderne lamentation might haue mou'd.
+But which a rere-ward following Tybalts death
+Romeo is banished to speake that word,
+Is Father, Mother, Tybalt, Romeo, Iuliet,
+All slaine, all dead: Romeo is banished,
+There is no end, no limit, measure, bound,
+In that words death, no words can that woe sound.
+Where is my Father and my Mother Nurse?
+  Nur. Weeping and wailing ouer Tybalts Coarse,
+Will you go to them? I will bring you thither
+
+   Iu. Wash they his wounds with tears: mine shal be spent
+When theirs are drie for Romeo's banishment.
+Take vp those Cordes, poore ropes you are beguil'd,
+Both you and I for Romeo is exild:
+He made you for a high-way to my bed,
+But I a Maid, die Maiden widowed.
+Come Cord, come Nurse, Ile to my wedding bed,
+And death not Romeo, take my Maiden head
+
+   Nur. Hie to your Chamber, Ile find Romeo
+To comfort you, I wot well where he is:
+Harke ye your Romeo will be heere at night,
+Ile to him, he is hid at Lawrence Cell
+
+   Iul. O find him, giue this Ring to my true Knight,
+And bid him come, to take his last farewell.
+
+Exit
+
+Enter Frier and Romeo.
+
+  Fri. Romeo come forth,
+Come forth thou fearfull man,
+Affliction is enamor'd of thy parts
+And thou art wedded to calamitie,
+  Rom. Father what newes?
+What is the Princes Doome?
+What sorrow craues acquaintance at my hand,
+That I yet know not?
+  Fri. Too familiar
+Is my deare Sonne with such sowre Company
+I bring thee tydings of the Princes Doome
+
+   Rom. What lesse then Doomesday,
+Is the Princes Doome?
+  Fri. A gentler iudgement vanisht from his lips,
+Not bodies death, but bodies banishment
+
+   Rom. Ha, banishment? be mercifull, say death:
+For exile hath more terror in his looke,
+Much more then death: do not say banishment
+
+   Fri. Here from Verona art thou banished:
+Be patient, for the world is broad and wide
+
+   Rom. There is no world without Verona walles,
+But Purgatorie, Torture, hell it selfe:
+Hence banished, is banisht from the world,
+And worlds exile is death. Then banished,
+Is death, mistearm'd, calling death banished,
+Thou cut'st my head off with a golden Axe,
+And smilest vpon the stroke that murders me
+
+   Fri. O deadly sin, O rude vnthankefulnesse!
+Thy falt our Law calles death, but the kind Prince
+Taking thy part, hath rusht aside the Law,
+And turn'd that blacke word death, to banishment.
+This is deare mercy, and thou seest it not
+
+   Rom. 'Tis Torture and not mercy, heauen is here
+Where Iuliet liues, and euery Cat and Dog,
+And little Mouse, euery vnworthy thing
+Liue here in Heauen and may looke on her,
+But Romeo may not. More Validitie,
+More Honourable state, more Courtship liues
+In carrion Flies, then Romeo: they may seaze
+On the white wonder of deare Iuliets hand,
+And steale immortall blessing from her lips,
+Who euen in pure and vestall modestie
+Still blush, as thinking their owne kisses sin.
+This may Flies doe, when I from this must flie,
+And saist thou yet, that exile is not death?
+But Romeo may not, hee is banished.
+Had'st thou no poyson mixt, no sharpe ground knife,
+No sudden meane of death, though nere so meane,
+But banished to kill me? Banished?
+O Frier, the damned vse that word in hell:
+Howlings attends it, how hast then the hart
+Being a Diuine, a Ghostly Confessor,
+A Sin-Absoluer, and my Friend profest:
+To mangle me with that word, banished?
+  Fri. Then fond Mad man, heare me speake
+
+   Rom. O thou wilt speake againe of banishment
+
+   Fri. Ile giue thee Armour to keepe off that word,
+Aduersities sweete milke, Philosophie,
+To comfort thee, though thou art banished
+
+   Rom. Yet banished? hang vp Philosophie:
+Vnlesse Philosophie can make a Iuliet,
+Displant a Towne, reuerse a Princes Doome,
+It helpes not, it preuailes not, talke no more
+
+   Fri. O then I see, that Mad men haue no eares
+
+   Rom. How should they,
+When wisemen haue no eyes?
+  Fri. Let me dispaire with thee of thy estate,
+  Rom. Thou can'st not speake of that y dost not feele,
+Wert thou as young as Iuliet my Loue:
+An houre but married, Tybalt murdered,
+Doting like me, and like me banished,
+Then mightest thou speake,
+Then mightest thou teare thy hayre,
+And fall vpon the ground as I doe now,
+Taking the measure of an vnmade graue.
+Enter Nurse, and knockes.
+
+  Frier. Arise one knockes,
+Good Romeo hide thy selfe
+
+   Rom. Not I,
+Vnlesse the breath of Hartsicke groanes
+Mist-like infold me from the search of eyes.
+
+Knocke
+
+  Fri. Harke how they knocke:
+(Who's there) Romeo arise,
+Thou wilt be taken, stay a while, stand vp:
+
+Knocke.
+
+Run to my study: by and by, Gods will
+What simplenesse is this: I come, I come.
+
+Knocke.
+
+Who knocks so hard?
+Whence come you? what's your will?
+Enter Nurse.
+
+  Nur. Let me come in,
+And you shall know my errand:
+I come from Lady Iuliet
+
+   Fri. Welcome then
+
+   Nur. O holy Frier, O tell me holy Frier,
+Where's my Ladies Lord? where's Romeo?
+  Fri. There on the ground,
+With his owne teares made drunke
+
+   Nur. O he is euen in my Mistresse case,
+Iust in her case. O wofull simpathy:
+Pittious predicament, euen so lies she,
+Blubbring and weeping, weeping and blubbring,
+Stand vp, stand vp, stand and you be a man,
+For Iuliets sake, for her sake rise and stand:
+Why should you fall into so deepe an O
+
+   Rom. Nurse
+
+   Nur. Ah sir, ah sir, deaths the end of all
+
+   Rom. Speak'st thou of Iuliet? how is it with her?
+Doth not she thinke me an old Murtherer,
+Now I haue stain'd the Childhood of our ioy,
+With blood remoued, but little from her owne?
+Where is she? and how doth she? and what sayes
+My conceal'd Lady to our conceal'd Loue?
+  Nur. Oh she sayes nothing sir, but weeps and weeps,
+And now fals on her bed, and then starts vp,
+And Tybalt calls, and then on Romeo cries,
+And then downe falls againe
+
+   Ro. As if that name shot from the dead leuell of a Gun,
+Did murder her, as that names cursed hand
+Murdred her kinsman. Oh tell me Frier, tell me,
+In what vile part of this Anatomie
+Doth my name lodge? Tell me, that I may sacke
+The hatefull Mansion
+
+   Fri. Hold thy desperate hand:
+Art thou a man? thy forme cries out thou art:
+Thy teares are womanish, thy wild acts denote
+The vnreasonable Furie of a beast.
+Vnseemely woman, in a seeming man,
+And ill beseeming beast in seeming both,
+Thou hast amaz'd me. By my holy order,
+I thought thy disposition better temper'd.
+Hast thou slaine Tybalt? wilt thou slay thy selfe?
+And slay thy Lady, that in thy life lies,
+By doing damned hate vpon thy selfe?
+Why rayl'st thou on thy birth? the heauen and earth?
+Since birth, and heauen and earth, all three do meete
+In thee at once, which thou at once would'st loose.
+Fie, fie, thou sham'st thy shape, thy loue, thy wit,
+Which like a Vsurer abound'st in all:
+And vsest none in that true vse indeed,
+Which should bedecke thy shape, thy loue, thy wit:
+Thy Noble shape, is but a forme of waxe,
+Digressing from the Valour of a man,
+Thy deare Loue sworne but hollow periurie,
+Killing that Loue which thou hast vow'd to cherish.
+Thy wit, that Ornament, to shape and Loue,
+Mishapen in the conduct of them both:
+Like powder in a skillesse Souldiers flaske,
+Is set a fire by thine owne ignorance,
+And thou dismembred with thine owne defence.
+What, rowse thee man, thy Iuliet is aliue,
+For whose deare sake thou wast but lately dead.
+There art thou happy. Tybalt would kill thee,
+But thou slew'st Tybalt, there art thou happie.
+The law that threatned death became thy Friend.
+And turn'd it to exile, there art thou happy.
+A packe or blessing light vpon thy backe,
+Happinesse Courts thee in her best array,
+But like a mishaped and sullen wench,
+Thou puttest vp thy Fortune and thy Loue:
+Take heed, take heed, for such die miserable.
+Goe get thee to thy Loue as was decreed,
+Ascend her Chamber, hence and comfort her:
+But looke thou stay not till the watch be set,
+For then thou canst not passe to Mantua,
+Where thou shalt liue till we can finde a time
+To blaze your marriage, reconcile your Friends,
+Beg pardon of thy Prince, and call thee backe,
+With twenty hundred thousand times more ioy
+Then thou went'st forth in lamentation.
+Goe before Nurse, commend me to thy Lady,
+And bid her hasten all the house to bed,
+Which heauy sorrow makes them apt vnto.
+Romeo is comming
+
+   Nur. O Lord, I could haue staid here all night,
+To heare good counsell: oh what learning is!
+My Lord Ile tell my Lady you will come
+
+   Rom. Do so, and bid my Sweete prepare to chide
+
+   Nur. Heere sir, a Ring she bid me giue you sir:
+Hie you, make hast, for it growes very late
+
+   Rom. How well my comfort is reuiu'd by this
+
+   Fri. Go hence,
+Goodnight, and here stands all your state:
+Either be gone before the watch be set,
+Or by the breake of day disguis'd from hence,
+Soiourne in Mantua, Ile find out your man,
+And he shall signifie from time to time,
+Euery good hap to you, that chaunces heere:
+Giue me thy hand, 'tis late, farewell, goodnight
+
+   Rom. But that a ioy past ioy, calls out on me,
+It were a griefe, so briefe to part with thee:
+Farewell.
+
+Exeunt.
+
+Enter old Capulet, his Wife and Paris.
+
+  Cap. Things haue falne out sir so vnluckily,
+That we haue had no time to moue our Daughter:
+Looke you, she Lou'd her kinsman Tybalt dearely,
+And so did I. Well, we were borne to die.
+'Tis very late, she'l not come downe to night:
+I promise you, but for your company,
+I would haue bin a bed an houre ago
+
+   Par. These times of wo, affoord no times to wooe:
+Madam goodnight, commend me to your Daughter
+
+   Lady. I will, and know her mind early to morrow,
+To night, she is mewed vp to her heauinesse
+
+   Cap. Sir Paris, I will make a desperate tender
+Of my Childes loue: I thinke she will be rul'd
+In all respects by me: nay more, I doubt it not.
+Wife, go you to her ere you go to bed,
+Acquaint her here, of my Sonne Paris Loue,
+And bid her, marke you me, on Wendsday next,
+But soft, what day is this?
+  Par. Monday my Lord
+
+   Cap. Monday, ha ha: well Wendsday is too soone,
+A Thursday let it be: a Thursday tell her,
+She shall be married to this Noble Earle:
+Will you be ready? do you like this hast?
+Weele keepe no great adoe, a Friend or two,
+For harke you, Tybalt being slaine so late,
+It may be thought we held him carelesly,
+Being our kinsman, if we reuell much:
+Therefore weele haue some halfe a dozen Friends,
+And there an end. But what say you to Thursday?
+  Paris. My Lord,
+I would that Thursday were to morrow
+
+   Cap. Well, get you gone, a Thursday, be it then:
+Go you to Iuliet ere you go to bed,
+Prepare her wife, against this wedding day.
+Farewell my Lord, light to my Chamber hoa,
+Afore me, it is so late, that we may call it early by and by,
+Goodnight.
+
+Exeunt.
+
+Enter Romeo and Iuliet aloft.
+
+  Iul. Wilt thou be gone? It is not yet neere day:
+It was the Nightingale, and not the Larke,
+That pier'st the fearefull hollow of thine eare,
+Nightly she sings on yond Pomgranet tree,
+Beleeue me Loue, it was the Nightingale
+
+   Rom. It was the Larke the Herauld of the Morne:
+No Nightingale: looke Loue what enuious streakes
+Do lace the seuering Cloudes in yonder East:
+Nights Candles are burnt out, and Iocond day
+Stands tipto on the mistie Mountaines tops,
+I must be gone and liue, or stay and die
+
+   Iul. Yond light is not daylight, I know it I:
+It is some Meteor that the Sun exhales,
+To be to thee this night a Torch-bearer,
+And light thee on thy way to Mantua.
+Therefore stay yet, thou need'st not be gone,
+  Rom. Let me be tane, let me be put to death,
+I am content, so thou wilt haue it so.
+Ile say yon gray is not the mornings eye,
+'Tis but the pale reflexe of Cinthias brow.
+Nor that is not Larke whose noates do beate
+The vaulty heauen so high aboue our heads,
+I haue more care to stay, then will to go:
+Come death and welcome, Iuliet wills it so.
+How ist my soule, lets talke, it is not day
+
+   Iuli. It is, it is, hie hence be gone away:
+It is the Larke that sings so out of tune,
+Straining harsh Discords, and vnpleasing Sharpes.
+Some say the Larke makes sweete Diuision;
+This doth not so: for she diuideth vs.
+Some say, the Larke and loathed Toad change eyes,
+O now I would they had chang'd voyces too:
+Since arme from arme that voyce doth vs affray,
+Hunting thee hence, with Hunts-vp to the day,
+O now be gone, more light and it light growes
+
+   Rom. More light & light, more darke & darke our woes.
+Enter Madam and Nurse.
+
+  Nur. Madam
+
+   Iul. Nurse
+
+   Nur. Your Lady Mother is comming to your chamber,
+The day is broke, be wary, looke about
+
+   Iul. Then window let day in, and let life out
+
+   Rom. Farewell, farewell, one kisse and Ile descend
+
+   Iul. Art thou gone so? Loue, Lord, ay Husband, Friend,
+I must heare from thee euery day in the houre,
+For in a minute there are many dayes,
+O by this count I shall be much in yeares,
+Ere I againe behold my Romeo
+
+   Rom. Farewell:
+I will omit no oportunitie,
+That may conuey my greetings Loue, to thee
+
+   Iul. O thinkest thou we shall euer meet againe?
+  Rom. I doubt it not, and all these woes shall serue
+For sweet discourses in our time to come
+
+   Iuliet. O God! I haue an ill Diuining soule,
+Me thinkes I see thee now, thou art so lowe,
+As one dead in the bottome of a Tombe,
+Either my eye-sight failes, or thou look'st pale
+
+   Rom. And trust me Loue, in my eye so do you:
+Drie sorrow drinkes our blood. Adue, adue.
+Enter.
+
+  Iul. O Fortune, Fortune, all men call thee fickle,
+If thou art fickle, what dost thou with him
+That is renown'd for faith? be fickle Fortune:
+For then I hope thou wilt not keepe him long,
+But send him backe.
+Enter Mother.
+
+  Lad. Ho Daughter, are you vp?
+  Iul. Who ist that calls? Is it my Lady Mother.
+Is she not downe so late, or vp so early?
+What vnaccustom'd cause procures her hither?
+  Lad. Why how now Iuliet?
+  Iul. Madam I am not well
+
+   Lad. Euermore weeping for your Cozins death?
+What wilt thou wash him from his graue with teares?
+And if thou could'st, thou could'st not make him liue:
+Therefore haue done, some griefe shewes much of Loue,
+But much of griefe, shewes still some want of wit
+
+   Iul. Yet let me weepe, for such a feeling losse
+
+   Lad. So shall you feele the losse, but not the Friend
+Which you weepe for
+
+   Iul. Feeling so the losse,
+I cannot chuse but euer weepe the Friend
+
+   La. Well Girle, thou weep'st not so much for his death,
+As that the Villaine liues which slaughter'd him
+
+   Iul. What Villaine, Madam?
+  Lad. That same Villaine Romeo
+
+   Iul. Villaine and he, be many miles assunder:
+God pardon, I doe with all my heart:
+And yet no man like he, doth grieue my heart
+
+   Lad. That is because the Traitor liues
+
+   Iul. I Madam from the reach of these my hands:
+Would none but I might venge my Cozins death
+
+   Lad. We will haue vengeance for it, feare thou not.
+Then weepe no more, Ile send to one in Mantua,
+Where that same banisht Run-agate doth liue,
+Shall giue him such an vnaccustom'd dram,
+That he shall soone keepe Tybalt company:
+And then I hope thou wilt be satisfied
+
+   Iul. Indeed I neuer shall be satisfied
+With Romeo, till I behold him. Dead
+Is my poore heart so for a kinsman vext:
+Madam, if you could find out but a man
+To beare a poyson, I would temper it;
+That Romeo should vpon receit thereof,
+Soone sleepe in quiet. O how my heart abhors
+To heare him nam'd, and cannot come to him,
+To wreake the Loue I bore my Cozin,
+Vpon his body that hath slaughter'd him
+
+   Mo. Find thou the meanes, and Ile find such a man.
+But now Ile tell thee ioyfull tidings Gyrle
+
+   Iul. And ioy comes well, in such a needy time,
+What are they, beseech your Ladyship?
+  Mo. Well, well, thou hast a carefull Father Child?
+One who to put thee from thy heauinesse,
+Hath sorted out a sudden day of ioy,
+That thou expects not, nor I lookt not for
+
+   Iul. Madam in happy time, what day is this?
+  Mo. Marry my Child, early next Thursday morne,
+The gallant, young, and Noble Gentleman,
+The Countie Paris at Saint Peters Church,
+Shall happily make thee a ioyfull Bride
+
+   Iul. Now by Saint Peters Church, and Peter too,
+He shall not make me there a ioyfull Bride.
+I wonder at this hast, that I must wed
+Ere he that should be Husband comes to woe:
+I pray you tell my Lord and Father Madam,
+I will not marrie yet, and when I doe, I sweare
+It shall be Romeo, whom you know I hate
+Rather then Paris. These are newes indeed
+
+   Mo. Here comes your Father, tell him so your selfe,
+And see how he will take it at your hands.
+Enter Capulet and Nurse.
+
+  Cap. When the Sun sets, the earth doth drizzle deaw
+But for the Sunset of my Brothers Sonne,
+It raines downright.
+How now? A Conduit Gyrle, what still in teares?
+Euermore showring in one little body?
+Thou counterfaits a Barke, a Sea, a Wind:
+For still thy eyes, which I may call the Sea,
+Do ebbe and flow with teares, the Barke thy body is
+Sayling in this salt floud, the windes thy sighes,
+Who raging with the teares and they with them,
+Without a sudden calme will ouer set
+Thy tempest tossed body. How now wife?
+Haue you deliuered to her our decree?
+  Lady. I sir;
+But she will none, she giues you thankes,
+I would the foole were married to her graue
+
+   Cap. Soft, take me with you, take me with you wife,
+How, will she none? doth she not giue vs thanks?
+Is she not proud? doth she not count her blest,
+Vnworthy as she is, that we haue wrought
+So worthy a Gentleman, to be her Bridegroome
+  Iul. Not proud you haue,
+But thankfull that you haue:
+Proud can I neuer be of what I haue,
+But thankfull euen for hate, that is meant Loue
+
+   Cap. How now?
+How now? Chopt Logicke? what is this?
+Proud, and I thanke you: and I thanke you not.
+Thanke me no thankings, nor proud me no prouds,
+But fettle your fine ioints 'gainst Thursday next,
+To go with Paris to Saint Peters Church:
+Or I will drag thee, on a Hurdle thither.
+Out you greene sicknesse carrion, out you baggage,
+You tallow face
+
+   Lady. Fie, fie, what are you mad?
+  Iul. Good Father, I beseech you on my knees
+Heare me with patience, but to speake a word
+
+   Fa. Hang thee young baggage, disobedient wretch,
+I tell thee what, get thee to Church a Thursday,
+Or neuer after looke me in the face.
+Speake not, reply not, do not answere me.
+My fingers itch, wife: we scarce thought vs blest,
+That God had lent vs but this onely Child,
+But now I see this one is one too much,
+And that we haue a curse in hauing her:
+Out on her Hilding
+
+   Nur. God in heauen blesse her,
+You are too blame my Lord to rate her so
+
+   Fa. And why my Lady wisedome? hold your tongue,
+Good Prudence, smatter with your gossip, go
+
+   Nur. I speak no treason,
+Father, O Godigoden,
+May not one speake?
+  Fa. Peace you mumbling foole,
+Vtter your grauitie ore a Gossips bowles
+For here we need it not
+
+   La. You are too hot
+
+   Fa. Gods bread, it makes me mad:
+Day, night, houre, ride, time, worke, play,
+Alone in companie, still my care hath bin
+To haue her matcht, and hauing now prouided
+A Gentleman of Noble Parentage,
+Of faire Demeanes, Youthfull, and Nobly Allied,
+Stuft as they say with Honourable parts,
+Proportion'd as ones thought would wish a man,
+And then to haue a wretched puling foole,
+A whining mammet, in her Fortunes tender,
+To answer, Ile not wed, I cannot Loue:
+I am too young, I pray you pardon me.
+But, and you will not wed, Ile pardon you.
+Graze where you will, you shall not house with me:
+Looke too't, thinke on't, I do not vse to iest.
+Thursday is neere, lay hand on heart, aduise,
+And you be mine, Ile giue you to my Friend:
+And you be not, hang, beg, starue, die in the streets,
+For by my soule, Ile nere acknowledge thee,
+Nor what is mine shall neuer do thee good:
+Trust too't, bethinke you, Ile not be forsworne
+Enter.
+
+  Iuli. Is there no pittie sitting in the Cloudes,
+That sees into the bottome of my griefe?
+O sweet my Mother cast me not away,
+Delay this marriage, for a month, a weeke,
+Or if you do not, make the Bridall bed
+In that dim Monument where Tybalt lies
+
+   Mo. Talke not to me, for Ile not speake a word,
+Do as thou wilt, for I haue done with thee.
+Enter.
+
+  Iul. O God!
+O Nurse, how shall this be preuented?
+My Husband is on earth, my faith in heauen,
+How shall that faith returne againe to earth,
+Vnlesse that Husband send it me from heauen,
+By leauing earth? Comfort me, counsaile me:
+Alacke, alacke, that heauen should practise stratagems
+Vpon so soft a subiect as my selfe.
+What saist thou? hast thou not a word of ioy?
+Some comfort Nurse
+
+   Nur. Faith here it is,
+Romeo is banished, and all the world to nothing,
+That he dares nere come backe to challenge you:
+Or if he do, it needs must be by stealth.
+Then since the case so stands as now it doth,
+I thinke it best you married with the Countie,
+O hee's a Louely Gentleman:
+Romeos a dish-clout to him: an Eagle Madam
+Hath not so greene, so quicke, so faire an eye
+As Paris hath, beshrow my very heart,
+I thinke you are happy in this second match,
+For it excels your first: or if it did not,
+Your first is dead, or 'twere as good he were,
+As liuing here and you no vse of him
+
+   Iul. Speakest thou from thy heart?
+  Nur. And from my soule too,
+Or else beshrew them both
+
+   Iul. Amen
+
+   Nur. What?
+  Iul. Well, thou hast comforted me marue'lous much,
+Go in, and tell my Lady I am gone,
+Hauing displeas'd my Father, to Lawrence Cell,
+To make confession, and to be absolu'd
+
+   Nur. Marrie I will, and this is wisely done
+
+   Iul. Auncient damnation, O most wicked fiend!
+It is more sin to wish me thus forsworne,
+Or to dispraise my Lord with that same tongue
+Which she hath prais'd him with aboue compare,
+So many thousand times? Go Counsellor,
+Thou and my bosom henceforth shall be twaine:
+Ile to the Frier to know his remedie,
+If all else faile, my selfe haue power to die.
+
+Exeunt.
+
+Enter Frier and Countie Paris.
+
+  Fri. On Thursday sir? the time is very short
+
+   Par. My Father Capulet will haue it so,
+And I am nothing slow to slack his hast
+
+   Fri. You say you do not know the Ladies mind?
+Vneuen is the course, I like it not
+
+   Pa. Immoderately she weepes for Tybalts death,
+And therfore haue I little talke of Loue,
+For Venus smiles not in a house of teares.
+Now sir, her Father counts it dangerous
+That she doth giue her sorrow so much sway:
+And in his wisedome, hasts our marriage,
+To stop the inundation of her teares,
+Which too much minded by her selfe alone,
+May be put from her by societie.
+Now doe you know the reason of this hast?
+  Fri. I would I knew not why it should be slow'd.
+Looke sir, here comes the Lady towards my Cell.
+Enter Iuliet.
+
+  Par. Happily met, my Lady and my wife
+
+   Iul. That may be sir, when I may be a wife
+
+   Par. That may be, must be Loue, on Thursday next
+
+   Iul. What must be shall be
+
+   Fri. That's a certaine text
+
+   Par. Come you to make confession to this Father?
+  Iul. To answere that, I should confesse to you
+
+   Par. Do not denie to him, that you Loue me
+
+   Iul. I will confesse to you that I Loue him
+
+   Par. So will ye, I am sure that you Loue me
+
+   Iul. If I do so, it will be of more price,
+Being spoke behind your backe, then to your face
+
+   Par. Poore soule, thy face is much abus'd with teares
+
+   Iul. The teares haue got small victorie by that:
+For it was bad inough before their spight
+
+   Pa. Thou wrong'st it more then teares with that report
+
+   Iul. That is no slaunder sir, which is a truth,
+And what I spake, I spake it to thy face
+
+   Par. Thy face is mine, and thou hast slaundred it
+
+   Iul. It may be so, for it is not mine owne.
+Are you at leisure, Holy Father now,
+Or shall I come to you at euening Masse?
+  Fri. My leisure serues me pensiue daughter now.
+My Lord you must intreat the time alone
+
+   Par. Godsheild: I should disturbe Deuotion,
+Iuliet, on Thursday early will I rowse yee,
+Till then adue, and keepe this holy kisse.
+
+Exit Paris.
+
+  Iul. O shut the doore, and when thou hast done so,
+Come weepe with me, past hope, past care, past helpe
+
+   Fri. O Iuliet, I alreadie know thy griefe,
+It streames me past the compasse of my wits:
+I heare thou must and nothing may prorogue it,
+On Thursday next be married to this Countie
+
+   Iul. Tell me not Frier that thou hearest of this,
+Vnlesse thou tell me how I may preuent it:
+If in thy wisedome, thou canst giue no helpe,
+Do thou but call my resolution wise,
+And with this knife, Ile helpe it presently.
+God ioyn'd my heart, and Romeos, thou our hands,
+And ere this hand by thee to Romeo seal'd:
+Shall be the Labell to another Deede,
+Or my true heart with trecherous reuolt,
+Turne to another, this shall slay them both:
+Therefore out of thy long experien'st time,
+Giue me some present counsell, or behold
+Twixt my extreames and me, this bloody knife
+Shall play the vmpeere, arbitrating that,
+Which the commission of thy yeares and art,
+Could to no issue of true honour bring:
+Be not so long to speak, I long to die,
+If what thou speak'st, speake not of remedy
+
+   Fri. Hold Daughter, I doe spie a kind of hope,
+Which craues as desperate an execution,
+As that is desperate which we would preuent.
+If rather then to marrie Countie Paris
+Thou hast the strength of will to slay thy selfe,
+Then is it likely thou wilt vndertake
+A thing like death to chide away this shame,
+That coap'st with death himselfe, to scape fro it:
+And if thou dar'st, Ile giue thee remedie
+
+   Iul. Oh bid me leape, rather then marrie Paris,
+From of the Battlements of any Tower,
+Or walke in theeuish waies, or bid me lurke
+Where Serpents are: chaine me with roaring Beares
+Or hide me nightly in a Charnell house,
+Orecouered quite with dead mens ratling bones,
+With reckie shankes and yellow chappels sculls:
+Or bid me go into a new made graue,
+And hide me with a dead man in his graue,
+Things that to heare them told, haue made me tremble,
+And I will doe it without feare or doubt,
+To liue an vnstained wife to my sweet Loue
+
+   Fri. Hold then: goe home, be merrie, giue consent,
+To marrie Paris: wensday is to morrow,
+To morrow night looke that thou lie alone,
+Let not thy Nurse lie with thee in thy Chamber:
+Take thou this Violl being then in bed,
+And this distilling liquor drinke thou off,
+When presently through all thy veines shall run,
+A cold and drowsie humour: for no pulse
+Shall keepe his natiue progresse, but surcease:
+No warmth, no breath shall testifie thou liuest,
+The Roses in thy lips and cheekes shall fade
+To many ashes, the eyes windowes fall
+Like death when he shut vp the day of life:
+Each part depriu'd of supple gouernment,
+Shall stiffe and starke, and cold appeare like death,
+And in this borrowed likenesse of shrunke death
+Thou shalt continue two and forty houres,
+And then awake, as from a pleasant sleepe.
+Now when the Bridegroome in the morning comes,
+To rowse thee from thy bed, there art thou dead:
+Then as the manner of our country is,
+In thy best Robes vncouer'd on the Beere,
+Be borne to buriall in thy kindreds graue:
+Thou shalt be borne to that same ancient vault,
+Where all the kindred of the Capulets lie,
+In the meane time against thou shalt awake,
+Shall Romeo by my Letters know our drift,
+And hither shall he come, and that very night
+Shall Romeo beare thee hence to Mantua.
+And this shall free thee from this present shame,
+If no inconstant toy nor womanish feare,
+Abate thy valour in the acting it
+
+   Iul. Giue me, giue me, O tell me not of care
+
+   Fri. Hold get you gone, be strong and prosperous:
+In this resolue, Ile send a Frier with speed
+To Mantua with my Letters to thy Lord
+
+   Iu. Loue giue me strength,
+And the strength shall helpe afford:
+Farewell deare father.
+
+Exit
+
+Enter Father Capulet, Mother, Nurse, and Seruing men, two or
+three.
+
+  Cap. So many guests inuite as here are writ,
+Sirrah, go hire me twenty cunning Cookes
+
+   Ser. You shall haue none ill sir, for Ile trie if they can
+licke their fingers
+
+   Cap. How canst thou trie them so?
+  Ser. Marrie sir, 'tis an ill Cooke that cannot licke his
+owne fingers: therefore he that cannot licke his fingers
+goes not with me
+
+   Cap. Go be gone, we shall be much vnfurnisht for this
+time: what is my Daughter gone to Frier Lawrence?
+  Nur. I forsooth
+
+   Cap. Well he may chance to do some good on her,
+A peeuish selfe-wild harlotry it is.
+Enter Iuliet.
+
+  Nur. See where she comes from shrift
+With merrie looke
+
+   Cap. How now my headstrong,
+Where haue you bin gadding?
+  Iul. Where I haue learnt me to repent the sin
+Of disobedient opposition:
+To you and your behests, and am enioyn'd
+By holy Lawrence, to fall prostrate here,
+To beg your pardon: pardon I beseech you,
+Henceforward I am euer rul'd by you
+
+   Cap. Send for the Countie, goe tell him of this,
+Ile haue this knot knit vp to morrow morning
+
+   Iul. I met the youthfull Lord at Lawrence Cell,
+And gaue him what becomed Loue I might,
+Not stepping ore the bounds of modestie
+
+   Cap. Why I am glad on't, this is well, stand vp,
+This is as't should be, let me see the County:
+I marrie go I say, and fetch him hither.
+Now afore God, this reueren'd holy Frier,
+All our whole Cittie is much bound to him
+
+   Iul. Nurse will you goe with me into my Closet,
+To helpe me sort such needfull ornaments,
+As you thinke fit to furnish me to morrow?
+  Mo. No not till Thursday, there's time inough
+
+   Fa. Go Nurse, go with her,
+Weele to Church to morrow.
+
+Exeunt. Iuliet and Nurse.
+
+  Mo. We shall be short in our prouision,
+'Tis now neere night
+
+   Fa. Tush, I will stirre about,
+And all things shall be well, I warrant thee wife:
+Go thou to Iuliet, helpe to decke vp her,
+Ile not to bed to night, let me alone:
+Ile play the huswife for this once. What ho?
+They are all forth, well I will walke my selfe
+To Countie Paris, to prepare him vp
+Against to morrow, my heart is wondrous light,
+Since this same way-ward Gyrle is so reclaim'd.
+
+Exeunt. Father and Mother.
+
+Enter Iuliet and Nurse.
+
+  Iul. I those attires are best, but gentle Nurse
+I pray thee leaue me to my selfe to night:
+For I haue need of many Orysons,
+To moue the heauens to smile vpon my state,
+Which well thou know'st, is crosse and full of sin.
+Enter Mother.
+
+  Mo. What are you busie ho? need you my help?
+  Iul. No Madam, we haue cul'd such necessaries
+As are behoouefull for our state to morrow:
+So please you, let me now be left alone;
+And let the Nurse this night sit vp with you,
+For I am sure, you haue your hands full all,
+In this so sudden businesse
+
+   Mo. Goodnight.
+Get thee to bed and rest, for thou hast need.
+
+Exeunt.
+
+  Iul. Farewell:
+God knowes when we shall meete againe.
+I haue a faint cold feare thrills through my veines,
+That almost freezes vp the heate of fire:
+Ile call them backe againe to comfort me.
+Nurse, what should she do here?
+My dismall Sceane, I needs must act alone:
+Come Viall, what if this mixture do not worke at all?
+Shall I be married then to morrow morning?
+No, no, this shall forbid it. Lie thou there,
+What if it be a poyson which the Frier
+Subtilly hath ministred to haue me dead,
+Least in this marriage he should be dishonour'd,
+Because he married me before to Romeo?
+I feare it is, and yet me thinkes it should not,
+For he hath still beene tried a holy man.
+How, if when I am laid into the Tombe,
+I wake before the time that Romeo
+Come to redeeme me? There's a fearefull point:
+Shall I not then be stifled in the Vault?
+To whose foule mouth no healthsome ayre breaths in,
+And there die strangled ere my Romeo comes.
+Or if I liue, is it not very like,
+The horrible conceit of death and night,
+Together with the terror of the place,
+As in a Vaulte, an ancient receptacle,
+Where for these many hundred yeeres the bones
+Of all my buried Auncestors are packt,
+Where bloody Tybalt, yet but greene in earth,
+Lies festring in his shrow'd, where as they say,
+At some houres in the night, Spirits resort:
+Alacke, alacke, is it not like that I
+So early waking, what with loathsome smels,
+And shrikes like Mandrakes torne out of the earth,
+That liuing mortalls hearing them, run mad.
+O if I wake, shall I not be distraught,
+Inuironed with all these hidious feares,
+And madly play with my forefathers ioynts?
+And plucke the mangled Tybalt from his shrow'd?
+And in this rage, with some great kinsmans bone,
+As (with a club) dash out my desperate braines.
+O looke, me thinks I see my Cozins Ghost,
+Seeking out Romeo that did spit his body
+Vpon my Rapiers point: stay Tybalt, stay;
+Romeo, Romeo, Romeo, here's drinke: I drinke to thee.
+Enter Lady of the house, and Nurse.
+
+  Lady. Hold,
+Take these keies, and fetch more spices Nurse
+
+   Nur. They call for Dates and Quinces in the Pastrie.
+Enter old Capulet.
+
+  Cap. Come, stir, stir, stir,
+The second Cocke hath Crow'd,
+The Curphew Bell hath rung, 'tis three a clocke:
+Looke to the bakte meates, good Angelica,
+Spare not for cost
+
+   Nur. Go you Cot-queane, go,
+Get you to bed, faith youle be sicke to morrow
+For this nights watching
+
+   Cap. No not a whit: what? I haue watcht ere now
+All night for lesse cause, and nere beene sicke
+
+   La. I you haue bin a Mouse-hunt in your time,
+But I will watch you from such watching now.
+
+Exit Lady and Nurse.
+
+  Cap. A iealous hood, a iealous hood,
+Now fellow, what there?
+Enter three or foure with spits, and logs, and baskets.
+
+  Fel. Things for the Cooke sir, but I know not what
+
+   Cap. Make hast, make hast, sirrah, fetch drier Logs.
+Call Peter, he will shew thee where they are
+
+   Fel. I haue a head sir, that will find out logs,
+And neuer trouble Peter for the matter
+
+   Cap. Masse and well said, a merrie horson, ha,
+Thou shalt be loggerhead; good Father, 'tis day.
+
+Play Musicke
+
+The Countie will be here with Musicke straight,
+For so he said he would, I heare him neere,
+Nurse, wife, what ho? what Nurse I say?
+Enter Nurse.
+
+Go waken Iuliet, go and trim her vp,
+Ile go and chat with Paris: hie, make hast,
+Make hast, the Bridegroome, he is come already:
+Make hast I say
+
+   Nur. Mistris, what Mistris? Iuliet? Fast I warrant her she.
+Why Lambe, why Lady? fie you sluggabed,
+Why Loue I say? Madam, sweet heart: why Bride?
+What not a word? You take your peniworths now.
+Sleepe for a weeke, for the next night I warrant
+The Countie Paris hath set vp his rest,
+That you shall rest but little, God forgiue me:
+Marrie and Amen: how sound is she a sleepe?
+I must needs wake her: Madam, Madam, Madam,
+I, let the Countie take you in your bed,
+Heele fright you vp yfaith. Will it not be?
+What drest, and in your clothes, and downe againe?
+I must needs wake you: Lady, Lady, Lady?
+Alas, alas, helpe, helpe, my Ladyes dead,
+Oh weladay, that euer I was borne,
+Some Aqua-vitć ho, my Lord, my Lady?
+  Mo. What noise is heere?
+Enter Mother.
+
+  Nur. O lamentable day
+
+   Mo. What is the matter?
+  Nur. Looke, looke, oh heauie day
+
+   Mo. O me, O me, my Child, my onely life:
+Reuiue, looke vp, or I will die with thee:
+Helpe, helpe, call helpe.
+Enter Father.
+
+  Fa. For shame bring Iuliet forth, her Lord is come
+
+   Nur. Shee's dead: deceast, shee's dead: alacke the day
+
+   M. Alacke the day, shee's dead, shee's dead, shee's dead
+
+   Fa. Ha? Let me see her: out alas shee's cold,
+Her blood is setled and her ioynts are stiffe:
+Life and these lips haue long bene seperated:
+Death lies on her like an vntimely frost
+Vpon the swetest flower of all the field
+
+   Nur. O Lamentable day!
+  Mo. O wofull time
+
+   Fa. Death that hath tane her hence to make me waile,
+Ties vp my tongue, and will not let me speake.
+Enter Frier and the Countie.
+
+  Fri. Come, is the Bride ready to go to Church?
+  Fa. Ready to go, but neuer to returne.
+O Sonne, the night before thy wedding day,
+Hath death laine with thy wife: there she lies,
+Flower as she was, deflowred by him.
+Death is my Sonne in law, death is my Heire,
+My Daughter he hath wedded. I will die,
+And leaue him all life liuing, all is deaths
+
+   Pa. Haue I thought long to see this mornings face,
+And doth it giue me such a sight as this?
+  Mo. Accur'st, vnhappie, wretched hatefull day,
+Most miserable houre, that ere time saw
+In lasting labour of his Pilgrimage.
+But one, poore one, one poore and louing Child,
+But one thing to reioyce and solace in,
+And cruell death hath catcht it from my sight
+
+   Nur. O wo, O wofull, wofull, wofull day,
+Most lamentable day, most wofull day,
+That euer, euer, I did yet behold.
+O day, O day, O day, O hatefull day,
+Neuer was seene so blacke a day as this:
+O wofull day, O wofull day
+
+   Pa. Beguild, diuorced, wronged, spighted, slaine,
+Most detestable death, by thee beguil'd,
+By cruell, cruell thee, quite ouerthrowne:
+O loue, O life; not life, but loue in death
+
+   Fat. Despis'd, distressed, hated, martir'd, kil'd,
+Vncomfortable time, why cam'st thou now
+To murther, murther our solemnitie?
+O Child, O Child; my soule, and not my Child,
+Dead art thou, alacke my Child is dead,
+And with my Child, my ioyes are buried
+
+   Fri. Peace ho for shame, confusions: Care liues not
+In these confusions, heauen and your selfe
+Had part in this faire Maid, now heauen hath all,
+And all the better is it for the Maid:
+Your part in her, you could not keepe from death,
+But heauen keepes his part in eternall life:
+The most you sought was her promotion,
+For 'twas your heauen, she shouldst be aduan'st,
+And weepe ye now, seeing she is aduan'st
+Aboue the Cloudes, as high as Heauen it selfe?
+O in this loue, you loue your Child so ill,
+That you run mad, seeing that she is well:
+Shee's not well married, that liues married long,
+But shee's best married, that dies married yong.
+Drie vp your teares, and sticke your Rosemarie
+On this faire Coarse, and as the custome is,
+And in her best array beare her to Church:
+For though some Nature bids all vs lament,
+Yet Natures teares are Reasons merriment
+
+   Fa. All things that we ordained Festiuall,
+Turne from their office to blacke Funerall:
+Our instruments to melancholy Bells,
+Our wedding cheare, to a sad buriall Feast:
+Our solemne Hymnes, to sullen Dyrges change:
+Our Bridall flowers serue for a buried Coarse:
+And all things change them to the contrarie
+
+   Fri. Sir go you in; and Madam, go with him,
+And go sir Paris, euery one prepare
+To follow this faire Coarse vnto her graue:
+The heauens do lowre vpon you, for some ill:
+Moue them no more, by crossing their high will.
+
+Exeunt.
+
+  Mu. Faith we may put vp our Pipes and be gone
+
+   Nur. Honest goodfellowes: Ah put vp, put vp,
+For well you know, this is a pitifull case
+
+   Mu. I by my troth, the case may be amended.
+Enter Peter.
+
+  Pet. Musitions, oh Musitions,
+Hearts ease, hearts ease,
+O, and you will haue me liue, play hearts ease
+
+   Mu. Why hearts ease;
+  Pet. O Musitions,
+Because my heart it selfe plaies, my heart is full
+
+   Mu. Not a dump we, 'tis no time to play now
+
+   Pet. You will not then?
+  Mu. No
+
+   Pet. I will then giue it you soundly
+
+   Mu. What will you giue vs?
+  Pet. No money on my faith, but the gleeke.
+I will giue you the Minstrell
+
+   Mu. Then will I giue you the Seruing creature
+
+   Peter. Then will I lay the seruing Creatures Dagger
+on your pate. I will carie no Crochets, Ile Re you, Ile Fa
+you, do you note me?
+  Mu. And you Re vs, and Fa vs, you Note vs
+
+   2.M. Pray you put vp your Dagger,
+And put out your wit.
+Then haue at you with my wit
+
+   Peter. I will drie-beate you with an yron wit,
+And put vp my yron Dagger.
+Answere me like men:
+When griping griefes the heart doth wound, then Musicke
+with her siluer sound.
+Why siluer sound? why Musicke with her siluer sound?
+what say you Simon Catling?
+  Mu. Mary sir, because siluer hath a sweet sound
+
+   Pet. Pratest, what say you Hugh Rebicke?
+  2.M. I say siluer sound, because Musitions sound for siluer
+  Pet. Pratest to, what say you Iames Sound-Post?
+  3.Mu. Faith I know not what to say
+
+   Pet. O I cry you mercy, you are the Singer.
+I will say for you; it is Musicke with her siluer sound,
+Because Musitions haue no gold for sounding:
+Then Musicke with her siluer sound, with speedy helpe
+doth lend redresse.
+Enter.
+
+  Mu. What a pestilent knaue is this same?
+  M.2. Hang him Iacke, come weele in here, tarrie for
+the Mourners, and stay dinner.
+Enter.
+
+Enter Romeo.
+
+  Rom. If I may trust the flattering truth of sleepe,
+My dreames presage some ioyfull newes at hand:
+My bosomes L[ord]. sits lightly in his throne:
+And all this day an vnaccustom'd spirit,
+Lifts me aboue the ground with cheerefull thoughts.
+I dreamt my Lady came and found me dead,
+(Strange dreame that giues a dead man leaue to thinke,)
+And breath'd such life with kisses in my lips,
+That I reuiu'd and was an Emperour.
+Ah me, how sweet is loue it selfe possest,
+When but loues shadowes are so rich in ioy.
+Enter Romeo's man.
+
+Newes from Verona, how now Balthazer?
+Dost thou not bring me Letters from the Frier?
+How doth my Lady? Is my Father well?
+How doth my Lady Iuliet? that I aske againe,
+For nothing can be ill, is she be well
+
+   Man. Then she is well, and nothing can be ill.
+Her body sleepes in Capels Monument,
+And her immortall part with Angels liue,
+I saw her laid low in her kindreds Vault,
+And presently tooke Poste to tell it you:
+O pardon me for bringing these ill newes,
+Since you did leaue it for my office Sir
+
+   Rom. Is it euen so?
+Then I denie you Starres.
+Thou knowest my lodging, get me inke and paper,
+And hire Post-Horses, I will hence to night
+
+   Man. I do beseech you sir, haue patience:
+Your lookes are pale and wild, and do import
+Some misaduenture
+
+   Rom. Tush, thou art deceiu'd,
+Leaue me, and do the thing I bid thee do.
+Hast thou no Letters to me from the Frier?
+  Man. No my good Lord.
+
+Exit Man.
+
+  Rom. No matter: Get thee gone,
+And hyre those Horses, Ile be with thee straight,
+Well Iuliet, I will lie with thee to night:
+Lets see for meanes, O mischiefe thou art swift,
+To enter in the thoughts of desperate men:
+I do remember an Appothecarie,
+And here abouts dwells, which late I noted
+In tattred weeds, with ouerwhelming browes,
+Culling of Simples, meager were his lookes,
+Sharp miserie had worne him to the bones:
+And in his needie shop a Tortoyrs hung,
+An Allegater stuft, and other skins
+Of ill shap'd fishes, and about his shelues,
+A beggerly account of emptie boxes ,
+Greene earthen pots, Bladders, and mustie seedes,
+Remnants of packthred, and old cakes of Roses
+Were thinly scattered, to make vp a shew.
+Noting this penury, to my selfe I said,
+An if a man did need a poyson now,
+Whose sale is present death in Mantua,
+Here liues a Caitiffe wretch would sell it him.
+O this same thought did but fore-run my need,
+And this same needie man must sell it me.
+As I remember, this should be the house,
+Being holy day, the beggers shop is shut.
+What ho? Appothecarie?
+Enter Appothecarie.
+
+  App. Who call's so low'd?
+  Rom. Come hither man, I see that thou art poore,
+Hold, there is fortie Duckets, let me haue
+A dram of poyson, such soone speeding geare,
+As will disperse it selfe through all the veines,
+That the life-wearie-taker may fall dead,
+And that the Trunke may be discharg'd of breath,
+As violently, as hastie powder fier'd
+Doth hurry from the fatall Canons wombe
+
+   App. Such mortall drugs I haue, but Mantuas law
+Is death to any he, that vtters them
+
+   Rom. Art thou so bare and full of wretchednesse,
+And fear'st to die? Famine is in thy cheekes,
+Need and opression starueth in thy eyes,
+Contempt and beggery hangs vpon thy backe:
+The world is not thy friend, nor the worlds law:
+The world affords no law to make thee rich.
+Then be not poore, but breake it, and take this
+
+   App. My pouerty, but not my will consents
+
+   Rom. I pray thy pouerty, and not thy will
+
+   App. Put this in any liquid thing you will
+And drinke it off, and if you had the strength
+Of twenty men, it would dispatch you straight
+
+   Rom. There's thy Gold,
+Worse poyson to mens soules,
+Doing more murther in this loathsome world,
+Then these poore compounds that thou maiest not sell.
+I sell thee poyson, thou hast sold me none,
+Farewell, buy food, and get thy selfe in flesh.
+Come Cordiall, and not poyson, go with me
+To Iuliets graue, for there must I vse thee.
+
+Exeunt.
+
+Enter Frier Iohn to Frier Lawrence.
+
+  Iohn. Holy Franciscan Frier, Brother, ho?
+Enter Frier Lawrence.
+
+  Law. This same should be the voice of Frier Iohn.
+Welcome from Mantua, what sayes Romeo?
+Or if his mind be writ, giue me his Letter
+
+   Iohn. Going to find a bare-foote Brother out,
+One of our order to associate me,
+Here in this Citie visiting the sick,
+And finding him, the Searchers of the Towne
+Suspecting that we both were in a house
+Where the infectious pestilence did raigne,
+Seal'd vp the doores, and would not let vs forth,
+So that my speed to Mantua there was staid
+
+   Law. Who bare my Letter then to Romeo?
+  Iohn. I could not send it, here it is againe,
+Nor get a messenger to bring it thee,
+So fearefull were they of infection
+
+   Law. Vnhappie Fortune: by my Brotherhood
+The Letter was not nice; but full of charge,
+Of deare import; and the neglecting it
+May do much danger: Frier Iohn go hence,
+Get me an Iron Crow, and bring it straight
+Vnto my Cell
+
+   Iohn. Brother Ile go and bring it thee.
+Enter.
+
+  Law. Now must I to the Monument alone,
+Within this three houres will faire Iuliet wake,
+Shee will beshrew me much that Romeo
+Hath had no notice of these accidents:
+But I will write againe to Mantua,
+And keepe her at my Cell till Romeo come,
+Poore liuing Coarse, clos'd in a dead mans Tombe,
+Enter.
+
+Enter Paris and his Page.
+
+  Par. Giue me thy Torch Boy, hence and stand aloft,
+Yet put it out, for I would not be seene:
+Vnder yond young Trees lay thee all along,
+Holding thy eare close to the hollow ground,
+So shall no foot vpon the Churchyard tread,
+Being loose, vnfirme with digging vp of Graues,
+But thou shalt heare it: whistle then to me,
+As signall that thou hearest some thing approach,
+Giue me those flowers. Do as I bid thee, go
+
+   Page. I am almost afraid to stand alone
+Here in the Churchyard, yet I will aduenture
+
+   Pa. Sweet Flower with flowers thy Bridall bed I strew:
+O woe, thy Canopie is dust and stones,
+Which with sweet water nightly I will dewe,
+Or wanting that, with teares destil'd by mones;
+The obsequies that I for thee will keepe,
+Nightly shall be, to strew thy graue, and weepe.
+
+Whistle Boy.
+
+The Boy giues warning, something doth approach,
+What cursed foot wanders this wayes to night,
+To crosse my obsequies, and true loues right?
+What with a Torch? Muffle me night a while.
+Enter Romeo, and Peter.
+
+  Rom. Giue me that Mattocke, & the wrenching Iron,
+Hold take this Letter, early in the morning
+See thou deliuer it to my Lord and Father,
+Giue me the light; vpon thy life I charge thee,
+What ere thou hear'st or seest, stand all aloofe,
+And do not interrupt me in my course.
+Why I descend into this bed of death,
+Is partly to behold my Ladies face:
+But chiefly to take thence from her dead finger,
+A precious Ring, a Ring that I must vse,
+In deare employment, therefore hence be gone:
+But if thou iealous dost returne to prie
+In what I further shall intend to do,
+By heauen I will teare thee ioynt by ioynt,
+And strew this hungry Churchyard with thy limbs:
+The time, and my intents are sauage wilde:
+More fierce and more inexorable farre,
+Them emptie Tygers, or the roaring Sea
+
+   Pet. I will be gone sir, and not trouble you
+  Ro. So shalt thou shew me friendship: take thou that,
+Liue and be prosperous, and farewell good fellow
+
+   Pet. For all this same, Ile hide me here about,
+His lookes I feare, and his intents I doubt
+
+   Rom. Thou detestable mawe, thou wombe of death,
+Gorg'd with the dearest morsell of the earth:
+Thus I enforce thy rotten Iawes to open,
+And in despight, Ile cram thee with more food
+
+   Par. This is that banisht haughtie Mountague,
+That murdred my Loues Cozin; with which griefe,
+It is supposed the faire Creature died,
+And here is come to do some villanous shame
+To the dead bodies: I will apprehend him.
+Stop thy vnhallowed toyle, vile Mountague:
+Can vengeance be pursued further then death?
+Condemned villaine, I do apprehend thee.
+Obey and go with me, for thou must die,
+  Rom. I must indeed, and therfore came I hither:
+Good gentle youth, tempt not a desperate man,
+Flie hence and leaue me, thinke vpon those gone,
+Let them affright thee. I beseech thee Youth,
+Put not an other sin vpon my head,
+By vrging me to furie. O be gone,
+By heauen I loue thee better then my selfe,
+For I come hither arm'd against my selfe:
+Stay not, be gone, liue, and hereafter say,
+A mad mans mercy bid thee run away
+
+   Par. I do defie thy commisseration,
+And apprehend thee for a Fellon here
+
+   Ro. Wilt thou prouoke me? Then haue at thee Boy
+
+   Pet. O Lord they fight, I will go call the Watch
+
+   Pa. O I am slaine, if thou be mercifull,
+Open the Tombe, lay me with Iuliet
+
+   Rom. In faith I will, let me peruse this face:
+Mercutius kinsman, Noble Countie Paris,
+What said my man, when my betossed soule
+Did not attend him as we rode? I thinke
+He told me Paris should haue married Iuliet.
+Said he not so? Or did I dreame it so?
+Or am I mad, hearing him talke of Iuliet,
+To thinke it was so? O giue me thy hand,
+One, writ with me in sowre misfortunes booke.
+Ile burie thee in a triumphant graue.
+A Graue; O no, a Lanthorne; slaughtred Youth:
+For here lies Iuliet, and her beautie makes
+This Vault a feasting presence full of light.
+Death lie thou there, by a dead man inter'd,
+How oft when men are at the point of death,
+Haue they beene merrie? Which their Keepers call
+A lightning before death? Oh how may I
+Call this a lightning? O my Loue, my Wife,
+Death that hath suckt the honey of thy breath,
+Hath had no power yet vpon thy Beautie:
+Thou are not conquer'd: Beauties ensigne yet
+Is Crymson in thy lips, and in thy cheekes,
+And Deaths pale flag is not aduanced there.
+Tybalt, ly'st thou there in thy bloudy sheet?
+O what more fauour can I do to thee,
+Then with that hand that cut thy youth in twaine,
+To sunder his that was thy enemie?
+Forgiue me Cozen. Ah deare Iuliet:
+Why art thou yet so faire? I will beleeue,
+Shall I beleeue, that vnsubstantiall death is amorous?
+And that the leane abhorred Monster keepes
+Thee here in darke to be his Paramour?
+For feare of that, I still will stay with thee,
+And neuer from this Pallace of dym night
+Depart againe: come lie thou in my armes,
+Heere's to thy health, where ere thou tumblest in.
+O true Appothecarie!
+Thy drugs are quicke. Thus with a kisse I die.
+Depart againe; here, here will I remaine,
+With Wormes that are thy Chambermaides: O here
+Will I set vp my euerlasting rest:
+And shake the yoke of inauspicious starres
+From this world-wearied flesh: Eyes looke your last:
+Armes take your last embrace: And lips, O you
+The doores of breath, seale with a righteous kisse
+A datelesse bargaine to ingrossing death:
+Come bitter conduct, come vnsauory guide,
+Thou desperate Pilot, now at once run on
+The dashing Rocks, thy Sea-sicke wearie Barke:
+Heere's to my Loue. O true Appothecary:
+Thy drugs are quicke. Thus with a kisse I die.
+Enter Frier with a Lanthorne, Crow, and Spade.
+
+  Fri. St. Francis be my speed, how oft to night
+Haue my old feet stumbled at graues? Who's there?
+  Man. Here's one, a Friend, & one that knowes you well
+
+   Fri. Blisse be vpon you. Tell me good my Friend
+What Torch is yond that vainely lends his light
+To grubs, and eyelesse Sculles? As I discerne,
+It burneth in the Capels Monument
+
+   Man. It doth so holy sir,
+And there's my Master, one that you loue
+
+   Fri. Who is it?
+  Man. Romeo
+
+   Fri. How long hath he bin there?
+  Man. Full halfe an houre
+
+   Fri. Go with me to the Vault
+
+   Man. I dare not Sir.
+My Master knowes not but I am gone hence,
+And fearefully did menace me with death,
+If I did stay to looke on his entents
+
+   Fri. Stay, then Ile go alone, feares comes vpon me.
+O much I feare some ill vnluckie thing
+
+   Man. As I did sleepe vnder this young tree here,
+I dreamt my maister and another fought,
+And that my Maister slew him
+
+   Fri. Romeo.
+Alacke, alacke, what blood is this which staines
+The stony entrance of this Sepulcher?
+What meane these Masterlesse, and goarie Swords
+To lie discolour'd by this place of peace?
+Romeo, oh pale: who else? what Paris too?
+And steept in blood? Ah what an vnkind houre
+Is guiltie of this lamentable chance?
+The Lady stirs
+
+   Iul. O comfortable Frier, where's my Lord?
+I do remember well where I should be:
+And there I am, where is my Romeo?
+  Fri. I heare some noyse Lady, come from that nest
+Of death, contagion, and vnnaturall sleepe,
+A greater power then we can contradict
+Hath thwarted our entents, come, come away,
+Thy husband in thy bosome there lies dead:
+And Paris too: come Ile dispose of thee,
+Among a Sisterhood of holy Nunnes:
+Stay not to question, for the watch is comming.
+Come, go good Iuliet, I dare no longer stay.
+Enter.
+
+  Iul. Go get thee hence, for I will not away,
+What's here, A cup clos'd in my true loues hand?
+Poyson I see hath bin his timelesse end
+O churle, drinke all? and left no friendly drop,
+To helpe me after, I will kisse thy lips,
+Happlie some poyson yet doth hang on them,
+To make me die with a restoratiue.
+Thy lips are warme.
+Enter Boy and Watch.
+
+  Watch. Lead Boy, which way?
+  Iul. Yea noise?
+Then ile be briefe. O happy Dagger.
+'Tis in thy sheath, there rust and let me die.
+
+Kils herselfe.
+
+  Boy. This is the place,
+There where the Torch doth burne
+  Watch. The ground is bloody,
+Search about the Churchyard.
+Go some of you, who ere you find attach.
+Pittifull sight, here lies the Countie slaine,
+And Iuliet bleeding, warme and newly dead
+Who here hath laine these two dayes buried.
+Go tell the Prince, runne to the Capulets,
+Raise vp the Mountagues, some others search,
+We see the ground whereon these woes do lye,
+But the true ground of all these piteous woes,
+We cannot without circumstance descry.
+Enter Romeo's man.
+
+  Watch. Here's Romeo's man,
+We found him in the Churchyard
+
+   Con. Hold him in safety, till the Prince come hither.
+Enter Frier, and another Watchman.
+
+  3.Wat. Here is a Frier that trembles, sighes, and weepes
+We tooke this Mattocke and this Spade from him,
+As he was comming from this Church-yard side
+
+   Con. A great suspition, stay the Frier too.
+Enter the Prince.
+
+  Prin. What misaduenture is so earely vp,
+That calls our person from our mornings rest?
+Enter Capulet and his Wife.
+
+  Cap. What should it be that they so shrike abroad?
+  Wife. O the people in the streete crie Romeo.
+Some Iuliet, and some Paris, and all runne
+With open outcry toward our Monument
+
+   Pri. What feare is this which startles in your eares?
+  Wat. Soueraigne, here lies the Countie Paris slaine,
+And Romeo dead, and Iuliet dead before,
+Warme and new kil'd
+
+   Prin. Search,
+Seeke, and know how, this foule murder comes
+
+   Wat. Here is a Frier, and Slaughter'd Romeos man,
+With Instruments vpon them fit to open
+These dead mens Tombes
+
+   Cap. O heauen!
+O wife looke how our Daughter bleedes!
+This Dagger hath mistaine, for loe his house
+Is empty on the backe of Mountague,
+And is misheathed in my Daughters bosome
+
+   Wife. O me, this sight of death, is as a Bell
+That warnes my old age to a Sepulcher.
+Enter Mountague.
+
+  Pri. Come Mountague, for thou art early vp
+To see thy Sonne and Heire, now early downe
+
+   Moun. Alas my liege, my wife is dead to night,
+Griefe of my Sonnes exile hath stopt her breath:
+What further woe conspires against my age?
+  Prin. Looke: and thou shalt see
+
+   Moun. O thou vntaught, what manners is in this,
+To presse before thy Father to a graue?
+  Prin. Seale vp the mouth of outrage for a while,
+Till we can cleare these ambiguities,
+And know their spring, their head, their true descent,
+And then I will be generall of your woes,
+And lead you euen to death? meane time forbeare,
+And let mischance be slaue to patience,
+Bring forth the parties of suspition
+
+   Fri. I am the greatest, able to doe least,
+Yet most suspected as the time and place
+Doth make against me of this direfull murther:
+And heere I stand both to impeach and purge
+My selfe condemned, and my selfe excus'd
+
+   Prin. Then say at once, what thou dost know in this?
+  Fri. I will be briefe, for my short date of breath
+Is not so long as is a tedious tale.
+Romeo there dead, was husband to that Iuliet,
+And she there dead, that's Romeos faithfull wife:
+I married them; and their stolne marriage day
+Was Tybalts Doomesday: whose vntimely death
+Banish'd the new-made Bridegroome from this Citie:
+For whom (and not for Tybalt) Iuliet pinde.
+You, to remoue that siege of Greefe from her,
+Betroth'd, and would haue married her perforce
+To Countie Paris. Then comes she to me,
+And (with wilde lookes) bid me deuise some meanes
+To rid her from this second Marriage,
+Or in my Cell there would she kill her selfe.
+Then gaue I her (so Tutor'd by my Art)
+A sleeping Potion, which so tooke effect
+As I intended, for it wrought on her
+The forme of death. Meane time, I writ to Romeo,
+That he should hither come, as this dyre night,
+To helpe to take her from her borrowed graue,
+Being the time the Potions force should cease.
+But he which bore my Letter, Frier Iohn,
+Was stay'd by accident; and yesternight
+Return'd my Letter backe. Then all alone,
+At the prefixed houre of her waking,
+Came I to take her from her Kindreds vault,
+Meaning to keepe her closely at my Cell,
+Till I conueniently could send to Romeo.
+But when I came (some Minute ere the time
+Of her awaking) heere vntimely lay
+The Noble Paris, and true Romeo dead.
+Shee wakes, and I intreated her come foorth,
+And beare this worke of Heauen, with patience:
+But then, a noyse did scarre me from the Tombe,
+And she (too desperate) would not go with me,
+But (as it seemes) did violence on her selfe.
+All this I know, and to the Marriage her Nurse is priuy:
+And if ought in this miscarried by my fault,
+Let my old life be sacrific'd, some houre before the time,
+Vnto the rigour of seuerest Law
+
+   Prin. We still haue knowne thee for a Holy man.
+Where's Romeo's man? What can he say to this?
+  Boy. I brought my Master newes of Iuliets death,
+And then in poste he came from Mantua
+To this same place, to this same Monument.
+This Letter he early bid me giue his Father,
+And threatned me with death, going in the Vault,
+If I departed not, and left him there
+
+   Prin. Giue me the Letter, I will look on it.
+Where is the Counties Page that rais'd the Watch?
+Sirra, what made your Master in this place?
+  Page. He came with flowres to strew his Ladies graue,
+And bid me stand aloofe, and so I did:
+Anon comes one with light to ope the Tombe,
+And by and by my Maister drew on him,
+And then I ran away to call the Watch
+
+   Prin. This Letter doth make good the Friers words,
+Their course of Loue, the tydings of her death:
+And heere he writes, that he did buy a poyson
+Of a poore Pothecarie, and therewithall
+Came to this Vault to dye, and lye with Iuliet.
+Where be these Enemies? Capulet, Mountague,
+See what a scourge is laide vpon your hate,
+That Heauen finds meanes to kill your ioyes with Loue;
+And I, for winking at your discords too,
+Haue lost a brace of Kinsmen: All are punish'd
+
+   Cap. O Brother Mountague, giue me thy hand,
+This is my Daughters ioynture, for no more
+Can I demand
+
+   Moun. But I can giue thee more:
+For I will raise her Statue in pure Gold,
+That whiles Verona by that name is knowne,
+There shall no figure at that Rate be set,
+As that of True and Faithfull Iuliet
+
+   Cap. As rich shall Romeo by his Lady ly,
+Poore sacrifices of our enmity
+
+   Prin. A glooming peace this morning with it brings,
+The Sunne for sorrow will not shew his head;
+Go hence, to haue more talke of these sad things,
+Some shall be pardon'd, and some punished.
+For neuer was a Storie of more Wo,
+Then this of Iuliet, and her Romeo.
+
+Exeunt. omnes
+
+FINIS. THE TRAGEDIE OF ROMEO and IVLIET
