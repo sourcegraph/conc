@@ -38,7 +38,7 @@ func New() *Stream {
 type Stream struct {
 	pool             pool.Pool
 	callbackerHandle conc.WaitGroup
-	queue            chan callbackCh
+	queue            *callbackQueue
 
 	initOnce sync.Once
 }
@@ -66,7 +66,7 @@ func (s *Stream) Go(f Task) {
 	ch := getCh()
 
 	// Queue the channel for the callbacker.
-	s.queue <- ch
+	s.queue.push(ch)
 
 	// Submit the task for execution.
 	s.pool.Go(func() {
@@ -94,7 +94,7 @@ func (s *Stream) Wait() {
 	// Defer the callbacker cleanup so that it occurs even in the case
 	// that one of the tasks panics and is propagated up by s.pool.Wait().
 	defer func() {
-		close(s.queue)
+		s.queue.close()
 		s.callbackerHandle.Wait()
 	}()
 
@@ -109,7 +109,7 @@ func (s *Stream) WithMaxGoroutines(n int) *Stream {
 
 func (s *Stream) init() {
 	s.initOnce.Do(func() {
-		s.queue = make(chan callbackCh, s.pool.MaxGoroutines()+1)
+		s.queue = newCallbackQueue()
 
 		// Start the callbacker.
 		s.callbackerHandle.Go(s.callbacker)
@@ -123,7 +123,12 @@ func (s *Stream) callbacker() {
 	defer panicCatcher.Repanic()
 
 	// For every scheduled task, read that tasks channel from the queue.
-	for callbackCh := range s.queue {
+	for {
+		callbackCh, ok := s.queue.pop()
+		if !ok {
+			break
+		}
+
 		// Wait for the task to complete and get its callback from the channel.
 		callback := <-callbackCh
 
@@ -135,6 +140,62 @@ func (s *Stream) callbacker() {
 		// Return the channel to the pool of unused channels.
 		putCh(callbackCh)
 	}
+}
+
+type callbackQueue struct {
+	mu     sync.Mutex
+	cond   *sync.Cond
+	items  []callbackCh
+	head   int
+	closed bool
+}
+
+func newCallbackQueue() *callbackQueue {
+	q := &callbackQueue{}
+	q.cond = sync.NewCond(&q.mu)
+	return q
+}
+
+func (q *callbackQueue) push(ch callbackCh) {
+	q.mu.Lock()
+	q.items = append(q.items, ch)
+	q.cond.Signal()
+	q.mu.Unlock()
+}
+
+func (q *callbackQueue) pop() (callbackCh, bool) {
+	q.mu.Lock()
+	defer q.mu.Unlock()
+
+	for q.head == len(q.items) && !q.closed {
+		q.cond.Wait()
+	}
+
+	if q.head == len(q.items) && q.closed {
+		return nil, false
+	}
+
+	ch := q.items[q.head]
+	q.items[q.head] = nil
+	q.head++
+
+	if q.head == len(q.items) {
+		q.items = q.items[:0]
+		q.head = 0
+	} else if q.head > 1024 && q.head*2 >= len(q.items) {
+		copy(q.items, q.items[q.head:])
+		q.items = q.items[:len(q.items)-q.head]
+		q.head = 0
+	}
+
+	return ch, true
+}
+
+func (q *callbackQueue) close() {
+	q.mu.Lock()
+	q.closed = true
+	q.cond.Broadcast()
+	q.mu.Unlock()
 }
 
 type callbackCh chan func()

@@ -133,6 +133,69 @@ func TestStream(t *testing.T) {
 		}
 		require.Panics(t, s.Wait)
 	})
+
+	t.Run("unbounded concurrent execution", func(t *testing.T) {
+		t.Parallel()
+		s := stream.New()
+		const taskCount = 10
+		started := make(chan struct{}, taskCount)
+		release := make(chan struct{})
+
+		for i := 0; i < taskCount; i++ {
+			s.Go(func() stream.Callback {
+				started <- struct{}{}
+				<-release
+				return nil
+			})
+		}
+
+		for i := 0; i < taskCount; i++ {
+			select {
+			case <-started:
+			case <-time.After(5 * time.Second):
+				t.Fatalf("timed out waiting for task %d to start concurrently", i)
+			}
+		}
+
+		close(release)
+		s.Wait()
+	})
+
+	t.Run("unbounded ordered callbacks with inverted completion", func(t *testing.T) {
+		t.Parallel()
+		s := stream.New()
+		const taskCount = 10
+		var results []int
+
+		for i := 0; i < taskCount; i++ {
+			i := i
+			s.Go(func() stream.Callback {
+				// Earlier tasks take longer so that completion order is inverted.
+				sleepDuration := time.Duration(taskCount-i) * 5 * time.Millisecond
+				time.Sleep(sleepDuration)
+				return func() {
+					results = append(results, i)
+				}
+			})
+		}
+
+		s.Wait()
+
+		expected := make([]int, taskCount)
+		for i := 0; i < taskCount; i++ {
+			expected[i] = i
+		}
+		require.Equal(t, expected, results)
+	})
+
+	t.Run("unbounded panic propagation", func(t *testing.T) {
+		t.Parallel()
+		s := stream.New()
+		s.Go(func() stream.Callback {
+			panic("panic in unbounded task")
+		})
+		require.Panics(t, s.Wait)
+	})
 }
 
 func BenchmarkStream(b *testing.B) {
