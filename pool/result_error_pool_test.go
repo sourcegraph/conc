@@ -146,4 +146,87 @@ func TestResultErrorPool(t *testing.T) {
 		require.ErrorIs(t, errs2, err2)
 		require.NotErrorIs(t, errs2, err1)
 	})
+
+	t.Run("results preserved across error conditions", func(t *testing.T) {
+		t.Run("error in middle", func(t *testing.T) {
+			t.Parallel()
+			p := pool.NewWithResults[int]().WithErrors()
+			p.Go(func() (int, error) { return 1, nil })
+			p.Go(func() (int, error) { return 2, err1 })
+			p.Go(func() (int, error) { return 3, nil })
+
+			got, err := p.Wait()
+			require.Equal(t, []int{1, 3}, got)
+			require.ErrorIs(t, err, err1)
+		})
+
+		t.Run("first task errored", func(t *testing.T) {
+			t.Parallel()
+			p := pool.NewWithResults[int]().WithErrors()
+			p.Go(func() (int, error) { return 1, err1 })
+			p.Go(func() (int, error) { return 2, nil })
+			p.Go(func() (int, error) { return 3, nil })
+
+			got, err := p.Wait()
+			require.Equal(t, []int{2, 3}, got)
+			require.ErrorIs(t, err, err1)
+		})
+
+		t.Run("last task errored", func(t *testing.T) {
+			t.Parallel()
+			p := pool.NewWithResults[int]().WithErrors()
+			p.Go(func() (int, error) { return 1, nil })
+			p.Go(func() (int, error) { return 2, nil })
+			p.Go(func() (int, error) { return 3, err1 })
+
+			got, err := p.Wait()
+			require.Equal(t, []int{1, 2}, got)
+			require.ErrorIs(t, err, err1)
+		})
+
+		t.Run("multiple interleaved errors", func(t *testing.T) {
+			t.Parallel()
+			p := pool.NewWithResults[int]().WithErrors()
+			var expected []int
+			for i := 0; i < 10; i++ {
+				i := i
+				if i%2 == 1 {
+					expected = append(expected, i)
+					p.Go(func() (int, error) { return i, nil })
+				} else {
+					p.Go(func() (int, error) { return i, fmt.Errorf("err %d", i) })
+				}
+			}
+
+			got, err := p.Wait()
+			require.Equal(t, expected, got)
+			require.Error(t, err)
+		})
+
+		t.Run("consecutive errors", func(t *testing.T) {
+			t.Parallel()
+			p := pool.NewWithResults[int]().WithErrors()
+			p.Go(func() (int, error) { return 1, nil })
+			p.Go(func() (int, error) { return 2, err1 })
+			p.Go(func() (int, error) { return 3, err2 })
+			p.Go(func() (int, error) { return 4, nil })
+
+			got, err := p.Wait()
+			require.Equal(t, []int{1, 4}, got)
+			require.ErrorIs(t, err, err1)
+			require.ErrorIs(t, err, err2)
+		})
+
+		t.Run("all tasks errored", func(t *testing.T) {
+			t.Parallel()
+			p := pool.NewWithResults[int]().WithErrors()
+			p.Go(func() (int, error) { return 1, err1 })
+			p.Go(func() (int, error) { return 2, err2 })
+
+			got, err := p.Wait()
+			require.Empty(t, got)
+			require.ErrorIs(t, err, err1)
+			require.ErrorIs(t, err, err2)
+		})
+	})
 }
