@@ -2,6 +2,7 @@ package pool_test
 
 import (
 	"fmt"
+	"iter"
 	"math/rand"
 	"strconv"
 	"sync/atomic"
@@ -21,6 +22,27 @@ func ExampleResultPool() {
 			return i * 2
 		})
 	}
+	res := p.Wait()
+	fmt.Println(res)
+
+	// Output:
+	// [0 2 4 6 8 10 12 14 16 18]
+}
+
+func ExampleResultPool_GoForEach() {
+	seq := func() iter.Seq[func() int] {
+		return func(yield func(func() int) bool) {
+			for i := 0; i < 10; i++ {
+				if !yield(func() int {
+					return i * 2
+				}) {
+					return
+				}
+			}
+		}
+	}
+	p := pool.NewWithResults[int]()
+	p.GoForEach(seq())
 	res := p.Wait()
 	fmt.Println(res)
 

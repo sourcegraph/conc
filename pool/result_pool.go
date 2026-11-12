@@ -2,6 +2,7 @@ package pool
 
 import (
 	"context"
+	"iter"
 	"sort"
 	"sync"
 )
@@ -34,6 +35,15 @@ func (p *ResultPool[T]) Go(f func() T) {
 	p.pool.Go(func() {
 		p.agg.save(idx, f(), false)
 	})
+}
+
+// GoForEach executes the given function concurrently for each element in the iterator.
+// It maintains the order of the input iterator in the execution. This method is useful
+// for parallel processing of iterable data structures while preserving their original sequence.
+func (p *ResultPool[T]) GoForEach(seq iter.Seq[func() T]) {
+	for f := range seq {
+		p.Go(f)
+	}
 }
 
 // Wait cleans up all spawned goroutines, propagating any panics, and returning

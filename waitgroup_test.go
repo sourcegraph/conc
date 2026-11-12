@@ -2,6 +2,7 @@ package conc_test
 
 import (
 	"fmt"
+	"iter"
 	"sync/atomic"
 	"testing"
 
@@ -19,6 +20,29 @@ func ExampleWaitGroup() {
 			count.Add(1)
 		})
 	}
+	wg.Wait()
+
+	fmt.Println(count.Load())
+	// Output:
+	// 10
+}
+
+func ExampleWaitGroup_GoForEach() {
+	var count atomic.Int64
+
+	var wg conc.WaitGroup
+	seq := func() iter.Seq[func()] {
+		return func(yield func(func()) bool) {
+			for i := 0; i < 10; i++ {
+				if !yield(func() {
+					count.Add(1)
+				}) {
+					return
+				}
+			}
+		}
+	}
+	wg.GoForEach(seq())
 	wg.Wait()
 
 	fmt.Println(count.Load())

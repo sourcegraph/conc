@@ -2,6 +2,8 @@ package stream_test
 
 import (
 	"fmt"
+	"iter"
+	"slices"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -23,6 +25,35 @@ func ExampleStream() {
 			return func() { fmt.Println(dur) }
 		})
 	}
+	s.Wait()
+
+	// Output:
+	// 20ms
+	// 52ms
+	// 16ms
+	// 45ms
+	// 4ms
+	// 80ms
+}
+
+func ExampleStream_GoForEach() {
+	times := []int{20, 52, 16, 45, 4, 80}
+	seq := func(timeSeq iter.Seq[int]) iter.Seq[stream.Task] {
+		return func(yield func(stream.Task) bool) {
+			for millis := range timeSeq {
+				dur := time.Duration(millis) * time.Millisecond
+				if !yield(func() stream.Callback {
+					time.Sleep(dur)
+					// This will print in the order the tasks were submitted
+					return func() { fmt.Println(dur) }
+				}) {
+				}
+			}
+		}
+	}
+
+	s := stream.New()
+	s.GoForEach(seq(slices.Values(times)))
 	s.Wait()
 
 	// Output:

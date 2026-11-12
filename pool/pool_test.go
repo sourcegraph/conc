@@ -2,6 +2,7 @@ package pool_test
 
 import (
 	"fmt"
+	"iter"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -19,6 +20,30 @@ func ExamplePool() {
 			fmt.Println("conc")
 		})
 	}
+	p.Wait()
+	// Output:
+	// conc
+	// conc
+	// conc
+	// conc
+	// conc
+}
+
+func ExamplePool_GoForEach() {
+	seq := func(count int) iter.Seq[func()] {
+		return func(yield func(func()) bool) {
+			for i := 0; i < count; i++ {
+				if !yield(func() {
+					fmt.Println("conc")
+				}) {
+					return
+				}
+			}
+		}
+	}
+
+	p := pool.New().WithMaxGoroutines(3)
+	p.GoForEach(seq(5))
 	p.Wait()
 	// Output:
 	// conc

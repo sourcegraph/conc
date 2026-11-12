@@ -1,6 +1,7 @@
 package conc
 
 import (
+	"iter"
 	"sync"
 
 	"github.com/sourcegraph/conc/panics"
@@ -31,6 +32,15 @@ func (h *WaitGroup) Go(f func()) {
 		defer h.wg.Done()
 		h.pc.Try(f)
 	}()
+}
+
+// GoForEach executes the given function concurrently for each element in the iterator.
+// It maintains the order of the input iterator in the execution. This method is useful
+// for parallel processing of iterable data structures while preserving their original sequence.
+func (h *WaitGroup) GoForEach(seq iter.Seq[func()]) {
+	for f := range seq {
+		h.Go(f)
+	}
 }
 
 // Wait will block until all goroutines spawned with Go exit and will

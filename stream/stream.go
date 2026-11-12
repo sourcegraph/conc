@@ -2,6 +2,7 @@
 package stream
 
 import (
+	"iter"
 	"sync"
 
 	"github.com/sourcegraph/conc"
@@ -84,6 +85,15 @@ func (s *Stream) Go(f Task) {
 		callback := f()
 		ch <- callback
 	})
+}
+
+// GoForEach executes the given function concurrently for each element in the iterator.
+// It maintains the order of the input iterator in the execution. This method is useful
+// for parallel processing of iterable data structures while preserving their original sequence.
+func (s *Stream) GoForEach(seq iter.Seq[Task]) {
+	for f := range seq {
+		s.Go(f)
+	}
 }
 
 // Wait signals to the stream that all tasks have been submitted. Wait will

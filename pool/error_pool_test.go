@@ -3,6 +3,7 @@ package pool_test
 import (
 	"errors"
 	"fmt"
+	"iter"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -24,6 +25,30 @@ func ExampleErrorPool() {
 			return nil
 		})
 	}
+	err := p.Wait()
+	fmt.Println(err)
+	// Output:
+	// oh no!
+}
+
+func ExampleErrorPool_GoForEach() {
+	seq := func() iter.Seq[func() error] {
+		return func(yield func(func() error) bool) {
+			for i := 0; i < 3; i++ {
+				if !yield(func() error {
+					if i == 2 {
+						return errors.New("oh no!")
+					}
+					return nil
+				}) {
+					return
+				}
+			}
+		}
+	}
+
+	p := pool.New().WithErrors()
+	p.GoForEach(seq())
 	err := p.Wait()
 	fmt.Println(err)
 	// Output:

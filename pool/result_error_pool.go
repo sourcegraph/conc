@@ -2,6 +2,7 @@ package pool
 
 import (
 	"context"
+	"iter"
 )
 
 // ResultErrorPool is a pool that executes tasks that return a generic result
@@ -28,6 +29,15 @@ func (p *ResultErrorPool[T]) Go(f func() (T, error)) {
 		p.agg.save(idx, res, err != nil)
 		return err
 	})
+}
+
+// GoForEach executes the given function concurrently for each element in the iterator.
+// It maintains the order of the input iterator in the execution. This method is useful
+// for parallel processing of iterable data structures while preserving their original sequence.
+func (p *ResultErrorPool[T]) GoForEach(seq iter.Seq[func() (T, error)]) {
+	for f := range seq {
+		p.Go(f)
+	}
 }
 
 // Wait cleans up any spawned goroutines, propagating any panics and

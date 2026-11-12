@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"iter"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -243,5 +244,29 @@ func TestResultContextPool(t *testing.T) {
 		require.Empty(t, results2)
 		require.ErrorIs(t, errs2, err2)
 		require.NotErrorIs(t, errs2, err1)
+	})
+
+	t.Run("GoForEach", func(t *testing.T) {
+		t.Parallel()
+		seq := func() iter.Seq[func(context.Context) (int, error)] {
+			return func(yield func(func(context.Context) (int, error)) bool) {
+				if !yield(func(context.Context) (int, error) { return 0, err1 }) {
+					return
+				}
+				if !yield(func(context.Context) (int, error) { return 0, nil }) {
+					return
+				}
+				if !yield(func(context.Context) (int, error) { return 0, err2 }) {
+					return
+				}
+			}
+		}
+
+		g := pool.NewWithResults[int]().WithErrors().WithContext(context.Background())
+		g.GoForEach(seq())
+		res, err := g.Wait()
+		require.Len(t, res, 1)
+		require.ErrorIs(t, err, err1)
+		require.ErrorIs(t, err, err2)
 	})
 }

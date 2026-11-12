@@ -3,6 +3,7 @@ package pool
 import (
 	"context"
 	"errors"
+	"iter"
 	"sync"
 )
 
@@ -28,6 +29,15 @@ func (p *ErrorPool) Go(f func() error) {
 	p.pool.Go(func() {
 		p.addErr(f())
 	})
+}
+
+// GoForEach executes the given function concurrently for each element in the iterator.
+// It maintains the order of the input iterator in the execution. This method is useful
+// for parallel processing of iterable data structures while preserving their original sequence.
+func (p *ErrorPool) GoForEach(seq iter.Seq[func() error]) {
+	for f := range seq {
+		p.Go(f)
+	}
 }
 
 // Wait cleans up any spawned goroutines, propagating any panics and

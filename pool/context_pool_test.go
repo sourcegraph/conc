@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"iter"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -30,6 +31,34 @@ func ExampleContextPool_WithCancelOnError() {
 			return nil
 		})
 	}
+	err := p.Wait()
+	fmt.Println(err)
+	// Output:
+	// I will cancel all other tasks!
+}
+
+func ExampleContextPool_GoForEach() {
+	seq := func() iter.Seq[func(context.Context) error] {
+		return func(yield func(func(context.Context) error) bool) {
+			for i := 0; i < 3; i++ {
+				if !yield(func(ctx context.Context) error {
+					if i == 2 {
+						return errors.New("I will cancel all other tasks!")
+					}
+					<-ctx.Done()
+					return nil
+				}) {
+					return
+				}
+			}
+		}
+	}
+
+	p := pool.New().
+		WithMaxGoroutines(4).
+		WithContext(context.Background()).
+		WithCancelOnError()
+	p.GoForEach(seq())
 	err := p.Wait()
 	fmt.Println(err)
 	// Output:

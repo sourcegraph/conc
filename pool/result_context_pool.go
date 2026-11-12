@@ -2,6 +2,7 @@ package pool
 
 import (
 	"context"
+	"iter"
 )
 
 // ResultContextPool is a pool that runs tasks that take a context and return a
@@ -26,6 +27,15 @@ func (p *ResultContextPool[T]) Go(f func(context.Context) (T, error)) {
 		p.agg.save(idx, res, err != nil)
 		return err
 	})
+}
+
+// GoForEach executes the given function concurrently for each element in the iterator.
+// It maintains the order of the input iterator in the execution. This method is useful
+// for parallel processing of iterable data structures while preserving their original sequence.
+func (p *ResultContextPool[T]) GoForEach(seq iter.Seq[func(context.Context) (T, error)]) {
+	for f := range seq {
+		p.Go(f)
+	}
 }
 
 // Wait cleans up all spawned goroutines, propagates any panics, and
