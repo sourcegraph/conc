@@ -139,10 +139,11 @@ func (p *Pool) deref() Pool {
 // signal that all goroutines should be cancelled upon the first error.
 func (p *Pool) WithContext(ctx context.Context) *ContextPool {
 	p.panicIfInitialized()
-	ctx, cancel := context.WithCancel(ctx)
+	derivedCtx, cancel := context.WithCancel(ctx)
 	return &ContextPool{
 		errorPool: p.WithErrors().deref(),
-		ctx:       ctx,
+		parentCtx: ctx,
+		ctx:       derivedCtx,
 		cancel:    cancel,
 	}
 }

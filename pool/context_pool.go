@@ -12,8 +12,9 @@ import (
 type ContextPool struct {
 	errorPool ErrorPool
 
-	ctx    context.Context
-	cancel context.CancelFunc
+	parentCtx context.Context
+	ctx       context.Context
+	cancel    context.CancelFunc
 
 	cancelOnError bool
 }
@@ -53,7 +54,14 @@ func (p *ContextPool) Go(f func(ctx context.Context) error) {
 // returns an error if any of the tasks errored.
 func (p *ContextPool) Wait() error {
 	// Make sure we call cancel after pool is done to avoid memory leakage.
-	defer p.cancel()
+	// Then derive a fresh context from the parent so the pool can be
+	// reused after Wait, like the other pool types: without this, tasks
+	// submitted on a subsequent use would observe the context canceled
+	// by this call. The fresh context is canceled by the next Wait.
+	defer func() {
+		p.cancel()
+		p.ctx, p.cancel = context.WithCancel(p.parentCtx)
+	}()
 	return p.errorPool.Wait()
 }
 

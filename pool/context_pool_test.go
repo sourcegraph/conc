@@ -251,4 +251,43 @@ func TestContextPool(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("reuse", func(t *testing.T) {
+		t.Parallel()
+		p := pool.New().WithContext(bgctx)
+
+		p.Go(func(ctx context.Context) error { return ctx.Err() })
+		p.Go(func(context.Context) error { return err1 })
+		require.ErrorIs(t, p.Wait(), err1)
+
+		// On reuse, tasks must observe a live context again, not the one
+		// canceled by the first Wait, and only new errors are returned.
+		p.Go(func(ctx context.Context) error { return ctx.Err() })
+		p.Go(func(context.Context) error { return err2 })
+		err := p.Wait()
+		require.ErrorIs(t, err, err2)
+		require.NotErrorIs(t, err, err1)
+		require.NotErrorIs(t, err, context.Canceled)
+	})
+
+	t.Run("reuse with cancel on error", func(t *testing.T) {
+		t.Parallel()
+		p := pool.New().WithContext(bgctx).WithCancelOnError()
+
+		for i := 0; i < 2; i++ {
+			var cancelled atomic.Int64
+			p.Go(func(context.Context) error { return err1 })
+			p.Go(func(ctx context.Context) error {
+				select {
+				case <-ctx.Done():
+					cancelled.Add(1)
+					return nil
+				case <-time.After(10 * time.Second):
+					return errors.New("context was not canceled")
+				}
+			})
+			require.ErrorIs(t, p.Wait(), err1)
+			require.EqualValues(t, 1, cancelled.Load())
+		}
+	})
 }
