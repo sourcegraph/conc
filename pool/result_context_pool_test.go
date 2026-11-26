@@ -244,4 +244,20 @@ func TestResultContextPool(t *testing.T) {
 		require.ErrorIs(t, errs2, err2)
 		require.NotErrorIs(t, errs2, err1)
 	})
+
+	t.Run("reuse with live context", func(t *testing.T) {
+		p := pool.NewWithResults[int]().WithContext(context.Background())
+
+		p.Go(func(ctx context.Context) (int, error) { return 1, ctx.Err() })
+		results1, errs1 := p.Wait()
+		require.NoError(t, errs1)
+		require.Equal(t, []int{1}, results1)
+
+		// On reuse, tasks must observe a live context again, not the one
+		// canceled by the first Wait.
+		p.Go(func(ctx context.Context) (int, error) { return 2, ctx.Err() })
+		results2, errs2 := p.Wait()
+		require.NoError(t, errs2)
+		require.Equal(t, []int{2}, results2)
+	})
 }
